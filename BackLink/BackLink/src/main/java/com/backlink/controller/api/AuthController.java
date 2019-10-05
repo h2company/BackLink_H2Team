@@ -1,0 +1,53 @@
+package com.backlink.controller.api;
+
+import java.net.URI;
+import java.util.Collections;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.backlink.entities.Role;
+import com.backlink.entities.Role.RoleName;
+import com.backlink.entities.User;
+import com.backlink.exception.AppException;
+import com.backlink.payload.reponse.APIResponse;
+import com.backlink.payload.reponse.JwtAuthenticationResponse;
+import com.backlink.payload.request.LoginRequest;
+import com.backlink.payload.request.SignUpRequest;
+import com.backlink.repository.RoleRepository;
+import com.backlink.repository.UserRepository;
+import com.backlink.security.JwtTokenProvider;
+import com.backlink.service.UserService;
+
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+	
+    @Autowired
+    UserService userService;
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        return userService.authenticate(loginRequest);
+    }
+
+    @SuppressWarnings("unchecked")
+	@PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+    	return userService.register(signUpRequest);
+    }
+	
+}

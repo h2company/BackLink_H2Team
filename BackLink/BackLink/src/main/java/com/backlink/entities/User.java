@@ -1,12 +1,17 @@
 package com.backlink.entities;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
-import com.backlink.util.Enum.Roles;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Document(collection = "Users")
+@Document(collection = "users")
 public class User extends BaseEntity {
 
 	@Id
@@ -15,31 +20,66 @@ public class User extends BaseEntity {
 	@Indexed(unique = true)
 	private String username;
 
+	@JsonIgnore
 	private String password;
 
-	private Roles role = Roles.CUSTOMER;
+	private Set<Role> roles = new HashSet<>();
 
-	private UserDetail userDetail;
+	@Indexed(unique = true)
+	private String email;
+
+	@Indexed(unique = true)
+	private String phone;
+
+	private String fullname;
+
+	private String address;
+
+	private Date birthday;
+
+	private boolean gender;
 
 	public User() {
 		super();
 	}
 
-	public User(String username, String password, Roles role, UserDetail userDetail) {
+	public User(String username, String password, Set<Role> roles, String email, String phone, String fullname,
+			String address, Date birthday, boolean gender) {
 		super();
 		this.username = username;
-		this.password = password;
-		this.role = role;
-		this.userDetail = userDetail;
+		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+		this.roles = roles;
+		this.email = email;
+		this.phone = phone;
+		this.fullname = fullname;
+		this.address = address;
+		this.birthday = birthday;
+		this.gender = gender;
+	}
+	
+	
+
+	public User(String username, String password, String email, String fullname) {
+		super();
+		this.username = username;
+		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+		this.email = email;
+		this.fullname = fullname;
 	}
 
-	public User(String id, String username, String password, Roles role, UserDetail userDetail) {
+	public User(String id, String username, String password, Set<Role> roles, String email, String phone,
+			String fullname, String address, Date birthday, boolean gender) {
 		super();
 		this.id = id;
 		this.username = username;
-		this.password = password;
-		this.role = role;
-		this.userDetail = userDetail;
+		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+		this.roles = roles;
+		this.email = email;
+		this.phone = phone;
+		this.fullname = fullname;
+		this.address = address;
+		this.birthday = birthday;
+		this.gender = gender;
 	}
 
 	public String getId() {
@@ -63,23 +103,63 @@ public class User extends BaseEntity {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
 	}
 
-	public Roles getRole() {
-		return role;
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
-	public void setRole(Roles role) {
-		this.role = role;
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
-	public UserDetail getUserDetail() {
-		return userDetail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUserDetail(UserDetail userDetail) {
-		this.userDetail = userDetail;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getFullname() {
+		return fullname;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public boolean isGender() {
+		return gender;
+	}
+
+	public void setGender(boolean gender) {
+		this.gender = gender;
 	}
 
 }
