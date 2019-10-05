@@ -1,4 +1,4 @@
-package com.backlink.controller.api;
+package com.backlink.controller;
 
 import java.util.List;
 
