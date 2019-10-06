@@ -20,7 +20,6 @@ public class User extends BaseEntity {
 	@Indexed(unique = true)
 	private String username;
 
-	@JsonIgnore
 	private String password;
 
 	private Set<Role> roles = new HashSet<>();
