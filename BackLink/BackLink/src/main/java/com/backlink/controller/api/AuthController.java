@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backlink.exception.BadRequestException;
+import com.backlink.exception.SyntaxException;
 import com.backlink.payload.request.LoginRequest;
 import com.backlink.payload.request.RecoverRequest;
 import com.backlink.payload.request.SignUpRequest;
@@ -35,7 +35,6 @@ public class AuthController {
     	return userService.register(signUpRequest);
     }
     
-    @ExceptionHandler(Exception.class)
     @PutMapping("/recover")
     public ResponseEntity<?> recoverUser(@Valid @RequestBody RecoverRequest recoverRequest) {
     	return userService.recover(recoverRequest);
