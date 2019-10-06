@@ -1,47 +1,38 @@
 package com.backlink.entities;
 
-import java.util.List;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "action")
-public class Action extends BaseEntity {
-	
+@Document(collection = "backlink")
+public class Backlink extends BaseEntity {
 	@Id
 	private String id;
-	
-	private String urlTarget;
-	
-	private String[] keywords;
-	
-	private String searchEngine;
-	
-	private String userAgent;
-	
+
+	private String urlBacklink;
+
+	private String urlIgnore;
+
 	private int point;
-	
+
 	private String blockPixel;
-	
+
 	private boolean filterVA;
-	
+
 	private String[] accessHistory;
-	
+
 	private Long beginTime;
-	
+
 	private Long endTime;
-	
-	public Action() {
+
+	public Backlink() {
 		super();
 	}
 
-	public Action(String urlTarget, String[] keywords, String searchEngine, String userAgent, int point,
-			String blockPixel, boolean filterVA, String[] accessHistory, Long beginTime, Long endTime) {
+	public Backlink(String urlBacklink, String urlIgnore, int point, String blockPixel, boolean filterVA,
+			String[] accessHistory, Long beginTime, Long endTime) {
 		super();
-		this.urlTarget = urlTarget;
-		this.keywords = keywords;
-		this.searchEngine = searchEngine;
-		this.userAgent = userAgent;
+		this.urlBacklink = urlBacklink;
+		this.urlIgnore = urlIgnore;
 		this.point = point;
 		this.blockPixel = blockPixel;
 		this.filterVA = filterVA;
@@ -58,36 +49,20 @@ public class Action extends BaseEntity {
 		this.id = id;
 	}
 
-	public String getUrlTarget() {
-		return urlTarget;
+	public String getUrlBacklink() {
+		return urlBacklink;
 	}
 
-	public void setUrlTarget(String urlTarget) {
-		this.urlTarget = urlTarget;
+	public void setUrlBacklink(String urlBacklink) {
+		this.urlBacklink = urlBacklink;
 	}
 
-	public String[] getKeywords() {
-		return keywords;
+	public String getUrlIgnore() {
+		return urlIgnore;
 	}
 
-	public void setKeywords(String[] keywords) {
-		this.keywords = keywords;
-	}
-
-	public String getSearchEngine() {
-		return searchEngine;
-	}
-
-	public void setSearchEngine(String searchEngine) {
-		this.searchEngine = searchEngine;
-	}
-
-	public String getUserAgent() {
-		return userAgent;
-	}
-
-	public void setUserAgent(String userAgent) {
-		this.userAgent = userAgent;
+	public void setUrlIgnore(String urlIgnore) {
+		this.urlIgnore = urlIgnore;
 	}
 
 	public int getPoint() {
@@ -140,3 +115,4 @@ public class Action extends BaseEntity {
 	
 	
 }
+
