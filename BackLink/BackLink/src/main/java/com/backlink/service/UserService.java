@@ -137,10 +137,8 @@ public class UserService implements IBaseService<User, String> {
 
 	public ResponseEntity<?> recover(RecoverRequest recoverRequest) {
 		String sendTo = recoverRequest.getEmail();
-		System.out.println(sendTo);
-		System.out.println(Validate.checkEmail(sendTo));
 		if(sendTo == null || !Validate.checkEmail(sendTo)) {
-			throw new BadRequestException();
+			throw new BadRequestException("Incorrect Syntax");
 		}
 		// ktra email
 		User user = userRepository.findByEmail(sendTo)

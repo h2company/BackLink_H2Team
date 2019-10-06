@@ -4,18 +4,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class BadRequestException extends RuntimeException {
+public class SyntaxException extends IllegalStateException {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2498083848097546660L;
+	private static final long serialVersionUID = 7890262702476479104L;
 
-	public BadRequestException(String message) {
+	public SyntaxException(String message) {
 		super(message);
 	}
-
-	public BadRequestException(String message, Throwable cause) {
+	
+	public SyntaxException(String message, Throwable cause) {
 		super(message, cause);
 	}
+
 }
