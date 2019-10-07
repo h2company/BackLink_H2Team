@@ -1,7 +1,5 @@
 package com.backlink.entities;
 
-import org.springframework.data.annotation.Id;
-
 public class EventAction {
 	
 	private Long timeStamp;

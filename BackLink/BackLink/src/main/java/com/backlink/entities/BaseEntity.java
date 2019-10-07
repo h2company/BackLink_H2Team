@@ -2,6 +2,9 @@ package com.backlink.entities;
 
 import java.util.Date;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class BaseEntity {
 	
 	//Thời gian tạo

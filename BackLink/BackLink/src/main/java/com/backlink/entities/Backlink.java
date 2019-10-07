@@ -1,12 +1,16 @@
 package com.backlink.entities;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "backlink")
+@Document(collection = "backlinks")
 public class Backlink extends BaseEntity {
 	@Id
 	private String id;
+	
+	private String username;
 
 	private String urlBacklink;
 
@@ -20,17 +24,18 @@ public class Backlink extends BaseEntity {
 
 	private String[] accessHistory;
 
-	private Long beginTime;
+	private Long beginTime = new Date().getTime();
 
 	private Long endTime;
 
 	public Backlink() {
 		super();
-	}
+	}	
 
-	public Backlink(String urlBacklink, String urlIgnore, int point, String blockPixel, boolean filterVA,
-			String[] accessHistory, Long beginTime, Long endTime) {
+	public Backlink(String username, String urlBacklink, String urlIgnore, int point, String blockPixel,
+			boolean filterVA, String[] accessHistory, Long beginTime, Long endTime) {
 		super();
+		this.username = username;
 		this.urlBacklink = urlBacklink;
 		this.urlIgnore = urlIgnore;
 		this.point = point;
@@ -39,6 +44,14 @@ public class Backlink extends BaseEntity {
 		this.accessHistory = accessHistory;
 		this.beginTime = beginTime;
 		this.endTime = endTime;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getId() {

@@ -1,41 +1,44 @@
 package com.backlink.entities;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "actions")
-public class Action extends BaseEntity { 
-	
+public class Action extends BaseEntity {
+
 	@Id
 	private String id;
-	
+
+	private String username;
+
 	private String[] keywords;
-	
+
 	private String searchEngine;
-	
+
 	private String userAgent;
-	
+
 	private int point;
-	
+
 	private boolean blockPixel;
-	
+
 	private boolean filterVA;
-	
+
 	private String[] accessHistory;
-	
-	private Long beginTime;
-	
+
+	private Long beginTime = new Date().getTime();
+
 	private Long endTime;
 
 	public Action() {
 		super();
 	}
 
-	public Action(String[] keywords, String searchEngine, String userAgent, int point, boolean blockPixel,
-			boolean filterVA, String[] accessHistory, Long beginTime, Long endTime) {
+	public Action(String username, String[] keywords, String searchEngine, String userAgent, int point,
+			boolean blockPixel, boolean filterVA, String[] accessHistory, Long beginTime, Long endTime) {
 		super();
+		this.username = username;
 		this.keywords = keywords;
 		this.searchEngine = searchEngine;
 		this.userAgent = userAgent;
@@ -45,6 +48,14 @@ public class Action extends BaseEntity {
 		this.accessHistory = accessHistory;
 		this.beginTime = beginTime;
 		this.endTime = endTime;
+	}	
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getId() {
@@ -126,9 +137,5 @@ public class Action extends BaseEntity {
 	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
 	}
-	
-	
-	
-	
-	
+
 }
