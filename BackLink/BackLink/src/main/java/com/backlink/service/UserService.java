@@ -16,6 +16,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.backlink.Message.MessageException;
+import com.backlink.entities.LogSystem;
+import com.backlink.entities.LogSystem.LogAction;
+import com.backlink.entities.LogSystem.Type;
 import com.backlink.entities.Mailer;
 import com.backlink.entities.Role;
 import com.backlink.entities.Role.RoleName;
@@ -38,9 +42,12 @@ public class UserService implements IBaseService<User, String> {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
-	private MailService mailService;	
+	private LogSystemService logSystemService;
+
+	@Autowired
+	private MailService mailService;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -132,26 +139,36 @@ public class UserService implements IBaseService<User, String> {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		String jwt = tokenProvider.generateToken(authentication);
+
+		// Lưu Log
+		logSystemService.saveOne(new LogSystem(loginRequest.getUsernameOrEmail(), Type.CUSTOMER, LogAction.LOGIN,
+				loginRequest.getUsernameOrEmail() + " vừa đăng nhập"));
+
 		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
 	}
 
 	public ResponseEntity<?> recover(RecoverRequest recoverRequest) {
 		String sendTo = recoverRequest.getEmail();
-		if(sendTo == null || !Validate.checkEmail(sendTo)) {
-			throw new BadRequestException("Incorrect Syntax");
+		if (sendTo == null || !Validate.checkEmail(sendTo)) {
+			throw new BadRequestException(MessageException.INCORRECT_SYNTAX);
 		}
-		// ktra email
-		User user = userRepository.findByEmail(sendTo)
-				.orElseThrow(() -> new UsernameNotFoundException("Email not found with : " + sendTo));
+		// Kiểm tra email
+		User user = userRepository.findByEmail(sendTo).orElseThrow(() -> new UsernameNotFoundException(
+				String.format(MessageException.CUSTOM_NOT_FOUND, "Email", "", sendTo)));
 
-		// update
+		// Tạo và cập nhật mật khẩu mới
 		String newPass = Generate.getAlphaNumericString(8);
-		user.setPassword(newPass);		
-		this.updateOne(user);	
-		
-		// gui messs
-		mailService.sendEmailRecover(new Mailer(new String[] {sendTo}, "Mật Khẩu Khôi Phục Tại Backlink", null) , newPass);		
-		
+		user.setPassword(newPass);
+		this.updateOne(user);
+
+		// Lưu Log
+		logSystemService.saveOne(
+				new LogSystem(sendTo, Type.CUSTOMER, LogAction.RECOVER, sendTo + " yêu cầu khôi phục mật khẩu"));
+
+		// Gửi Mail
+		mailService.sendEmailRecover(new Mailer(new String[] { sendTo }, "Mật Khẩu Khôi Phục Tại Backlink", null),
+				newPass);
+
 		return ResponseEntity.ok(new APIResponse(true, sendTo));
 	}
 

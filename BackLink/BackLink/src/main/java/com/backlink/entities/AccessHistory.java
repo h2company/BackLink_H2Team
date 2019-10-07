@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "acction_history")
+@Document(collection = "access_history")
 public class AccessHistory extends BaseEntity {
 	
 	@Id

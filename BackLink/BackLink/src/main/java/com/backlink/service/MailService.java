@@ -1,5 +1,8 @@
 package com.backlink.service;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -20,6 +23,8 @@ public class MailService {
 	@Autowired
     private TemplateEngine templateEngine;
 	
+	private ScheduledExecutorService quickService = Executors.newScheduledThreadPool(20);
+	
 	public void sendEmailRecover(Mailer mailer, String pass) {
 		
 		Context context = new Context();		
@@ -33,9 +38,13 @@ public class MailService {
 	        helper.setTo(mailer.getSendTo()[0]);
 	        helper.setSubject(mailer.getSubject());
 	        helper.setText(body, true);
-	        javaMailSender.send(mail);
+	        quickService.submit(new Runnable() {				
+				@Override
+				public void run() {
+			        javaMailSender.send(mail);					
+				}
+			});
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
