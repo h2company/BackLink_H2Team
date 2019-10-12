@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.backlink.Message.MessageException;
+import com.backlink.beans.CurrentUser;
 import com.backlink.entities.LogSystem;
 import com.backlink.entities.LogSystem.LogAction;
 import com.backlink.entities.LogSystem.Type;
@@ -26,7 +26,9 @@ import com.backlink.entities.Role;
 import com.backlink.entities.Role.RoleName;
 import com.backlink.entities.User;
 import com.backlink.exception.AppException;
+import com.backlink.exception.AuthorizationException;
 import com.backlink.exception.BadRequestException;
+import com.backlink.exception.ResourceNotFoundException;
 import com.backlink.payload.reponse.APIResponse;
 import com.backlink.payload.reponse.JwtAuthenticationResponse;
 import com.backlink.payload.request.LoginRequest;
@@ -62,9 +64,16 @@ public class UserService implements IBaseService<User, String> {
 	@Autowired
 	private JwtTokenProvider tokenProvider;
 
+	@Autowired
+	private CurrentUser currentUser;
+
 	@Override
 	public User getById(String id) {
-		return userRepository.findById(id).get();
+		if (currentUser.userHasAuthority(RoleName.ROLE_CUSTOMER) && !currentUser.get().getId().equals(id)) {
+			throw new AuthorizationException(MessageException.UNAUTHORIZATION);
+		}
+		return userRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("User", "id", id));
 	}
 
 	@Override
