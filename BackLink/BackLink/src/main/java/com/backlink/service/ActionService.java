@@ -2,20 +2,37 @@ package com.backlink.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.backlink.Message.MessageException;
+import com.backlink.beans.CurrentUser;
 import com.backlink.entities.Action;
+import com.backlink.entities.LogSystem;
+import com.backlink.entities.LogSystem.LogAction;
+import com.backlink.entities.LogSystem.Type;
+import com.backlink.entities.Role.RoleName;
 import com.backlink.exception.AppException;
-import com.backlink.exception.BadRequestException;
+import com.backlink.exception.ForbiddenException;
 import com.backlink.exception.ResourceNotFoundException;
+import com.backlink.payload.request.ActionRequest;
 import com.backlink.repository.ActionRepository;
 
 @Service
-public class ActionService  implements IBaseService<Action, String>{
-	
+public class ActionService implements IBaseService<Action, String> {
+
+	@Autowired
+	private LogSystemService logSystemService;
+
 	@Autowired
 	private ActionRepository actionRepository;
+
+	@Autowired
+	private CurrentUser currentUser;
 
 	@Override
 	public Action getById(String id) {
@@ -26,20 +43,13 @@ public class ActionService  implements IBaseService<Action, String>{
 	}
 
 	@Override
-	public List<Action> findAll() {		
+	public List<Action> findAll() {
 		return actionRepository.findAll();
 	}
 
 	@Override
 	public Action saveOne(Action entity) {
-		Action action = null;
-		try {
-
-			action = actionRepository.save(entity);
-		} catch (Exception e) {
-			throw new AppException(e.getMessage());
-		}
-		return action;
+		return actionRepository.save(entity);
 	}
 
 	@Override
@@ -55,14 +65,14 @@ public class ActionService  implements IBaseService<Action, String>{
 	}
 
 	@Override
-	public List<Action> updateMany(List<Action> list) {	
+	public List<Action> updateMany(List<Action> list) {
 		List<Action> action = null;
 		try {
-			action= actionRepository.saveAll(list);
+			action = actionRepository.saveAll(list);
 		} catch (Exception e) {
 			throw new AppException(e.getMessage());
 		}
-		
+
 		return action;
 	}
 
@@ -79,13 +89,43 @@ public class ActionService  implements IBaseService<Action, String>{
 	@Override
 	public boolean deleteMany(String[] ids) {
 		try {
-			for(String id : ids) {
+			for (String id : ids) {
 				this.deleteOne(id);
 			}
 			return true;
 		} catch (Exception e) {
 			throw new AppException(e.getMessage());
 		}
+	}
+
+	public ResponseEntity<?> saveAction(ActionRequest actionRequest, HttpServletRequest request) {
+		System.out.println(currentUser.get().getUsername() + " : " + actionRequest.getUsername());
+		if (currentUser.userHasAuthority(RoleName.ROLE_CUSTOMER)
+				&& !currentUser.get().getUsername().equals(actionRequest.getUsername())) {
+			throw new ForbiddenException(MessageException.FORBIDDEN);
+		}
+
+		Action action = new Action();
+		action.setUserAgent(new String[] { request.getHeader("User-Agent") });
+		action.setKeywords(actionRequest.getKeywords());
+		action.setSearchEngine(actionRequest.getSearchEngine());
+		action.setPoint(Integer.parseInt(actionRequest.getPoint().toString()));
+		action.setUsername(actionRequest.getUsername());
+		action.setBlockPixel(actionRequest.isBlockPixel());
+		action.setFilterVA(actionRequest.isFilterVA());
+		action.setAccessHistory(new String[0]);
+		action.setEndTime(actionRequest.getEndTime());
+		action.setBeginTime(actionRequest.getBeginTime());
+		
+		// Lưu action vào cơ sở dữ liệu
+		Action ac = this.saveOne(action);
+
+		// Lưu Log
+		logSystemService.saveOne(new LogSystem(action.getUsername(), Type.CUSTOMER, LogAction.CREATE,
+				action.getUsername() + " Vừa tạo mới 1 Action: " + ac.getId()));
+		return new ResponseEntity<Object>(action, HttpStatus.OK);
+		
+		
 	}
 
 }
