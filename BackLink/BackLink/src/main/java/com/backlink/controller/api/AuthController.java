@@ -1,8 +1,11 @@
 package com.backlink.controller.api;
 
+import java.text.ParseException;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,9 +34,10 @@ public class AuthController {
 
     @SuppressWarnings("unchecked")
 	@PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) throws ParseException {
     	return userService.register(signUpRequest);
     }
+    
     
     @PutMapping("/recover")
     public ResponseEntity<?> recoverUser(@Valid @RequestBody RecoverRequest recoverRequest) {

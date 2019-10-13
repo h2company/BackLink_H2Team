@@ -39,7 +39,5 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
         	errors.add(fieldError.getField() + " : " + fieldError.getDefaultMessage());;
         }
         return errors;
-    }
-	
-	
+    }	
 }
