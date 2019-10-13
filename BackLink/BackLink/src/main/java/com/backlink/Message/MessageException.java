@@ -11,6 +11,7 @@ public class MessageException {
 	public static final String ANO_SIZE = "Độ dài phải từ {min} đến {max}";
 	public static final String ANO_SIZE_MIN = "Độ dài tối thiểu phải là {min}";
 	public static final String ANO_SIZE_MAX = "Độ dài tối đa là {max}";	
+	public static final String ANO_EMAIL_INCORRECT = "Định dạng không hợp lệ";
 	public static final String FORBIDDEN = "FORBIDDEN";
 	public static final String EXIST = "%s already exists";
 }
