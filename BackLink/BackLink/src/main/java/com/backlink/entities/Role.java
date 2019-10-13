@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "roles")
 public class Role {
+	
     @Id
     private Long id;
 
@@ -15,7 +16,12 @@ public class Role {
     }
 
     public Role(RoleName name) {
-        this.name = name;
+        if(name.equals(RoleName.ROLE_CUSTOMER)) {
+        	this.id = 1L;
+        }else if(name.equals(RoleName.ROLE_ADMIN)) {
+        	this.id = 2L;
+        }
+    	this.name = name;
     }
 
     public Long getId() {

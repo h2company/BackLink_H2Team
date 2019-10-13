@@ -20,6 +20,8 @@ public interface UserRepository extends MongoRepository<User, String>{
 	List<User> findByIdIn(List<Long> userIds);
 
 	Optional<User> findByUsername(String username);
+	
+	Optional<User> findByPhone(String phone);
 
 	Boolean existsByUsername(String username);
 
