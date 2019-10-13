@@ -16,27 +16,27 @@ public class BaseEntity {
 	// Trạng thái
 	protected boolean enabled = true;
 
-	protected Date getCreateAt() {
+	public Date getCreateAt() {
 		return createAt;
 	}
 
-	protected void setCreateAt(Date createAt) {
+	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
 
-	protected Date getUpdateAt() {
+	public Date getUpdateAt() {
 		return updateAt;
 	}
 
-	protected void setUpdateAt(Date updateAt) {
+	public void setUpdateAt(Date updateAt) {
 		this.updateAt = updateAt;
 	}
 
-	protected boolean isEnabled() {
+	public boolean isEnabled() {
 		return enabled;
 	}
 
-	protected void setEnabled(boolean enabled) {
+	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}	
 	

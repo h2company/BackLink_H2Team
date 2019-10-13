@@ -2,33 +2,43 @@ package com.backlink.payload.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.backlink.Message.MessageException;
+
 public class SignUpRequest {
-    @NotBlank
-    @Size(min = 4, max = 40)
-    private String fullname;
+	
+	@NotBlank(message = MessageException.ANO_NOT_BLANK)
+	@Size(min = 5, max = 30, message = MessageException.ANO_SIZE)
+	private String username;
 
-    @NotBlank
-    @Size(min = 3, max = 15)
-    private String username;
+	@NotBlank(message = MessageException.ANO_NOT_BLANK)
+	@Size(min = 8, max = 50, message = MessageException.ANO_SIZE)
+	private String password;
 
-    @NotBlank
-    @Size(max = 40)
-    @Email
-    private String email;
+	@NotBlank(message = MessageException.ANO_NOT_BLANK)
+	@Size(min = 5, max = 30, message = MessageException.ANO_SIZE)
+	private String fullname;
 
-    @NotBlank
-    @Size(min = 6, max = 20)
-    private String password;
+	@NotBlank(message = MessageException.ANO_NOT_BLANK)
+	@Size(min = 5, max = 50, message = MessageException.ANO_SIZE)
+	@Email
+	private String email;
 
-	public String getFullname() {
-		return fullname;
-	}
+	@NotBlank(message = MessageException.ANO_NOT_BLANK)
+	@Size(min = 10, max = 10, message = MessageException.ANO_SIZE)
+	@Pattern(regexp = "^(0{1})([1-9]{1})([0-9]{8})")
+	private String phone;
 
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
-	}
+	@NotBlank(message = MessageException.ANO_NOT_BLANK)
+	private String address;
+
+	private boolean gender;
+
+	@NotBlank(message = MessageException.ANO_NOT_BLANK)
+	@Pattern(regexp = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$")
+	private String birthday;
 
 	public String getUsername() {
 		return username;
@@ -36,6 +46,22 @@ public class SignUpRequest {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getFullname() {
+		return fullname;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
 	}
 
 	public String getEmail() {
@@ -46,12 +72,36 @@ public class SignUpRequest {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
-    
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public boolean isGender() {
+		return gender;
+	}
+
+	public void setGender(boolean gender) {
+		this.gender = gender;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
 }

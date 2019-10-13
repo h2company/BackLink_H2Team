@@ -15,9 +15,9 @@ public class Action extends BaseEntity {
 
 	private String[] keywords;
 
-	private String searchEngine;
+	private String[] searchEngine;
 
-	private String userAgent;
+	private String[] userAgent;
 
 	private int point;
 
@@ -35,7 +35,7 @@ public class Action extends BaseEntity {
 		super();
 	}
 
-	public Action(String username, String[] keywords, String searchEngine, String userAgent, int point,
+	public Action(String username, String[] keywords, String searchEngine[], String userAgent[], int point,
 			boolean blockPixel, boolean filterVA, String[] accessHistory, Long beginTime, Long endTime) {
 		super();
 		this.username = username;
@@ -74,19 +74,19 @@ public class Action extends BaseEntity {
 		this.keywords = keywords;
 	}
 
-	public String getSearchEngine() {
+	public String[] getSearchEngine() {
 		return searchEngine;
 	}
 
-	public void setSearchEngine(String searchEngine) {
+	public void setSearchEngine(String[] searchEngine) {
 		this.searchEngine = searchEngine;
 	}
 
-	public String getUserAgent() {
+	public String[] getUserAgent() {
 		return userAgent;
 	}
 
-	public void setUserAgent(String userAgent) {
+	public void setUserAgent(String[] userAgent) {
 		this.userAgent = userAgent;
 	}
 

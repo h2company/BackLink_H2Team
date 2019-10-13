@@ -1,42 +1,37 @@
 package com.backlink.controller.api;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backlink.entities.User;
-import com.backlink.service.UserService;
-
+import com.backlink.payload.request.ActionRequest;
+import com.backlink.service.ActionService;
 
 @RestController
 @RequestMapping("/api/")
-public class UserController {
-
+public class ActionController {
+	
 	@Autowired
-	private UserService userService;
+	private ActionService actionService;
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
-	@GetMapping("users/{id}")
-	public ResponseEntity<?> findOne(@PathVariable String id){
-		return new ResponseEntity<Object>(userService.getById(id), HttpStatus.OK);
-	}
-	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("users")
+	@GetMapping("actions")
 	public ResponseEntity<?> findAll(){
-		return new ResponseEntity<Object>(userService.findAll(), HttpStatus.OK);
+		return new ResponseEntity<Object>(actionService.findAll(), HttpStatus.OK);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@PostMapping("users")
-	public ResponseEntity<?> createUser(@RequestBody User user) {
-		return new ResponseEntity<Object>(userService.saveOne(user), HttpStatus.OK);
-	}
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
+	@PostMapping("actions")
+	public ResponseEntity<?> createAction(HttpServletRequest request ,@Valid @RequestBody ActionRequest actionRequest) {
+		return actionService.saveAction(actionRequest, request);
+	}	
 }
