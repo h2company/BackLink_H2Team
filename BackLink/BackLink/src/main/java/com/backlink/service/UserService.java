@@ -1,8 +1,10 @@
 package com.backlink.service;
 
-import java.net.URI;
-import java.util.Collections;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +16,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.backlink.Message.MessageException;
 import com.backlink.beans.CurrentUser;
+import com.backlink.controller.api.UserController;
 import com.backlink.entities.LogSystem;
 import com.backlink.entities.LogSystem.LogAction;
 import com.backlink.entities.LogSystem.Type;
@@ -25,7 +27,6 @@ import com.backlink.entities.Mailer;
 import com.backlink.entities.Role;
 import com.backlink.entities.Role.RoleName;
 import com.backlink.entities.User;
-import com.backlink.exception.AppException;
 import com.backlink.exception.AuthorizationException;
 import com.backlink.exception.BadRequestException;
 import com.backlink.exception.ResourceNotFoundException;
@@ -72,8 +73,7 @@ public class UserService implements IBaseService<User, String> {
 		if (currentUser.userHasAuthority(RoleName.ROLE_CUSTOMER) && !currentUser.get().getId().equals(id)) {
 			throw new AuthorizationException(MessageException.UNAUTHORIZATION);
 		}
-		return userRepository.findById(id).orElseThrow(
-				() -> new ResourceNotFoundException("User", "id", id));
+		return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 	}
 
 	@Override
@@ -110,35 +110,44 @@ public class UserService implements IBaseService<User, String> {
 	public boolean deleteMany(String[] ids) {
 		return false;
 	}
-
-	public ResponseEntity<?> register(SignUpRequest signUpRequest) {
-		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-			return new ResponseEntity<APIResponse>(new APIResponse(false, "Username is already taken!"),
-					HttpStatus.BAD_REQUEST);
+		//ĐĂNG KÝ THÀNH VIÊN
+	public ResponseEntity<?> register(SignUpRequest signUpRequest) throws ParseException {
+		// KIỂM TRA USERNAME ĐÃ TỒN TẠI HAY CHƯA
+		if (userRepository.findByUsername(signUpRequest.getUsername()).isPresent()) {
+			throw new BadRequestException(String.format(MessageException.EXIST, signUpRequest.getUsername()));
 		}
 
-		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-			return new ResponseEntity<APIResponse>(new APIResponse(false, "Email Address already in use!"),
-					HttpStatus.BAD_REQUEST);
+		// KIỂM TRA MAIL ĐÃ TỒN TẠI HAY CHƯA
+		if (userRepository.findByEmail(signUpRequest.getEmail()).isPresent()) {
+			throw new BadRequestException(String.format(MessageException.EXIST, signUpRequest.getEmail()));
 		}
 
-		// Creating user's account
-		User user = new User(signUpRequest.getFullname(), signUpRequest.getUsername(), signUpRequest.getEmail(),
-				signUpRequest.getPassword());
+		// KIỂM TRA SỐ ĐIỆN THOẠI ĐÃ TỒN TẠI HAY CHƯA
+		if (userRepository.findByPhone(signUpRequest.getPhone()).isPresent()) {
+			throw new BadRequestException(String.format(MessageException.EXIST, signUpRequest.getPhone()));
+		}
 
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-		Role userRole = roleRepository.findByName(RoleName.ROLE_ADMIN)
-				.orElseThrow(() -> new AppException("User Role not set."));
-
-		user.setRoles(Collections.singleton(userRole));
-
-		User result = userRepository.save(user);
-
-		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/{username}")
-				.buildAndExpand(result.getUsername()).toUri();
-
-		return ResponseEntity.created(location).body(new APIResponse(true, "User registered successfully"));
+		// SET GIÁ TRỊ
+		User user = new User();
+		user.setUsername(signUpRequest.getUsername());
+		user.setPassword(signUpRequest.getPassword());
+		user.setEmail(signUpRequest.getEmail());
+		user.setPhone(signUpRequest.getPhone());
+		user.setFullname(signUpRequest.getFullname());
+		user.setAddress(signUpRequest.getAddress());
+		user.setGender(signUpRequest.isGender());
+		user.setBirthday(new SimpleDateFormat("dd/MM/yyyy").parse(signUpRequest.getBirthday()));
+		Set<Role> role = new HashSet<Role>();
+		role.add(new Role(RoleName.ROLE_CUSTOMER));
+		user.setRoles(role);
+		
+		userRepository.save(user); 		
+		
+		// Lưu Log
+		logSystemService.saveOne(
+				new LogSystem(user.getUsername(), Type.CUSTOMER, LogAction.CREATE, user.getFullname() + " vừa đăng kí thành viên"));
+		
+		return new ResponseEntity<Object>(new APIResponse(true, "Tạo tài khoản thành công"), HttpStatus.OK);
 	}
 
 	public ResponseEntity<?> authenticate(LoginRequest loginRequest) {

@@ -12,22 +12,21 @@ import com.backlink.entities.UserPrincipal;
 
 @Component("currentUser")
 public class CurrentUser {
-	
+
 	public UserPrincipal get() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		return (UserPrincipal) authentication.getPrincipal();
 	}
-	
-	public boolean userHasAuthority(RoleName authority)
-	{
-	    List<GrantedAuthority> authorities = extracted();
-	    for (GrantedAuthority grantedAuthority : authorities) {
-	    	if (authority.name().equals(grantedAuthority.getAuthority())) {
-	            return true;
-	        }
-	    }
 
-	    return false;
+	public boolean userHasAuthority(RoleName authority) {
+		List<GrantedAuthority> authorities = extracted();
+		for (GrantedAuthority grantedAuthority : authorities) {
+			if (authority.name().equals(grantedAuthority.getAuthority())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private List<GrantedAuthority> extracted() {

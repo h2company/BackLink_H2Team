@@ -6,4 +6,5 @@ public class MessageException {
 	public static final String USER_NOT_FOUND_ID = "User not found with id : %s";
 	public static final String CUSTOM_NOT_FOUND = "%s not found with %s : '%s'";
 	public static final String UNAUTHORIZATION = "UNAUTHORIZATION";
+	public static final String EXIST = "%s already exists";
 }
