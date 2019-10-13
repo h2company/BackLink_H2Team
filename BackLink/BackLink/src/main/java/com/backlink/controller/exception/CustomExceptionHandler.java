@@ -21,7 +21,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
 {
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
+			HttpHeaders headers, HttpStatus status, WebRequest request) {		
 		ApiError error = new ApiError(HttpStatus.BAD_REQUEST, MessageException.INCORRECT_SYNTAX);
 		return new ResponseEntity<Object>(error, error.getHttpStatus());
 	}
@@ -31,7 +31,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		ApiError error = new ApiError(HttpStatus.BAD_REQUEST, MessageException.INCORRECT_SYNTAX, processFieldErrors(ex.getBindingResult().getFieldErrors()));
 		return new ResponseEntity<Object>(error, error.getHttpStatus());
-	}	
+	}
 	
 	private List<String> processFieldErrors(List<FieldError> fieldErrors) {
 		List<String> errors = new ArrayList<String>();
@@ -40,5 +40,4 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler
         }
         return errors;
     }	
-	
 }
