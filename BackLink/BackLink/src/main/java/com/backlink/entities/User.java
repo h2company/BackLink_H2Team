@@ -9,6 +9,9 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Document(collection = "users")
 public class User extends BaseEntity {
 
@@ -17,21 +20,23 @@ public class User extends BaseEntity {
 
 	@Indexed(unique = true)
 	private String username;
-
+	
+	@JsonProperty(access=Access.WRITE_ONLY)
 	private String password;
-
+	
+	@JsonProperty(access=Access.WRITE_ONLY)
 	private Set<Role> roles = new HashSet<>();
 
 	@Indexed(unique = true)
 	private String email;
-
+	
 	@Indexed(unique = true)
 	private String phone;
 
 	private String fullname;
 
 	private String address;
-
+	
 	private Date birthday;
 
 	private boolean gender;
