@@ -4,6 +4,9 @@ import java.util.Date;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Document
 public class BaseEntity {
 	
@@ -14,6 +17,7 @@ public class BaseEntity {
 	protected Date updateAt;
 	
 	// Trạng thái
+	@JsonProperty(access=Access.WRITE_ONLY)
 	protected boolean enabled = true;
 
 	public Date getCreateAt() {
