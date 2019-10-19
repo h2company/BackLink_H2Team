@@ -62,7 +62,7 @@ public class AddUserRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
 	public RoleRequest[] getRoles() {
 		return roles;
 	}

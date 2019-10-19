@@ -4,9 +4,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.backlink.Message.MessageException;
+import com.backlink.entities.Role;
 import com.backlink.entities.Role.RoleName;
 
-public class RoleRequest {
+public class RoleRequest{
 
 	@NotNull(message = MessageException.ANO_NOT_NULL)
 	private Long id;
