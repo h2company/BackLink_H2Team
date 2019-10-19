@@ -33,6 +33,7 @@ import com.backlink.payload.reponse.JwtAuthenticationResponse;
 import com.backlink.payload.request.AddUserRequest;
 import com.backlink.payload.request.LoginRequest;
 import com.backlink.payload.request.RecoverRequest;
+import com.backlink.payload.request.RoleRequest;
 import com.backlink.payload.request.SignUpRequest;
 import com.backlink.repository.UserRepository;
 import com.backlink.security.JwtTokenProvider;
@@ -171,7 +172,9 @@ public class UserService implements IBaseService<User, String> {
 		user.setGender(addUserRequest.isGender());
 		user.setBirthday(new SimpleDateFormat("dd/MM/yyyy").parse(addUserRequest.getBirthday()));
 		Set<Role> role = new HashSet<Role>();
-		role.add(new Role(RoleName.ROLE_CUSTOMER));
+		for(RoleRequest rq : addUserRequest.getRoles()) {
+			role.add(new Role(rq.getName()));
+		}
 		user.setRoles(role);
 
 		this.saveOne(user);
