@@ -16,7 +16,11 @@ public class AccessHistory extends BaseEntity {
 	
 	private String userAgent;
 	
+	private String urlAgent;
+	
 	private Date timeAccess;
+	
+	private Date timeConnect;
 	
 	private List<Event> events;
 
@@ -24,20 +28,15 @@ public class AccessHistory extends BaseEntity {
 		super();
 	}
 
-	public AccessHistory(String ip, String userAgent, Date timeAccess, List<Event> events) {
+	public AccessHistory(String ip, String userAgent, String urlAgent, Date timeAccess, Date timeConnect,
+			List<Event> events) {
 		super();
 		this.ip = ip;
 		this.userAgent = userAgent;
+		this.urlAgent = urlAgent;
 		this.timeAccess = timeAccess;
+		this.timeConnect = timeConnect;
 		this.events = events;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getIp() {
@@ -56,12 +55,28 @@ public class AccessHistory extends BaseEntity {
 		this.userAgent = userAgent;
 	}
 
+	public String getUrlAgent() {
+		return urlAgent;
+	}
+
+	public void setUrlAgent(String urlAgent) {
+		this.urlAgent = urlAgent;
+	}
+
 	public Date getTimeAccess() {
 		return timeAccess;
 	}
 
 	public void setTimeAccess(Date timeAccess) {
 		this.timeAccess = timeAccess;
+	}
+
+	public Date getTimeConnect() {
+		return timeConnect;
+	}
+
+	public void setTimeConnect(Date timeConnect) {
+		this.timeConnect = timeConnect;
 	}
 
 	public List<Event> getEvents() {
@@ -71,6 +86,6 @@ public class AccessHistory extends BaseEntity {
 	public void setEvents(List<Event> events) {
 		this.events = events;
 	}
-	
+
 	
 }
