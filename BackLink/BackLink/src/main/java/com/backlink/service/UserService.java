@@ -14,12 +14,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.backlink.Message.MessageException;
 import com.backlink.beans.CurrentUser;
-import com.backlink.controller.api.UserController;
 import com.backlink.entities.LogSystem;
 import com.backlink.entities.LogSystem.LogAction;
 import com.backlink.entities.LogSystem.Type;
@@ -32,10 +30,11 @@ import com.backlink.exception.BadRequestException;
 import com.backlink.exception.ResourceNotFoundException;
 import com.backlink.payload.reponse.APIResponse;
 import com.backlink.payload.reponse.JwtAuthenticationResponse;
+import com.backlink.payload.request.AddUserRequest;
 import com.backlink.payload.request.LoginRequest;
 import com.backlink.payload.request.RecoverRequest;
+import com.backlink.payload.request.RoleRequest;
 import com.backlink.payload.request.SignUpRequest;
-import com.backlink.repository.RoleRepository;
 import com.backlink.repository.UserRepository;
 import com.backlink.security.JwtTokenProvider;
 import com.backlink.util.Generate;
@@ -55,12 +54,6 @@ public class UserService implements IBaseService<User, String> {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
-
-	@Autowired
-	private RoleRepository roleRepository;
-
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private JwtTokenProvider tokenProvider;
@@ -110,7 +103,8 @@ public class UserService implements IBaseService<User, String> {
 	public boolean deleteMany(String[] ids) {
 		return false;
 	}
-		//ĐĂNG KÝ THÀNH VIÊN
+
+	// ĐĂNG KÝ THÀNH VIÊN
 	public ResponseEntity<?> register(SignUpRequest signUpRequest) throws ParseException {
 		// KIỂM TRA USERNAME ĐÃ TỒN TẠI HAY CHƯA
 		if (userRepository.findByUsername(signUpRequest.getUsername()).isPresent()) {
@@ -140,13 +134,55 @@ public class UserService implements IBaseService<User, String> {
 		Set<Role> role = new HashSet<Role>();
 		role.add(new Role(RoleName.ROLE_CUSTOMER));
 		user.setRoles(role);
-		
-		userRepository.save(user); 		
-		
+
+		this.saveOne(user);
+
 		// Lưu Log
-		logSystemService.saveOne(
-				new LogSystem(user.getUsername(), Type.CUSTOMER, LogAction.CREATE, user.getFullname() + " vừa đăng kí thành viên"));
-		
+		logSystemService.saveOne(new LogSystem(user.getUsername(), Type.CUSTOMER, LogAction.CREATE,
+				user.getFullname() + " vừa đăng kí thành viên"));
+
+		return new ResponseEntity<Object>(new APIResponse(true, "Tạo tài khoản thành công"), HttpStatus.OK);
+	}
+
+	// THÊM THÀNH VIÊN
+	public ResponseEntity<?> addUser(AddUserRequest addUserRequest) throws ParseException {
+		// KIỂM TRA USERNAME ĐÃ TỒN TẠI HAY CHƯA
+		if (userRepository.findByUsername(addUserRequest.getUsername()).isPresent()) {
+			throw new BadRequestException(String.format(MessageException.EXIST, addUserRequest.getUsername()));
+		}
+
+		// KIỂM TRA MAIL ĐÃ TỒN TẠI HAY CHƯA
+		if (userRepository.findByEmail(addUserRequest.getEmail()).isPresent()) {
+			throw new BadRequestException(String.format(MessageException.EXIST, addUserRequest.getEmail()));
+		}
+
+		// KIỂM TRA SỐ ĐIỆN THOẠI ĐÃ TỒN TẠI HAY CHƯA
+		if (userRepository.findByPhone(addUserRequest.getPhone()).isPresent()) {
+			throw new BadRequestException(String.format(MessageException.EXIST, addUserRequest.getPhone()));
+		}
+
+		// SET GIÁ TRỊ
+		User user = new User();
+		user.setUsername(addUserRequest.getUsername());
+		user.setPassword(addUserRequest.getPassword());
+		user.setEmail(addUserRequest.getEmail());
+		user.setPhone(addUserRequest.getPhone());
+		user.setFullname(addUserRequest.getFullname());
+		user.setAddress(addUserRequest.getAddress());
+		user.setGender(addUserRequest.isGender());
+		user.setBirthday(new SimpleDateFormat("dd/MM/yyyy").parse(addUserRequest.getBirthday()));
+		Set<Role> role = new HashSet<Role>();
+		for(RoleRequest rq : addUserRequest.getRoles()) {
+			role.add(new Role(rq.getName()));
+		}
+		user.setRoles(role);
+
+		this.saveOne(user);
+
+		// Lưu Log
+		logSystemService.saveOne(new LogSystem(currentUser.get().getUsername(), Type.ADMIN, LogAction.CREATE,
+				currentUser.get().getUsername() + " vừa tạo tài khoản " + user.getUsername() + " thành công"));
+
 		return new ResponseEntity<Object>(new APIResponse(true, "Tạo tài khoản thành công"), HttpStatus.OK);
 	}
 

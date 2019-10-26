@@ -1,5 +1,9 @@
 package com.backlink.controller.api;
 
+import java.text.ParseException;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backlink.entities.User;
+import com.backlink.payload.request.AddUserRequest;
 import com.backlink.service.UserService;
 
 
@@ -36,7 +41,7 @@ public class UserController {
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("users")
-	public ResponseEntity<?> createUser(@RequestBody User user) {
-		return new ResponseEntity<Object>(userService.saveOne(user), HttpStatus.OK);
+	public ResponseEntity<?> createUser(@Valid @RequestBody AddUserRequest addUserRequest) throws ParseException {
+		return userService.addUser(addUserRequest);
 	}
 }
