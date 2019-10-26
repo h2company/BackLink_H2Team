@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Back-Link": {
+    "my-app": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,17 +13,29 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/Back-Link",
+            "outputPath": "dist/my-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
+            "styles": [  
+              "src/assets/css/fonts.css",   
+              "src/assets/vendors/css/vendors.min.css",
+              "src/assets/vendors/css/forms/toggle/switchery.min.css",
+              "src/assets/css/plugins/forms/switch.min.css",
+              "src/assets/css/core/colors/palette-switch.min.css",
+              "src/assets/css/bootstrap.css",
+              "src/assets/css/bootstrap-extended.min.css",
+              "src/assets/css/colors.min.css",
+              "src//assets/css/components.css",
+              "src/assets/css/core/menu/menu-types/vertical-menu.min.css",
+              "src/assets/css/core/colors/palette-gradient.min.css",
+              "src/assets/css/pages/login-register.min.css",              
               "src/styles.css"
             ],
             "scripts": []
@@ -63,18 +75,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Back-Link:build"
+            "browserTarget": "my-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "Back-Link:build:production"
+              "browserTarget": "my-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Back-Link:build"
+            "browserTarget": "my-app:build"
           }
         },
         "test": {
@@ -111,15 +123,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "Back-Link:serve"
+            "devServerTarget": "my-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "Back-Link:serve:production"
+              "devServerTarget": "my-app:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "Back-Link"
+  "defaultProject": "my-app"
 }

@@ -1,5 +1,12 @@
 package com.backlink.controller.socket;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +23,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import com.backlink.entities.AccessHistory;
 import com.backlink.entities.SDKMessage;
+import com.backlink.service.AccessHistoryService;
 
 @Controller
 public class SDKController {
 
+	private List<AccessHistory> AHList = new ArrayList<>();
+	
 	@Autowired
     private TemplateEngine templateEngine;
 	
+	@Autowired
+	private AccessHistoryService AHService;
+	
 	@MessageMapping("/service.sendMessage")
 	@SendTo("/service/public")
-	public SDKMessage sendMessage(@Payload SDKMessage sdkMessage) {
-		return sdkMessage;
+	public AccessHistory sendMessage(@Payload AccessHistory accessHistory, SimpMessageHeaderAccessor headerAccessor) {
+		AHList.add(accessHistory);
+		headerAccessor.getSessionAttributes().put("tracking", AHList);
+		accessHistory.setTimeConnect(new Date());
+		accessHistory.setUpdateAt(new Date());
+		return accessHistory;
 	}
 	
 	@MessageMapping("/service.addEvent")
@@ -46,6 +64,17 @@ public class SDKController {
 		context.setVariable("ip", request.getRemoteAddr());	
 		context.setVariable("userAgent", request.getHeader("User-Agent"));
 		String body = templateEngine.process("tracking", context);
+		return body;
+	}
+	
+	@RequestMapping(value="/frame/c/follow.js", method = RequestMethod.GET, produces = "text/javascript; charset=UTF-8")
+	@ResponseBody
+	public String followResource(HttpServletRequest request, @RequestParam String siteId) {
+		Context context = new Context();		
+		context.setVariable("siteId", siteId);		
+		context.setVariable("ip", request.getRemoteAddr());	
+		context.setVariable("userAgent", request.getHeader("User-Agent"));
+		String body = templateEngine.process("follow", context);
 		return body;
 	}
 }

@@ -25,12 +25,16 @@
                 window.blSiteSettings = e.data.blSiteSettings;
         		connect();
         	} else if(e.data.action == 'tracking'){
-        		console.log(e.data);
+        		e.data.type = "tracking";
+        		window.blSiteSettings = e.data.blSiteSettings;
+        		if(stompClient && e.data.isTrusted == true) {
+        			delete e.data.isTrusted;
+        			stompClient.send("/app/service.sendMessage", {}, JSON.stringify(e.data));
+        		}
         	}
         });
 		function connect() {
-			siteId = window.blSiteSettings.site_id;
-			
+			siteId = window.blSiteSettings.site_id ? window.blSiteSettings.site_id : new URL(window.location.href).searchParams.get("auth_token");
 			if (siteId) {
 
 				var socket = new SockJS('/ws');
@@ -40,10 +44,8 @@
 			}
 		}
 		function onConnected() {
-			// Subscribe to the Public Topic
 			stompClient.subscribe('/service/public', onMessageReceived);
 
-			// Tell your siteId to the server
 			stompClient.send("/app/service.addEvent", {}, JSON.stringify({
 				action: 'tracking',
 				siteId : siteId,
