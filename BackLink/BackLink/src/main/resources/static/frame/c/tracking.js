@@ -41,6 +41,7 @@ window.blSiteSettings = {
 	d.addEventListener("click", function(event){
 		console.log(event);
 		d.getElementsByName('_blRemoteVarsFrame')[0].contentWindow.postMessage({
+			'isTrusted': true,
 			'action': 'tracking',
 			'ip': blSiteSettings.ip,
 			'userAgent': blSiteSettings.userAgent,
@@ -49,11 +50,32 @@ window.blSiteSettings = {
 				{
 					'siteId': blSiteSettings.site_id,
 					'uuid': 0,
-					'eventAction' : {
+					'eventAction' : [{
 						'timeStamp': new Date().getTime(),
 						'selector' : event.toElement.outerHTML+'|dataset:'+JSON.stringify(event.toElement.dataset),
 						'event' : 'mouse_click'
-					}
+					}]
+				}
+			]
+		}, '*');
+	});
+	d.addEventListener("mouseover", function(event){
+		console.log(event);
+		d.getElementsByName('_blRemoteVarsFrame')[0].contentWindow.postMessage({
+			'isTrusted' : event.toElement.dataset.bl ? true : false,
+			'action': 'tracking',
+			'ip': blSiteSettings.ip,
+			'userAgent': blSiteSettings.userAgent,
+			'timeAccess': new Date().getTime(),
+			'events' : [
+				{
+					'siteId': blSiteSettings.site_id,
+					'uuid': 0,
+					'eventAction' : [{
+						'timeStamp': new Date().getTime(),
+						'selector' : event.toElement.outerHTML+'|dataset:'+JSON.stringify(event.toElement.dataset),
+						'event' : 'mouse_over'
+					}]
 				}
 			]
 		}, '*');
