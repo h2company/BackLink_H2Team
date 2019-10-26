@@ -7,14 +7,13 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backlink.exception.SyntaxException;
+import com.backlink.entities.AccessHistory;
 import com.backlink.payload.request.LoginRequest;
 import com.backlink.payload.request.RecoverRequest;
 import com.backlink.payload.request.SignUpRequest;
@@ -43,6 +42,11 @@ public class AuthController {
     public ResponseEntity<?> recoverUser(@Valid @RequestBody RecoverRequest recoverRequest) {
     	return userService.recover(recoverRequest);
     }
+    
+	@PostMapping("/test")
+	public ResponseEntity<?> aa(@RequestBody AccessHistory accessHistory){
+		return new ResponseEntity<Object>(accessHistory, HttpStatus.OK);
+	}
     
 	
 }

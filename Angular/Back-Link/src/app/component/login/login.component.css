@@ -1,0 +1,9 @@
+@import url('../../../assets/css/pages/login-register.min.css');
+body {
+    padding-top: 0 !important;
+}
+@media (min-width: 992px){
+    div.vertical-layout.vertical-menu .content, div.vertical-layout.vertical-menu .footer {
+        margin-left: 0 !important;
+    }
+}

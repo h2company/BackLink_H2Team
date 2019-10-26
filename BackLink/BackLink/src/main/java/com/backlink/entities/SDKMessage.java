@@ -1,7 +1,5 @@
 package com.backlink.entities;
 
-import java.awt.TrayIcon.MessageType;
-
 public class SDKMessage {
 	private MessageType type;
 	private String action;

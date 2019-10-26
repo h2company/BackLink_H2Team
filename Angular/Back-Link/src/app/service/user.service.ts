@@ -7,21 +7,25 @@ import { IBaseService } from './Ibase.service';
 import { User } from '../model/user.model';
 import { HttpService } from './http.service';
 import { Roles } from '../model/roles.model';
+import { APIService } from '../util/api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService implements IBaseService<User, string> {
 
-  private url = 'http://localhost:8082/api/users';
-
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService, private API: APIService) {}
 
   findById(id: string): Observable<User> {
-    throw new Error('Method not implemented.');
+    return this.http.get(this.API.ONE_USER + id);
   }
+
+  findByIdSync(id: string) {
+    return this.http.get(this.API.ONE_USER + id).toPromise();
+  }
+
   findAll(): Observable<User[]> {
-    return this.http.get(this.url).pipe(
+    return this.http.get(this.API.ALL_USERS).pipe(
       map((data: User[]) => data.map((item: User) => item)),
     );
   }

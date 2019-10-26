@@ -1,0 +1,29 @@
+/* body {
+    padding-top: 5rem;
+} */
+
+ui-switch, td, th{
+    vertical-align: middle !important;
+}
+
+app-sidebar .main-menu.menu-light .navigation>li ul .open>a,app-sidebar .main-menu.menu-light .navigation>li .active  {
+    font-weight: 700;
+    color: #fa626b !important;
+}
+
+app-sidebar .main-menu.menu-light .navigation>li ul .open>a.active::before {
+    left: 85px;
+    display: block;
+    width: 7px;
+    height: 7px;
+    transition: all .2s ease;
+    transform: translate(-10px,-50%);
+    -webkit-transition: all .2s ease;
+    background-color: #fa626b;
+    content: '';
+    opacity: 1;
+    border-color: #fa626b;
+    position: absolute;
+    top: 50%;
+    border-radius: 50%;
+}

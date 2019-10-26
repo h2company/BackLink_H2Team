@@ -26,19 +26,24 @@
             "styles": [  
               "src/assets/css/fonts.css",   
               "src/assets/vendors/css/vendors.min.css",
-              "src/assets/vendors/css/forms/toggle/switchery.min.css",
               "src/assets/css/plugins/forms/switch.min.css",
               "src/assets/css/core/colors/palette-switch.min.css",
               "src/assets/css/bootstrap.css",
               "src/assets/css/bootstrap-extended.min.css",
               "src/assets/css/colors.min.css",
-              "src//assets/css/components.css",
+              "src/assets/css/components.min.css",
               "src/assets/css/core/menu/menu-types/vertical-menu.min.css",
               "src/assets/css/core/colors/palette-gradient.min.css",
-              "src/assets/css/pages/login-register.min.css",              
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/vendors/js/vendors.min.js",
+              "src/assets/js/scripts/forms/switch.min.js",
+              "src/assets/js/core/app-menu.min.js",
+              "src/assets/js/core/app.min.js",
+              "src/assets/js/scripts/customizer.min.js",
+              "src/assets/vendors/js/jquery.sharrre.js"
+            ]
           },
           "configurations": {
             "production": {

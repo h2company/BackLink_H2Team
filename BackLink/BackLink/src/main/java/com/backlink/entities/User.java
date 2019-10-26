@@ -24,7 +24,6 @@ public class User extends BaseEntity {
 	@JsonProperty(access=Access.WRITE_ONLY)
 	private String password;
 	
-	@JsonProperty(access=Access.WRITE_ONLY)
 	private Set<Role> roles = new HashSet<>();
 
 	@Indexed(unique = true)
