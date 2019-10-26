@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title" id="horz-layout-basic">Thay Đổi
+                    Thông Tin Thành Viên</h4>
+                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                <div class="heading-elements">
+                    <ul class="list-inline mb-0">
+                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-content collpase show">
+                <div class="card-body">
+                    <div class="card-text">
+                        <p>
+                            <span style="color: red">Chú ý:</span> Hãy cẩn trọng khi
+                            thay đổi bất kì thông tin nào.
+                        </p>
+                        <p>
+                            <span style="color: red">(*):</span> Thông tin bắt buộc.
+                        </p>
+                    </div>
+                    <form [formGroup]="userForm" class="form form-horizontal" novalidate>
+                        <div class="form-body">
+                            <h4 class="form-section">
+                                <i class="ft-clipboard"></i>Thông Tin Cá Nhân
+                            </h4>
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control" for="projectinput5">Tài Khoản</label>
+                                <div class="col-md-9">
+                                    <input type="text" formControlName="username" [(ngModel)]="user.username" id="projectinput5" class="form-control"
+                                        name="username" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control" for="projectinput5"><span
+                                        style="color: red">(*)</span> Tên Thành Viên</label>
+                                <div class="col-md-9">
+                                    <input type="text" formControlName="fullname" [(ngModel)]="user.fullname" id="projectinput5" class="form-control" value=""
+                                        name="fullname">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control" for="projectinput5">Địa
+                                    Chỉ</label>
+                                <div class="col-md-9">
+                                    <input type="text" formControlName="address" [(ngModel)]="user.address" id="projectinput5" class="form-control" value=""
+                                        name="address">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control" for="projectinput5"><span
+                                        style="color: red">(*)</span> Email</label>
+                                <div class="col-md-9">
+                                    <input type="email" formControlName="email" [(ngModel)]="user.email" id="projectinput5" class="form-control" value=""
+                                        name="email">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control" for="projectinput5"><span
+                                        style="color: red">(*)</span> Số Điện Thoại</label>
+                                <div class="col-md-9">
+                                    <input type="number" formControlName="phone" [(ngModel)]="user.phone" id="projectinput5" class="form-control" maxlength="10"
+                                        name="phone">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control" for="projectinput5">Vai trò</label>
+                                <div class="col-md-9">
+                                    <select class="form-control" id="basicSelect" name="role">
+                                        <option *ngFor="let role of roles" value="{{role.id}}" >{{role.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control" for="projectinput5">Ngày
+                                    Tạo</label>
+                                <div class="col-md-9">
+                                    <input type="text" formControlName="createAt" id="projectinput5" class="form-control" value="{{user.createAt | date:'HH:mm:ss dd-MM-yyyy'}}"
+                                        name="createAt" disabled="disabled">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control" for="projectinput5">Ngày
+                                    Cập Nhật</label>
+                                <div class="col-md-9">
+                                    <input type="text" id="projectinput5" class="form-control" value="{{user.updateAt | date:'HH:mm:ss dd-MM-yyyy'}}"
+                                        name="createAt" disabled="disabled">
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" value="" /> <input type="hidden"
+                            name="_method" value="PUT" />
+                        <div class="form-actions right">
+                            <button type="submit" class="btn btn-primary mr-1">
+                                <i class="la la-check-square-o"></i> Cập nhật
+                            </button>
+                            <button [routerLink]="[ '/dashboard/users']" type="button" class="btn btn-danger"
+                                    style="min-height: 44px">
+                                    <i class="ft-x"></i> Trở về
+                                </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{user | json}}
