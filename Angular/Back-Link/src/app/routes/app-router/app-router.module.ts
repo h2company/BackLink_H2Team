@@ -22,34 +22,34 @@ import { PointLogComponent } from 'src/app/component/dashboard/point-log/point-l
 import { EditUserComponent } from 'src/app/component/dashboard/user-manager/edit-user/edit-user.component';
 import { ListUserComponent } from 'src/app/component/dashboard/user-manager/list-user/list-user.component';
 
-const routes : Routes = [
+const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { 
-    path: 'dashboard', 
-    component: DashboardComponent, 
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
     canActivate: [NeedAuthGuard],
-      children: [
-        { path: '', component: IndexComponent },
-        { 
-          path: 'users', 
-        component: UserManagerComponent ,
-          children: [         
-            { path: '', component: ListUserComponent },     
-            { path: ':id', component: EditUserComponent },
-          ]
-        },
-        { path: 'add-backlink', component: AddBacklinkComponent },
-        { path: 'add-action', component: AddActionComponent },
-        { path: 'statistical-access', component: StatisticalAccessComponent },
-        { path: 'point-member', component: PointMemberComponent },
-        { path: 'point-member/:id', component: PointMemberComponent },
-        { path: 'point-log', component: PointLogComponent }      
-      ]
-  },  
-  { 
-    path: 'signin', 
+    children: [
+      { path: '', component: IndexComponent },
+      {
+        path: 'users',
+        component: UserManagerComponent,
+        children: [
+          { path: '', component: ListUserComponent },
+          { path: ':id', component: EditUserComponent },
+        ]
+      },
+      { path: 'add-backlink', component: AddBacklinkComponent },
+      { path: 'add-action', component: AddActionComponent },
+      { path: 'statistical-access', component: StatisticalAccessComponent },
+      { path: 'point-member', component: PointMemberComponent },
+      { path: 'point-member/:id', component: PointMemberComponent },
+      { path: 'point-log', component: PointLogComponent }
+    ]
+  },
+  {
+    path: 'signin',
     component: LoginComponent,
-    canActivate: [NotAuthGuard]
+    canActivate: [NotAuthGuard],
   },
   { path: 'recover', component: RecoverComponent },
   { path: 'signup', component: SignupComponent },

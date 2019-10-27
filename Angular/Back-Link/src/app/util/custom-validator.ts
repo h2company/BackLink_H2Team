@@ -2,7 +2,7 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export const requiredValidator = (): ValidatorFn => {
     return (control: AbstractControl): {[key: string]: string } =>{
-        return control.value.length > 0 ? null : { "message" : 'Trường dữ liệu bắt buộc'}
+        return control.value && control.value.length > 0 ? null : { "message" : 'Trường dữ liệu bắt buộc'}
     }
 }
 

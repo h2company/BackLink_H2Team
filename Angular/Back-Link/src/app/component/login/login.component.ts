@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    localStorage.getItem('oauth').length > 0 ? this.router.navigate(['/dashboard']) : '';
     this.createForm()
   }
   createForm() {

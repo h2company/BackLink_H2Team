@@ -16,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EditUserComponent implements OnInit {
 
-  user: User;
+  user: User = new User();
   userForm : FormGroup;
   roles = roles;
 
@@ -73,7 +73,9 @@ export class EditUserComponent implements OnInit {
       });
       return;
     }
-    
-    this._userService.update(this.user);
+    this.toastr.error('Thông báo1!', 'Vui lòng nhập chính xác thông tin!',{
+      positionClass: 'toast-top-right'
+    });
+    //this._userService.update(this.user);
   }
 }
