@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ import com.backlink.payload.request.LoginRequest;
 import com.backlink.payload.request.RecoverRequest;
 import com.backlink.payload.request.RoleRequest;
 import com.backlink.payload.request.SignUpRequest;
+import com.backlink.payload.request.UpdateUserRequest;
 import com.backlink.repository.UserRepository;
 import com.backlink.security.JwtTokenProvider;
 import com.backlink.util.Generate;
@@ -172,7 +174,7 @@ public class UserService implements IBaseService<User, String> {
 		user.setGender(addUserRequest.isGender());
 		user.setBirthday(new SimpleDateFormat("dd/MM/yyyy").parse(addUserRequest.getBirthday()));
 		Set<Role> role = new HashSet<Role>();
-		for(RoleRequest rq : addUserRequest.getRoles()) {
+		for (RoleRequest rq : addUserRequest.getRoles()) {
 			role.add(new Role(rq.getName()));
 		}
 		user.setRoles(role);
@@ -184,6 +186,34 @@ public class UserService implements IBaseService<User, String> {
 				currentUser.get().getUsername() + " vừa tạo tài khoản " + user.getUsername() + " thành công"));
 
 		return new ResponseEntity<Object>(new APIResponse(true, "Tạo tài khoản thành công"), HttpStatus.OK);
+	}
+
+	public ResponseEntity<?> updateUser(UpdateUserRequest updateUserRequest) throws ParseException {
+		Optional<User> userOpt = userRepository.findById(updateUserRequest.getId());
+		// KIỂM TRA ID Có tồn tại hay không
+		if (!userRepository.findById(updateUserRequest.getId()).isPresent()) {
+			throw new BadRequestException(String.format(MessageException.USER_NOT_FOUND_ID, updateUserRequest.getId()));
+		}		
+
+		// SET GIÁ TRỊ
+		User user = userOpt.get();
+		user.setFullname(updateUserRequest.getFullname());
+		user.setAddress(updateUserRequest.getAddress());
+		user.setGender(updateUserRequest.isGender());
+		user.setBirthday(updateUserRequest.getBirthday());
+		Set<Role> role = new HashSet<Role>();
+		for (RoleRequest rq : updateUserRequest.getRoles()) {
+			role.add(new Role(rq.getName()));
+		}
+		user.setRoles(role);
+
+		this.updateOne(user);
+
+		// Lưu Log
+		logSystemService.saveOne(new LogSystem(currentUser.get().getUsername(), Type.ADMIN, LogAction.UPDATE,
+				currentUser.get().getUsername() + " vừa cập nhật tài khoản " + user.getUsername() + " thành công"));
+
+		return new ResponseEntity<Object>(new APIResponse(true, "Cập nhật tài khoản thành công"), HttpStatus.OK);
 	}
 
 	public ResponseEntity<?> authenticate(LoginRequest loginRequest) {

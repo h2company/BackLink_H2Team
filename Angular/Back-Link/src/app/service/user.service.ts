@@ -33,7 +33,7 @@ export class UserService implements IBaseService<User, string> {
     throw new Error('Method not implemented.');
   }
   update(entity: User): Observable<User> {
-    throw new Error('Method not implemented.');
+    return this.http.put(this.API.ALL_USERS + entity.id, entity);
   }
   save(entity: User): Observable<User> {
     throw new Error('Method not implemented.');

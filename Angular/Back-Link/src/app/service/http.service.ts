@@ -25,6 +25,12 @@ export class HttpService {
     });
   }
 
+  public put(path: string, data: any): Observable<any> {
+    return this.httpClient.put<any>(this.toHost(path), data, {
+      headers: this.setHeader()
+    });
+  }
+
   private toHost(path): string {
     return `${this.API.DOMAIN}${path}`;
   }

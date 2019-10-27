@@ -34,6 +34,7 @@
               "src/assets/css/components.min.css",
               "src/assets/css/core/menu/menu-types/vertical-menu.min.css",
               "src/assets/css/core/colors/palette-gradient.min.css",
+              "node_modules/ngx-toastr/toastr.css",
               "src/styles.css"
             ],
             "scripts": [
@@ -42,7 +43,8 @@
               "src/assets/js/core/app-menu.min.js",
               "src/assets/js/core/app.min.js",
               "src/assets/js/scripts/customizer.min.js",
-              "src/assets/vendors/js/jquery.sharrre.js"
+              "src/assets/vendors/js/jquery.sharrre.js",
+              "node_modules/ngx-toastr/bundles/ngx-toastr.umd.min.js"
             ]
           },
           "configurations": {
