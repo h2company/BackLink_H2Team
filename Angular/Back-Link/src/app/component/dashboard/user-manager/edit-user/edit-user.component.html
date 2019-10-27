@@ -86,7 +86,7 @@
                                     <select class="form-control" (change)="onRolesChange($event.target.value)"
                                         name="role">
                                         <option *ngFor="let role of roles" value="{{role.id}}"
-                                            [selected]="user.roles[0].id === role.id">{{role.name}}</option>
+                                            [selected]="user.roles && user.roles[0].id === role.id ">{{role.name}}</option>
                                     </select>
                                 </div>
                             </div>
