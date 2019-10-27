@@ -10,14 +10,14 @@ export class AuthenticationService {
   constructor() { }
 
   readSession() : string{
-    return this.token = localStorage.getItem('auth') || null;
+    return this.token = localStorage.getItem('oauth') || null;
   }
 
   writeSession(token: string) {
-    localStorage.setItem('auth', token);
+    localStorage.setItem('oauth', token);
   }
 
   isLogged() : boolean {
-    return !!localStorage.getItem('auth');
+    return !!localStorage.getItem('oauth');
   }
 }

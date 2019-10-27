@@ -10,17 +10,27 @@ import { APIService } from '../util/api.service';
 })
 export class HttpService {
 
-  constructor(private httpClient: HttpClient, private auth: AuthenticationService, private API: APIService) { }
+  constructor(private httpClient: HttpClient, private oauth: AuthenticationService, private API: APIService) { }
 
   private setHeader(): HttpHeaders {
     return new HttpHeaders({
-      Authorization : this.auth.readSession(),
+      Authorization : this.oauth.readSession(),
       ContentType: 'application/json; charset=utf-8'
     });
   }
 
   public get(path: string): Observable<any> {
     return this.httpClient.get<any>(this.toHost(path), {
+      headers: this.setHeader()
+    });
+  }
+
+  public post(path: string, data: any): Observable<any> {
+    return this.httpClient.post<any>(this.toHost(path), data);
+  }
+
+  public post_oauth(path: string, data: any): Observable<any> {
+    return this.httpClient.post<any>(this.toHost(path), data ,{
       headers: this.setHeader()
     });
   }
