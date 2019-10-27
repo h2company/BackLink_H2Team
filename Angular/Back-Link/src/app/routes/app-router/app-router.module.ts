@@ -12,6 +12,7 @@ import { HeaderComponent } from 'src/app/component/blocks/header/header.componen
 import { SidebarComponent } from 'src/app/component/blocks/sidebar/sidebar.component';
 import { FooterComponent } from 'src/app/component/blocks/footer/footer.component';
 import { NeedAuthGuard } from '../need-auth.guard';
+import { NotAuthGuard } from '../not-auth.guard';
 import { IndexComponent } from 'src/app/component/dashboard/index/index.component';
 import { AddBacklinkComponent } from 'src/app/component/dashboard/add-backlink/add-backlink.component';
 import { AddActionComponent } from 'src/app/component/dashboard/add-action/add-action.component';
@@ -45,7 +46,11 @@ const routes : Routes = [
         { path: 'point-log', component: PointLogComponent }      
       ]
   },  
-  { path: 'signin', component: LoginComponent },
+  { 
+    path: 'signin', 
+    component: LoginComponent,
+    canActivate: [NotAuthGuard]
+  },
   { path: 'recover', component: RecoverComponent },
   { path: 'signup', component: SignupComponent },
   { path: '404', component: NotFoundComponent },

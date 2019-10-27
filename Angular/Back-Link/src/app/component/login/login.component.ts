@@ -5,6 +5,7 @@ import { requiredValidator, emailValidator } from "src/app/util/custom-validator
 import { UserService } from 'src/app/service/user.service';
 import { of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,11 +19,13 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder, 
     private _userService: UserService, 
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.createForm();
+    localStorage.getItem('oauth').length > 0 ? this.router.navigate(['/dashboard']) : '';
+    this.createForm()
   }
   createForm() {
     this.userFormGroup = this.formBuilder.group({
@@ -38,9 +41,13 @@ export class LoginComponent implements OnInit {
     };
     this._userService.login(data).subscribe(res => {
       localStorage.setItem('oauth', res.accessToken);
-      console.log(this._userService.getinfo().subscribe(data => {
-        console.log(data);
-      }));
+      this._userService.getinfo().subscribe(res => {
+        let _data = Object.keys(res);
+        _data.forEach(element => {
+          sessionStorage.setItem(element, res[element]);
+        });
+        this.router.navigate(['/dashboard']);
+      });
     }, error => {
       this.toastr.error(error.error.error, error.error.message, {
         positionClass: 'toast-top-right'
