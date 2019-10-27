@@ -17,9 +17,9 @@ public class Role {
 
     public Role(RoleName name) {
         if(name.equals(RoleName.ROLE_CUSTOMER)) {
-        	this.id = 1L;
+        	this.id = 0L;
         }else if(name.equals(RoleName.ROLE_ADMIN)) {
-        	this.id = 2L;
+        	this.id = 1L;
         }
     	this.name = name;
     }
