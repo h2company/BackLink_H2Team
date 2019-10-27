@@ -39,27 +39,6 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5"><span
-                                        style="color: red">(*)</span> Tên Thành Viên</label>
-                                <div class="col-md-9">
-                                    <input type="text" formControlName="fullname" [(ngModel)]="user.fullname"
-                                        class="form-control" [class.is-invalid]="userForm.controls.fullname.invalid">
-                                    <div class="invalid-tooltip" *ngIf="userForm.controls.fullname.errors">
-                                        {{userForm.controls.fullname.errors.message}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-md-3 label-control" for="projectinput5">Địa Chỉ</label>
-                                <div class="col-md-9">
-                                    <input type="text" formControlName="address" [(ngModel)]="user.address"
-                                        class="form-control" [class.is-invalid]="userForm.controls.address.invalid">
-                                    <div class="invalid-tooltip" *ngIf="userForm.controls.address.errors">
-                                        {{userForm.controls.address.errors.message}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-md-3 label-control" for="projectinput5"><span
                                         style="color: red">(*)</span> Email</label>
                                 <div class="col-md-9">
                                     <input type="email" formControlName="email" [(ngModel)]="user.email"
@@ -80,6 +59,27 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control" for="projectinput5"><span
+                                        style="color: red">(*)</span> Tên Thành Viên</label>
+                                <div class="col-md-9">
+                                    <input type="text" formControlName="fullname" [(ngModel)]="user.fullname"
+                                        class="form-control" [class.is-invalid]="userForm.controls.fullname.invalid">
+                                    <div class="invalid-tooltip" *ngIf="userForm.controls.fullname.errors">
+                                        {{userForm.controls.fullname.errors.message}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control" for="projectinput5">Địa Chỉ</label>
+                                <div class="col-md-9">
+                                    <input type="text" formControlName="address" [(ngModel)]="user.address"
+                                        class="form-control" [class.is-invalid]="userForm.controls.address.invalid">
+                                    <div class="invalid-tooltip" *ngIf="userForm.controls.address.errors">
+                                        {{userForm.controls.address.errors.message}}
+                                    </div>
+                                </div>
+                            </div>                            
                             <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5">Vai trò</label>
                                 <div class="col-md-9">
@@ -123,6 +123,3 @@
         </div>
     </div>
 </div>
-<swal #deleteSwal title="Thông Báo" text="Vui lòng nhập đầy đủ thông tin?" type="warning" [showCancelButton]="true">
-</swal>
-{{user | json}}

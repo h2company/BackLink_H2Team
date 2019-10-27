@@ -29,6 +29,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
 	@GetMapping("users/{id}")
 	public ResponseEntity<?> findOne(@PathVariable String id){

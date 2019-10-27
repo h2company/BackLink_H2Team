@@ -50,7 +50,7 @@ export class EditUserComponent implements OnInit {
 
   createForm(){
     this.userForm = this.formBuider.group({
-      username: ['', [Validators.required]],
+      username: ['', [requiredValidator()]],
       email: ['', [requiredValidator(), emailValidator()]],
       phone: ['', [phoneValidator()]],
       address: ['', [requiredValidator()]],
@@ -67,15 +67,26 @@ export class EditUserComponent implements OnInit {
   }
 
   onSubmit(){
+    console.log(this.userForm.controls);
     if(!this.userForm.valid){
       this.toastr.error('Thông báo!', 'Vui lòng nhập chính xác thông tin!',{
         positionClass: 'toast-top-right'
       });
       return;
     }
-    this.toastr.error('Thông báo1!', 'Vui lòng nhập chính xác thông tin!',{
-      positionClass: 'toast-top-right'
+   
+    this._userService.update(this.user).subscribe(data => {       
+      this.user = data;     
+      this.resetForm(this.user);   
+      this.toastr.success('Thông báo!', 'Cập nhật thông tin thành công!',{
+        positionClass: 'toast-top-right'
+      });
     });
-    //this._userService.update(this.user);
+  }
+
+  resetForm(user: User){
+    Object.keys(this.userForm.controls).forEach(elm => {
+      this.userForm.controls[elm].reset(this.user[elm]);
+    });
   }
 }
