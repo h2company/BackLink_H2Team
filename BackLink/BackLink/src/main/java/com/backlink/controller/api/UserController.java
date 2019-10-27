@@ -53,4 +53,10 @@ public class UserController {
 	public ResponseEntity<?> editUser(@Valid @RequestBody UpdateUserRequest updateUserRequest) throws ParseException {
 		return userService.updateUser(updateUserRequest); 
 	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
+	@GetMapping("users/me")
+	public ResponseEntity<?> me() throws ParseException {
+		return new ResponseEntity<Object>(userService.me(), HttpStatus.OK);
+	}
 }

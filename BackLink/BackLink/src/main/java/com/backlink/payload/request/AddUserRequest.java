@@ -33,6 +33,7 @@ public class AddUserRequest {
 	private String phone;
 	
 	@NotBlank(message = MessageException.ANO_NOT_BLANK)
+	@Size(min = 1, message = MessageException.ANO_SIZE_MIN)
 	private String address;
 	
 	@NotBlank(message = MessageException.ANO_NOT_BLANK)

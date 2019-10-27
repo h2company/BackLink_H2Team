@@ -17,11 +17,11 @@ export class UserService implements IBaseService<User, string> {
   constructor(private http: HttpService, private API: APIService) {}
 
   findById(id: string): Observable<User> {
-    return this.http.get(this.API.ONE_USER + id);
+    return this.http.get(this.API.ALL_USERS + id);
   }
 
   findByIdSync(id: string) {
-    return this.http.get(this.API.ONE_USER + id).toPromise();
+    return this.http.get(this.API.ALL_USERS + id).toPromise();
   }
 
   findAll(): Observable<User[]> {
@@ -38,5 +38,13 @@ export class UserService implements IBaseService<User, string> {
   save(entity: User): Observable<User> {
     throw new Error('Method not implemented.');
   }
-
+  login(data: any): Observable<any> {    
+    return this.http.post(this.API.OAUTH_SIGNIN, data)
+  }
+  register(entity: User): Observable<User> {
+    return ;
+  }
+  getinfo(): Observable<User[]>  {
+    return this.http.get(this.API.ME);
+  }
 }
