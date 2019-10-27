@@ -18,21 +18,28 @@
 								</div>
 								<div class="card-content">
 									<div class="card-body">
-										<form #f="ngForm" class="form-horizontal" novalidate>
+										<form class="form-horizontal" [formGroup]="userFormGroup" novalidate
+											(ngSubmit)="onSubmit()">
 											<fieldset class="form-group position-relative has-icon-left">
-												<input ngModel #username="ngModel" type="text"
-													class="form-control round" id="user-name" name="username"
-													placeholder="Tên đăng nhập" required>
+												<input type="text" class="form-control " id="user-name"
+													name="username" placeholder="Tên đăng nhập"
+													formControlName="username" required>
 												<div class="form-control-position">
 													<i class="ft-user"></i>
 												</div>
+												<div class="invalid-tooltip" *ngIf="userFormGroup.controls.username.errors && !userFormGroup.controls.username.pristine">
+													{{userFormGroup.controls.username.errors.message}}
+												</div>
 											</fieldset>
 											<fieldset class="form-group position-relative has-icon-left">
-												<input ngModel #password="ngModel" type="password"
-													class="form-control round" id="user-password" name="password"
-													placeholder="Mật khẩu" required>
+												<input type="password" class="form-control " id="user-password"
+													name="password" placeholder="Mật khẩu" formControlName="password"
+													required>
 												<div class="form-control-position">
 													<i class="ft-lock"></i>
+												</div>
+												<div class="invalid-tooltip" *ngIf="userFormGroup.controls.password.errors && !userFormGroup.controls.password.pristine">
+													{{userFormGroup.controls.password.errors.message}}
 												</div>
 											</fieldset>
 											<div class="form-group row">
@@ -64,7 +71,8 @@
 									</div>
 
 									<p class="card-subtitle text-muted text-right font-small-3 mx-2 my-1">
-										<span>Bạn chưa có tài khoản ? <a [routerLink]="['/signup']" class="card-link">Đăng
+										<span>Bạn chưa có tài khoản ? <a [routerLink]="['/signup']"
+												class="card-link">Đăng
 												ký</a></span>
 									</p>
 								</div>

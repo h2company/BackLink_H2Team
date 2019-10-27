@@ -2,6 +2,15 @@
 body {
     padding-top: 0 !important;
 }
+.invalid-tooltip {
+    display: block;
+}
+.was-validated .form-control:valid, .form-control.is-valid, .form-control.ng-valid.ng-dirty {
+    background-image: unset;
+}
+.form-control.ng-invalid.ng-dirty {
+    border: 1px solid #fb8189;
+}
 @media (min-width: 992px){
     div.vertical-layout.vertical-menu .content, div.vertical-layout.vertical-menu .footer {
         margin-left: 0 !important;

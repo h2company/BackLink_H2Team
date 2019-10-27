@@ -70,7 +70,7 @@ public class UserService implements IBaseService<User, String> {
 		}
 		return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 	}
-
+	
 	@Override
 	public List<User> findAll() {
 		return userRepository.findAll();
@@ -257,4 +257,7 @@ public class UserService implements IBaseService<User, String> {
 		return ResponseEntity.ok(new APIResponse(true, sendTo));
 	}
 
+	public User me() {
+		return this.getById(currentUser.get().getId());
+	}
 }
