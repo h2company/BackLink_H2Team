@@ -11,12 +11,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backlink.entities.User;
 import com.backlink.payload.request.AddUserRequest;
+import com.backlink.payload.request.UpdateUserRequest;
 import com.backlink.service.UserService;
 
 
@@ -43,5 +44,11 @@ public class UserController {
 	@PostMapping("users")
 	public ResponseEntity<?> createUser(@Valid @RequestBody AddUserRequest addUserRequest) throws ParseException {
 		return userService.addUser(addUserRequest);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
+	@PutMapping("users")
+	public ResponseEntity<?> editUser(@Valid @RequestBody UpdateUserRequest updateUserRequest) throws ParseException {
+		return userService.updateUser(updateUserRequest); 
 	}
 }

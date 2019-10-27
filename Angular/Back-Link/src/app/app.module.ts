@@ -3,7 +3,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
@@ -25,22 +27,30 @@ import { EditUserComponent } from './component/dashboard/user-manager/edit-user/
     ListUserComponent,
     EditUserComponent
   ],
-  imports: [    
+  imports: [
     CommonModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    AppRouterModule, 
-    UiSwitchModule,    
+    ReactiveFormsModule,
+    AppRouterModule,
+    UiSwitchModule,
+    BrowserAnimationsModule,
+    ToastContainerModule,
     SweetAlert2Module.forRoot(),
-    ReactiveFormsModule 
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      progressBar: true
+    })
   ],
   providers: [
     HttpService,
     AuthenticationService,
     UserService,
-    NeedAuthGuard 
-   ],
+    NeedAuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

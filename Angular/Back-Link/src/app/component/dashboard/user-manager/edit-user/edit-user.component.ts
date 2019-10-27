@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { UserService } from 'src/app/service/user.service';
 import { User } from 'src/app/model/user.model';
-import { roles } from 'src/app/model/roles.model';
+import { RoleName, roles, Roles } from 'src/app/model/roles.model';
+import { requiredValidator, emailValidator, phoneValidator } from 'src/app/util/custom-validator';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-user',
@@ -16,11 +19,15 @@ export class EditUserComponent implements OnInit {
   user: User;
   userForm : FormGroup;
   roles = roles;
+
+  @ViewChild(SwalComponent, {static: false}) deleteSwal: SwalComponent;
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private _userService: UserService,
-    private formBuider: FormBuilder
+    private formBuider: FormBuilder,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -44,13 +51,29 @@ export class EditUserComponent implements OnInit {
   createForm(){
     this.userForm = this.formBuider.group({
       username: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      phone: ['', [Validators.required, Validators.min(10), Validators.max(10)]],
-      address: ['', [Validators.required]],
-      fullname: ['', [Validators.required]],
-      updateAt: ['', [Validators.required]],
-      createAt: ['', [Validators.required]],
+      email: ['', [requiredValidator(), emailValidator()]],
+      phone: ['', [phoneValidator()]],
+      address: ['', [requiredValidator()]],
+      fullname: ['', [requiredValidator()]]
     });
   }
 
+  onRolesChange(id: number){
+    console.log(this.userForm.controls.email);
+    let rolename: RoleName = id == 0 ? RoleName.ROLE_CUSTOMER : id == 1 ? RoleName.ROLE_ADMIN : RoleName.ROLE_MANAGER ;
+    this.user.roles = [
+      new Roles(id, rolename)
+    ];
+  }
+
+  onSubmit(){
+    if(!this.userForm.valid){
+      this.toastr.error('Thông báo!', 'Vui lòng nhập chính xác thông tin!',{
+        positionClass: 'toast-top-right'
+      });
+      return;
+    }
+    
+    this._userService.update(this.user);
+  }
 }

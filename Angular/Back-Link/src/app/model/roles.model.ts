@@ -6,10 +6,12 @@ export class Roles {
 }
 
 export enum RoleName {
-  ROLE_CUSTOMER, ROLE_MANAGER, ROLE_ADMIN
+  ROLE_CUSTOMER = "ROLE_CUSTOMER",
+  ROLE_MANAGER = "ROLE_MANAGER", 
+  ROLE_ADMIN = "ROLE_ADMIN"
 }
 
 export const roles = [
-  {id: 1, name: "Thành Viên"},
-  {id: 2, name: "Admin"}
+  {id: 0, name: "Thành Viên"},
+  {id: 1, name: "Admin"}
 ];

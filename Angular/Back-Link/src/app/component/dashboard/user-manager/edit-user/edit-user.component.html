@@ -25,7 +25,7 @@
                             <span style="color: red">(*):</span> Thông tin bắt buộc.
                         </p>
                     </div>
-                    <form [formGroup]="userForm" class="form form-horizontal" novalidate>
+                    <form [formGroup]="userForm" class="form form-horizontal" (ngSubmit)="onSubmit()" novalidate>
                         <div class="form-body">
                             <h4 class="form-section">
                                 <i class="ft-clipboard"></i>Thông Tin Cá Nhân
@@ -33,47 +33,60 @@
                             <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5">Tài Khoản</label>
                                 <div class="col-md-9">
-                                    <input type="text" formControlName="username" [(ngModel)]="user.username" id="projectinput5" class="form-control"
-                                        name="username" readonly="readonly">
+                                    <input type="text" formControlName="username" [(ngModel)]="user.username"
+                                        class="form-control" name="username" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5"><span
                                         style="color: red">(*)</span> Tên Thành Viên</label>
                                 <div class="col-md-9">
-                                    <input type="text" formControlName="fullname" [(ngModel)]="user.fullname" id="projectinput5" class="form-control" value=""
-                                        name="fullname">
+                                    <input type="text" formControlName="fullname" [(ngModel)]="user.fullname"
+                                        class="form-control" [class.is-invalid]="userForm.controls.fullname.invalid">
+                                    <div class="invalid-tooltip" *ngIf="userForm.controls.fullname.errors">
+                                        {{userForm.controls.fullname.errors.message}}
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 label-control" for="projectinput5">Địa
-                                    Chỉ</label>
+                                <label class="col-md-3 label-control" for="projectinput5">Địa Chỉ</label>
                                 <div class="col-md-9">
-                                    <input type="text" formControlName="address" [(ngModel)]="user.address" id="projectinput5" class="form-control" value=""
-                                        name="address">
+                                    <input type="text" formControlName="address" [(ngModel)]="user.address"
+                                        class="form-control" [class.is-invalid]="userForm.controls.address.invalid">
+                                    <div class="invalid-tooltip" *ngIf="userForm.controls.address.errors">
+                                        {{userForm.controls.address.errors.message}}
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5"><span
                                         style="color: red">(*)</span> Email</label>
                                 <div class="col-md-9">
-                                    <input type="email" formControlName="email" [(ngModel)]="user.email" id="projectinput5" class="form-control" value=""
-                                        name="email">
+                                    <input type="email" formControlName="email" [(ngModel)]="user.email"
+                                        class="form-control" [class.is-invalid]="userForm.controls.email.invalid">
+                                    <div class="invalid-tooltip" *ngIf="userForm.controls.email.errors">
+                                        {{userForm.controls.email.errors.message}}
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5"><span
                                         style="color: red">(*)</span> Số Điện Thoại</label>
                                 <div class="col-md-9">
-                                    <input type="number" formControlName="phone" [(ngModel)]="user.phone" id="projectinput5" class="form-control" maxlength="10"
-                                        name="phone">
+                                    <input type="text" formControlName="phone" [(ngModel)]="user.phone"
+                                        class="form-control" [class.is-invalid]="userForm.controls.phone.invalid">
+                                    <div class="invalid-tooltip" *ngIf="userForm.controls.phone.errors">
+                                        {{userForm.controls.phone.errors.message}}
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5">Vai trò</label>
                                 <div class="col-md-9">
-                                    <select class="form-control" id="basicSelect" name="role">
-                                        <option *ngFor="let role of roles" value="{{role.id}}" >{{role.name}}</option>
+                                    <select class="form-control" (change)="onRolesChange($event.target.value)"
+                                        name="role">
+                                        <option *ngFor="let role of roles" value="{{role.id}}"
+                                            [selected]="user.roles[0].id === role.id">{{role.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -81,29 +94,28 @@
                                 <label class="col-md-3 label-control" for="projectinput5">Ngày
                                     Tạo</label>
                                 <div class="col-md-9">
-                                    <input type="text" formControlName="createAt" id="projectinput5" class="form-control" value="{{user.createAt | date:'HH:mm:ss dd-MM-yyyy'}}"
-                                        name="createAt" disabled="disabled">
+                                    <input type="text" class="form-control danger"
+                                        value="{{user.createAt | date:'HH:mm:ss dd-MM-yyyy'}}" name="createAt"
+                                        disabled="disabled">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5">Ngày
                                     Cập Nhật</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="projectinput5" class="form-control" value="{{user.updateAt | date:'HH:mm:ss dd-MM-yyyy'}}"
-                                        name="createAt" disabled="disabled">
+                                    <input type="text" class="form-control info"
+                                        value="{{user.updateAt | date:'HH:mm:ss dd-MM-yyyy'}}" disabled="disabled">
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="id" value="" /> <input type="hidden"
-                            name="_method" value="PUT" />
                         <div class="form-actions right">
-                            <button type="submit" class="btn btn-primary mr-1">
+                            <button type="submit" class="btn btn-primary mr-1" >
                                 <i class="la la-check-square-o"></i> Cập nhật
                             </button>
                             <button [routerLink]="[ '/dashboard/users']" type="button" class="btn btn-danger"
-                                    style="min-height: 44px">
-                                    <i class="ft-x"></i> Trở về
-                                </button>
+                                style="min-height: 44px">
+                                <i class="ft-x"></i> Trở về
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -111,4 +123,6 @@
         </div>
     </div>
 </div>
+<swal #deleteSwal title="Thông Báo" text="Vui lòng nhập đầy đủ thông tin?" type="warning" [showCancelButton]="true">
+</swal>
 {{user | json}}
