@@ -14,7 +14,7 @@
 									<div class="text-center mb-1">
 										<img src="/assets/images/logo/logo.png" alt="branding logo">
 									</div>
-									<div class="font-large-1  text-center">Đăng Nhập</div>
+									<div class="font-large-1 text-center">Đăng Nhập</div>
 								</div>
 								<div class="card-content">
 									<div class="card-body">
@@ -23,11 +23,11 @@
 											<fieldset class="form-group position-relative has-icon-left">
 												<input type="text" class="form-control " id="user-name"
 													name="username" placeholder="Tên đăng nhập"
-													formControlName="username" required>
+													formControlName="username" min="5" max="100" required>
 												<div class="form-control-position">
 													<i class="ft-user"></i>
 												</div>
-												<div class="invalid-tooltip" *ngIf="userFormGroup.controls.username.errors && !userFormGroup.controls.username.pristine">
+												<div class="invalid-tooltip" *ngIf="userFormGroup && userFormGroup.controls.username.errors && !userFormGroup.controls.username.pristine">
 													{{userFormGroup.controls.username.errors.message}}
 												</div>
 											</fieldset>
@@ -38,7 +38,7 @@
 												<div class="form-control-position">
 													<i class="ft-lock"></i>
 												</div>
-												<div class="invalid-tooltip" *ngIf="userFormGroup.controls.password.errors && !userFormGroup.controls.password.pristine">
+												<div class="invalid-tooltip" *ngIf="userFormGroup && userFormGroup.controls.password.errors && !userFormGroup.controls.password.pristine">
 													{{userFormGroup.controls.password.errors.message}}
 												</div>
 											</fieldset>

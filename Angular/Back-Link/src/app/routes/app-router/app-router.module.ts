@@ -51,8 +51,14 @@ const routes : Routes = [
     component: LoginComponent,
     canActivate: [NotAuthGuard]
   },
-  { path: 'recover', component: RecoverComponent },
-  { path: 'signup', component: SignupComponent },
+  { 
+    path: 'recover', 
+    component: RecoverComponent
+  },
+  { 
+    path: 'signup', component: SignupComponent,
+    canActivate: [NotAuthGuard]
+  },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '/404', pathMatch: 'full' }
 ];

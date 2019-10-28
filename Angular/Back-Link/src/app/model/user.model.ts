@@ -13,6 +13,7 @@ export class User {
       public birthday?: Date,
       public gender?: boolean,
       public updateAt?: Date,      
-      public createAt?: Date
+      public createAt?: Date,
+      public password?: string
     ) {}
 }

@@ -10,8 +10,8 @@ export class NotAuthGuard implements CanActivate {
   constructor(private authService: AuthenticationService, private router: Router){}
 
   canActivate(): boolean {
-    if(!this.authService.isLogged()){
-      this.router.navigate(['/signin']);
+    if(this.authService.isLogged()){
+      this.router.navigate(['/dashboard']);
       return false;
     }
     return true;

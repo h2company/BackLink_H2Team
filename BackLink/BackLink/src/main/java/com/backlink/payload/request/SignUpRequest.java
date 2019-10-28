@@ -26,19 +26,15 @@ public class SignUpRequest {
 	@Email
 	private String email;
 
-	@NotBlank(message = MessageException.ANO_NOT_BLANK)
-	@Size(min = 10, max = 10, message = MessageException.ANO_SIZE)
-	@Pattern(regexp = "^(0{1})([1-9]{1})([0-9]{8})")
-	private String phone;
+//	@NotBlank(message = MessageException.ANO_NOT_BLANK)
+//	@Size(min = 10, max = 10, message = MessageException.ANO_SIZE)
+//	@Pattern(regexp = "^(0{1})([1-9]{1})([0-9]{8})")
+//	private String phone;
 
-	@NotBlank(message = MessageException.ANO_NOT_BLANK)
+	//@NotBlank(message = MessageException.ANO_NOT_BLANK)
 	private String address;
 
 	private boolean gender;
-
-	@NotBlank(message = MessageException.ANO_NOT_BLANK)
-	@Pattern(regexp = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$")
-	private String birthday;
 
 	public String getUsername() {
 		return username;
@@ -72,14 +68,6 @@ public class SignUpRequest {
 		this.email = email;
 	}
 
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
 	public String getAddress() {
 		return address;
 	}
@@ -96,12 +84,9 @@ public class SignUpRequest {
 		this.gender = gender;
 	}
 
-	public String getBirthday() {
-		return birthday;
-	}
+//	@NotBlank(message = MessageException.ANO_NOT_BLANK)
+//	@Pattern(regexp = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$")
+//	private String birthday;
 
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
-	}
 
 }

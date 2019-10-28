@@ -10,8 +10,8 @@ export class NeedAuthGuard implements CanActivate {
   constructor(private authService: AuthenticationService, private router: Router){}
 
   canActivate(): boolean {
-    if(this.authService.isLogged()){
-      this.router.navigate(['/dashboard']);
+    if(!this.authService.isLogged()){
+      this.router.navigate(['/signin']);
       return false;
     }
     return true;

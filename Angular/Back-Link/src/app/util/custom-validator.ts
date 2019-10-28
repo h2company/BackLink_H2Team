@@ -19,3 +19,4 @@ export const phoneValidator = (): ValidatorFn => {
         return result ? null : { "message" : 'Số điện thoại không hợp lệ'}
     }
 }
+
