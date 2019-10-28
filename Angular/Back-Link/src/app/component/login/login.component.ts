@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.createForm()
+    this.createForm();
   }
   createForm() {
     this.userFormGroup = this.formBuilder.group({
@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
   }
   onSubmit() {
     console.log('submit');
+    console.log(this.userFormGroup.controls.username);
     const data = {
       usernameOrEmail: this.userFormGroup.controls.username.value,
       password: this.userFormGroup.controls.password.value

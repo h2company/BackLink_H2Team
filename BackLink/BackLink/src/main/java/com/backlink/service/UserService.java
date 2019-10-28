@@ -120,20 +120,20 @@ public class UserService implements IBaseService<User, String> {
 		}
 
 		// KIỂM TRA SỐ ĐIỆN THOẠI ĐÃ TỒN TẠI HAY CHƯA
-		if (userRepository.findByPhone(signUpRequest.getPhone()).isPresent()) {
-			throw new BadRequestException(String.format(MessageException.EXIST, signUpRequest.getPhone()));
-		}
+//		if (userRepository.findByPhone(signUpRequest.getPhone()).isPresent()) {
+//			throw new BadRequestException(String.format(MessageException.EXIST, signUpRequest.getPhone()));
+//		}
 
 		// SET GIÁ TRỊ
 		User user = new User();
 		user.setUsername(signUpRequest.getUsername());
 		user.setPassword(signUpRequest.getPassword());
 		user.setEmail(signUpRequest.getEmail());
-		user.setPhone(signUpRequest.getPhone());
+		//user.setPhone(signUpRequest.getPhone());
 		user.setFullname(signUpRequest.getFullname());
 		user.setAddress(signUpRequest.getAddress());
 		user.setGender(signUpRequest.isGender());
-		user.setBirthday(new SimpleDateFormat("dd/MM/yyyy").parse(signUpRequest.getBirthday()));
+		//user.setBirthday(new SimpleDateFormat("dd/MM/yyyy").parse(signUpRequest.getBirthday()));
 		Set<Role> role = new HashSet<Role>();
 		role.add(new Role(RoleName.ROLE_CUSTOMER));
 		user.setRoles(role);

@@ -41,8 +41,8 @@ export class UserService implements IBaseService<User, string> {
   login(data: any): Observable<any> {    
     return this.http.post(this.API.OAUTH_SIGNIN, data)
   }
-  register(entity: User): Observable<User> {
-    return ;
+  register(entity: User): Observable<any> {
+    return this.http.post(this.API.OAUTH_SIGNUP, entity);
   }
   getinfo(): Observable<User[]>  {
     return this.http.get(this.API.ME);
