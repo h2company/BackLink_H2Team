@@ -2,6 +2,7 @@ package com.backlink.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -201,6 +202,7 @@ public class UserService implements IBaseService<User, String> {
 		user.setAddress(updateUserRequest.getAddress());
 		user.setGender(updateUserRequest.isGender());
 		user.setBirthday(updateUserRequest.getBirthday());
+		user.setUpdateAt(new Date());
 		Set<Role> role = new HashSet<Role>();
 		for (RoleRequest rq : updateUserRequest.getRoles()) {
 			role.add(new Role(rq.getName()));
@@ -213,7 +215,7 @@ public class UserService implements IBaseService<User, String> {
 		logSystemService.saveOne(new LogSystem(currentUser.get().getUsername(), Type.ADMIN, LogAction.UPDATE,
 				currentUser.get().getUsername() + " vừa cập nhật tài khoản " + user.getUsername() + " thành công"));
 
-		return new ResponseEntity<Object>(new APIResponse(true, "Cập nhật tài khoản thành công"), HttpStatus.OK);
+		return new ResponseEntity<Object>(user, HttpStatus.OK);
 	}
 
 	public ResponseEntity<?> authenticate(LoginRequest loginRequest) {
