@@ -20,3 +20,20 @@ export const phoneValidator = (): ValidatorFn => {
     }
 }
 
+export const lengthValidator = (min: number, max: number): ValidatorFn => {
+    return (control: AbstractControl): { [key: string]: string } | null => {
+        if (isNaN(control.value) && (control.value.length < min || control.value.length > max)) {
+            return { "message" : 'Giá trị không hợp lệ (Độ dài tối thiểu '+min+', tối đa '+max+')'};
+        }
+        return null;
+    };
+}
+
+export const minmaxValidator = (min: number, max: number): ValidatorFn => {
+    return (control: AbstractControl): { [key: string]: string } | null => {
+        if (!isNaN(control.value) && (control.value < min || control.value > max)) {
+            return { "message" : 'Giá trị không hợp lệ (tối thiểu '+min+', tối đa '+max+')'};
+        }
+        return null;
+    };
+}

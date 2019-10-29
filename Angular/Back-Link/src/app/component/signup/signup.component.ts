@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/service/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { requiredValidator, emailValidator } from 'src/app/util/custom-validator';
+import { requiredValidator, emailValidator, minmaxValidator, lengthValidator } from 'src/app/util/custom-validator';
 import { User } from 'src/app/model/user.model';
 
 @Component({
@@ -25,7 +25,7 @@ export class SignupComponent implements OnInit {
   }
   createForm() {
     this.userFormGroup = this.formBuilder.group({
-      fullname: ['', [requiredValidator()]],
+      fullname: ['', [requiredValidator(), lengthValidator(10,100)]],
       email: ['', [requiredValidator(), emailValidator()]],
       username: ['', [requiredValidator()]],
       password: ['', [requiredValidator()]]
