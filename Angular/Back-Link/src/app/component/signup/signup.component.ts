@@ -25,10 +25,10 @@ export class SignupComponent implements OnInit {
   }
   createForm() {
     this.userFormGroup = this.formBuilder.group({
-      fullname: ['', [requiredValidator(), lengthValidator(10,100)]],
+      fullname: ['', [requiredValidator(), lengthValidator(5,30)]],
       email: ['', [requiredValidator(), emailValidator()]],
-      username: ['', [requiredValidator()]],
-      password: ['', [requiredValidator()]]
+      username: ['', [requiredValidator(), lengthValidator(5,30)]],
+      password: ['', [requiredValidator(), lengthValidator(8,50)]]
     });
   }
   onSubmit() {

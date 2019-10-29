@@ -2,9 +2,9 @@ package com.backlink.Message;
 
 public class MessageException {
 	public static final String INCORRECT_SYNTAX = "Dữ liệu không hợp lệ";
-	public static final String USERNAME_NOT_FOUND = "User not found with username or email : %s";
-	public static final String USER_NOT_FOUND_ID = "User not found with id : %s";
-	public static final String CUSTOM_NOT_FOUND = "%s not found with %s : '%s'";
+	public static final String USERNAME_NOT_FOUND = "Không tìm thấy tài khoản hoặc email : %s";
+	public static final String USER_NOT_FOUND_ID = "Không tìm thấy tài khoản với id : %s";
+	public static final String CUSTOM_NOT_FOUND = "%s không tìm thấy với %s : '%s'";
 	public static final String UNAUTHORIZATION = "UNAUTHORIZATION";
 	public static final String ANO_NOT_BLANK = "Trường bắt buộc";
 	public static final String ANO_NOT_NULL = "Không được để trống";
@@ -14,5 +14,5 @@ public class MessageException {
 	public static final String ANO_EMAIL_INCORRECT = "Định dạng không hợp lệ";
 	public static final String FORBIDDEN = "FORBIDDEN";
 	public static final String UNAUTHORIZATION_NOT_VALID = "Truy vấn không hợp lệ";
-	public static final String EXIST = "%s already exists";
+	public static final String EXIST = "%s đã tồn tại.";
 }
