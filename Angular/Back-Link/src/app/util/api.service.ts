@@ -9,6 +9,7 @@ export class APIService {
   public ME = '/api/users/me/';
   public OAUTH_SIGNIN = "/api/auth/signin";
   public OAUTH_SIGNUP = "/api/auth/signup";
+  public OAUTH_RECOVER = "/api/auth/recover";
   constructor() { }  
   
 }
