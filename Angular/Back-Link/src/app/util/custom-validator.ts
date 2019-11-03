@@ -20,6 +20,13 @@ export const phoneValidator = (): ValidatorFn => {
     }
 }
 
+export const urlValidator = (): ValidatorFn => {
+    return (control: AbstractControl): {[key: string]: string } =>{
+        const result = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi.test(control.value);
+        return result ? null : { "message" : 'Url không hợp lệ. VD: http://h2team.com'}
+    }
+}
+
 export const lengthValidator = (min: number, max: number): ValidatorFn => {
     return (control: AbstractControl): { [key: string]: string } | null => {
         if ((control.value.length < min || control.value.length > max)) {

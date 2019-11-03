@@ -47,7 +47,7 @@
                                         <span style="color: red">(*):</span> Thông tin bắt buộc.
                                     </p>
                                 </div>
-                                <form class="form form-horizontal" action="./account/manager.html" method="POST">
+                                <form class="form form-horizontal" [formGroup]="userFormGroup" (ngSubmit)="onSubmit()">
                                     <div class="form-body">
                                         <h4 class="form-section">
                                             <i class="ft-clipboard"></i>Thông Tin Hành Động
@@ -56,39 +56,25 @@
                                             <label class="col-md-3 label-control" for="projectinput5"><span
                                                     style="color: red">(*)</span> Đường dẫn yêu cầu</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" value="" formControlName="backlink_url"
+                                                <input type="text" class="form-control" value=""
+                                                    formControlName="backlink_url"
                                                     placeholder="Ví dụ: http://h2team.blog/gioi-thieu-ve-h2team.html">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3 label-control" for="projectinput5"><span
-                                                    style="color: red">(*)</span> Kênh tìm kiếm hợp lệ</label>
-                                            <div class="col-md-9">
-                                                <textarea class="form-control" rows="3"
-                                                    placeholder="Ví dụ: google.com , bing.com, yahoo.com..." formControlName="searchEngine"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3 label-control" for="projectinput5"><span
-                                                    style="color: red">(*)</span> Từ khóa tìm kiếm hợp lệ</label>
-                                            <div class="col-md-9">
-                                                <textarea class="form-control" rows="3"
-                                                    placeholder="Ví dụ: h2team , h2 team,..." formControlName="keywords"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3 label-control" for="projectinput5"><span
-                                                    style="color: red">(*)</span> Danh sách trình duyệt hợp lệ</label>
-                                            <div class="col-md-9">
-                                                <textarea class="form-control" rows="3"
-                                                    placeholder="Ví dụ: Chrome , Opera, Firefox,..." formControlName="userAgent"></textarea>
+                                                <div class="invalid-tooltip"
+                                                    *ngIf="userFormGroup && userFormGroup.controls.backlink_url.errors && !userFormGroup.controls.backlink_url.pristine">
+                                                    {{userFormGroup.controls.backlink_url.errors.message}}
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-3 label-control" for="projectinput5"><span
                                                     style="color: red">(*)</span> Điểm quy đổi</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" value="" formControlName="point">
+                                                <input type="text" class="form-control" value=""
+                                                    formControlName="point" placeholder="Từ 0 đến 99999">
+                                                <div class="invalid-tooltip"
+                                                    *ngIf="userFormGroup && userFormGroup.controls.point.errors && !userFormGroup.controls.point.pristine">
+                                                    {{userFormGroup.controls.point.errors.message}}
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -98,7 +84,12 @@
                                                         for="projectinput5"><span style="color: red">(*)</span> Ngày bắt
                                                         đầu</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" class="form-control" value="" formControlName="beginTime">
+                                                        <input type="text" class="form-control" value=""
+                                                            formControlName="beginTime" placeholder="Ngày bắt đầu Backlink" readonly bsDatepicker [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }">
+                                                    </div>
+                                                    <div class="invalid-tooltip"
+                                                        *ngIf="userFormGroup && userFormGroup.controls.beginTime.errors && !userFormGroup.controls.beginTime.pristine">
+                                                        {{userFormGroup.controls.beginTime.errors.message}}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -106,18 +97,15 @@
                                                         for="projectinput5"><span style="color: red">(*)</span> Ngày kết
                                                         thúc</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" class="form-control" value="" formControlName="endTime">
+                                                        <input type="text" class="form-control" value=""
+                                                            formControlName="endTime" placeholder="Ngày kết thúc Backlink" readonly bsDatepicker [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }">
+
+                                                        <div class="invalid-tooltip"
+                                                            *ngIf="userFormGroup && userFormGroup.controls.endTime.errors && !userFormGroup.controls.endTime.pristine">
+                                                            {{userFormGroup.controls.endTime.errors.message}}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3 label-control" for="projectinput5"><span
-                                                    style="color: red">(*)</span> Mã theo dõi</label>
-                                            <div class="col-md-9"> (Dùng mã nhúng sau <a data-bl='BL0215778'
-                                                    href="">Text backlink</a>)
-                                                <input type="text" class="form-control" value=""
-                                                    readonly="readonly" formControlName="backlink_code">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -138,7 +126,7 @@
                                         </div>
                                     </div>
                                     <div class="form-actions right">
-                                        <button type="button" class="btn btn-primary mr-1">
+                                        <button type="submit" class="btn btn-primary mr-1">
                                             <i class="la la-check-square-o"></i> Thêm mới
                                         </button>
                                     </div>
