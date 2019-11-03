@@ -201,6 +201,7 @@ public class UserService implements IBaseService<User, String> {
 		user.setFullname(updateUserRequest.getFullname());
 		user.setAddress(updateUserRequest.getAddress());
 		user.setGender(updateUserRequest.isGender());
+		user.setPhone(updateUserRequest.getPhone());
 		user.setBirthday(updateUserRequest.getBirthday());
 		user.setUpdateAt(new Date());
 		Set<Role> role = new HashSet<Role>();

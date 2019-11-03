@@ -1,10 +1,8 @@
 package com.backlink.service;
 
-import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +13,14 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import com.backlink.entities.Mailer;
+import com.sendgrid.Content;
+import com.sendgrid.Email;
+import com.sendgrid.Mail;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
+import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
+
 @Service
 public class MailService {
 	@Autowired
@@ -34,18 +37,27 @@ public class MailService {
 		context.setVariable("content", "Mật khẩu của bạn là: " + pass);
 		String body = templateEngine.process("recover", context);
 
-		MimeMessage mail = javaMailSender.createMimeMessage();
-		MimeMessageHelper helper;
+//		MimeMessage mail = javaMailSender.createMimeMessage();
+//		MimeMessageHelper helper;
 
-		SendGrid sg = new SendGrid(System.getenv("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"));
-		Request request = new Request();
 		try {
+			SendGrid sg = new SendGrid(
+					System.getenv("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"));
+
+			Email from = new Email("thiendaikyl@gmail.com");
+			String subject = "Sending with SendGrid is Fun";
+			Email to = new Email("qa1796@gmail.com");
+			Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
+			Mail mail = new Mail(from, subject, to, content);
+
+			Request request = new Request();
 			request.setMethod(Method.POST);
 			request.setEndpoint("mail/send");
-			request.setBody(
-					"{\"personalizations\":[{\"to\":[{\"email\":\""+mailer.getSendTo()[0]+"\"}],\"subject\":\""+mailer.getSubject()+"\"}],\"from\":{\"email\":\"no-reply@h2team.vn\"},\"content\":[{\"type\":\"text/html\",\"value\": \""+body+"\"}]}");
-			
-				sg.api(request);
+			request.setBody(mail.build());
+			Response response = sg.api(request);
+			System.out.println(response.getStatusCode());
+			System.out.println(response.getBody());
+			System.out.println(response.getHeaders());
 //			helper = new MimeMessageHelper(mail, true);
 //			helper.setTo(mailer.getSendTo()[0]);
 //			helper.setSubject(mailer.getSubject());

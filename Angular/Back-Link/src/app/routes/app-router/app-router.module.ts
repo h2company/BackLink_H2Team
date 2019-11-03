@@ -21,6 +21,7 @@ import { PointMemberComponent } from 'src/app/component/dashboard/point-member/p
 import { PointLogComponent } from 'src/app/component/dashboard/point-log/point-log.component';
 import { EditUserComponent } from 'src/app/component/dashboard/user-manager/edit-user/edit-user.component';
 import { ListUserComponent } from 'src/app/component/dashboard/user-manager/list-user/list-user.component';
+import { AddUserComponent } from 'src/app/component/dashboard/user-manager/add-user/add-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -35,6 +36,7 @@ const routes: Routes = [
         component: UserManagerComponent,
         children: [
           { path: '', component: ListUserComponent },
+          { path: 'add', component: AddUserComponent },
           { path: ':id', component: EditUserComponent },
         ]
       },
@@ -53,10 +55,12 @@ const routes: Routes = [
   },
   { 
     path: 'recover', 
-    component: RecoverComponent
+    component: RecoverComponent,
+    canActivate: [NotAuthGuard],
   },
   { 
-    path: 'signup', component: SignupComponent,
+    path: 'signup', 
+    component: SignupComponent,
     canActivate: [NotAuthGuard]
   },
   { path: '404', component: NotFoundComponent },
@@ -86,5 +90,5 @@ export const RoutesComponent = [
   PointMemberComponent,
   PointLogComponent,
   ListUserComponent,
-  AddActionComponent
+  AddUserComponent
 ];
