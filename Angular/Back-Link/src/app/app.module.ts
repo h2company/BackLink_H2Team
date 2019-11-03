@@ -20,6 +20,7 @@ import { NeedAuthGuard } from './routes/need-auth.guard';
 import { ListUserComponent } from './component/dashboard/user-manager/list-user/list-user.component';
 import { EditUserComponent } from './component/dashboard/user-manager/edit-user/edit-user.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
       preventDuplicates: true,
       progressBar: true
     }),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [
     HttpService,
