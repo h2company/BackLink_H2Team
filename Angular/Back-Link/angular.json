@@ -23,10 +23,8 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-              "src/assets/css/fonts.css",
+            "styles": [  
+              "src/assets/css/fonts.css",   
               "src/assets/vendors/css/vendors.min.css",
               "src/assets/css/plugins/forms/switch.min.css",
               "src/assets/css/core/colors/palette-switch.min.css",
@@ -109,8 +107,6 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -142,7 +138,6 @@
           }
         }
       }
-    }
-  },
+    }},
   "defaultProject": "my-app"
 }

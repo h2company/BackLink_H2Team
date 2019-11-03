@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { PointMember } from 'src/app/model/point-member.model';
+import { PointMemberService } from 'src/app/service/point-member.service';
 
 @Component({
   selector: 'app-point-member',
@@ -8,14 +10,12 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class PointMemberComponent implements OnInit {
 
-  id: string;
+  listPointMember: PointMember[];
 
-  constructor(private route: ActivatedRoute) { }
-
+  constructor(private _pointmemberService: PointMemberService){}
+  
   ngOnInit() {
-      this.route.paramMap.subscribe((params : ParamMap) => {
-        this.id = params.get('id');
-      })
+     this._pointmemberService.findAll().subscribe(data => this.listPointMember = data);
   }
 
 }

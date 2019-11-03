@@ -9,27 +9,20 @@ export const requiredValidator = (): ValidatorFn => {
 export const emailValidator = (): ValidatorFn => {
     return (control: AbstractControl): {[key: string]: string } =>{
         const result = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/i.test(control.value);
-        return result ? null : { "message" : 'Email không hợp lệ. VD: example@gmail.com'}
+        return result ? null : { "message" : 'Email không hợp lệ'}
     }
 }
 
 export const phoneValidator = (): ValidatorFn => {
     return (control: AbstractControl): {[key: string]: string } =>{
         const result = /^0(\d{9})$/i.test(control.value);
-        return result ? null : { "message" : 'Số điện thoại không hợp lệ. VD: 0986015392'}
-    }
-}
-
-export const urlValidator = (): ValidatorFn => {
-    return (control: AbstractControl): {[key: string]: string } =>{
-        const result = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi.test(control.value);
-        return result ? null : { "message" : 'Url không hợp lệ. VD: http://h2team.com'}
+        return result ? null : { "message" : 'Số điện thoại không hợp lệ'}
     }
 }
 
 export const lengthValidator = (min: number, max: number): ValidatorFn => {
     return (control: AbstractControl): { [key: string]: string } | null => {
-        if ((control.value.length < min || control.value.length > max)) {
+        if (isNaN(control.value) && (control.value.length < min || control.value.length > max)) {
             return { "message" : 'Giá trị không hợp lệ (Độ dài tối thiểu '+min+', tối đa '+max+')'};
         }
         return null;

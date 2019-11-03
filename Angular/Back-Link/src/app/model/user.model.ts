@@ -5,6 +5,7 @@ export class User {
     constructor(
       public id?: string,
       public username?: string,
+      public point? :string,
       public email?: string,
       public phone?: string,
       public address?: string,
