@@ -14,13 +14,13 @@ public class Backlink extends BaseEntity {
 
 	private String urlBacklink;
 
-	private String urlIgnore;
-
 	private int point;
 
 	private String blockPixel;
 
 	private boolean filterVA;
+	
+	private boolean saveVA;
 
 	private String[] accessHistory;
 
@@ -31,21 +31,34 @@ public class Backlink extends BaseEntity {
 	public Backlink() {
 		super();
 	}	
-
-	public Backlink(String username, String urlBacklink, String urlIgnore, int point, String blockPixel,
-			boolean filterVA, String[] accessHistory, Long beginTime, Long endTime) {
+	
+	
+	public Backlink(String username, String urlBacklink, int point, boolean filterVA, boolean saveVA, Long beginTime,
+			Long endTime) {
 		super();
 		this.username = username;
 		this.urlBacklink = urlBacklink;
-		this.urlIgnore = urlIgnore;
 		this.point = point;
-		this.blockPixel = blockPixel;
 		this.filterVA = filterVA;
-		this.accessHistory = accessHistory;
+		this.saveVA = saveVA;
 		this.beginTime = beginTime;
 		this.endTime = endTime;
 	}
 
+
+	public Backlink(String username, String urlBacklink, int point, String blockPixel, boolean filterVA, boolean saveVA,
+			Long beginTime, Long endTime) {
+		super();
+		this.username = username;
+		this.urlBacklink = urlBacklink;
+		this.point = point;
+		this.blockPixel = blockPixel;
+		this.filterVA = filterVA;
+		this.saveVA = saveVA;
+		this.beginTime = beginTime;
+		this.endTime = endTime;
+	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -68,14 +81,6 @@ public class Backlink extends BaseEntity {
 
 	public void setUrlBacklink(String urlBacklink) {
 		this.urlBacklink = urlBacklink;
-	}
-
-	public String getUrlIgnore() {
-		return urlIgnore;
-	}
-
-	public void setUrlIgnore(String urlIgnore) {
-		this.urlIgnore = urlIgnore;
 	}
 
 	public int getPoint() {
@@ -102,6 +107,14 @@ public class Backlink extends BaseEntity {
 		this.filterVA = filterVA;
 	}
 
+	public boolean isSaveVA() {
+		return saveVA;
+	}
+
+	public void setSaveVA(boolean saveVA) {
+		this.saveVA = saveVA;
+	}
+	
 	public String[] getAccessHistory() {
 		return accessHistory;
 	}
