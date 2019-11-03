@@ -14,6 +14,7 @@ export class APIService {
   //BACKLINK
   public BACKLINK = "/api/backlink/getBackink/";
   public BACKLINKS = "/api/backlink/getBackinks";
+  public BACKLINKS_USER = "/api/backlink/getBackinks/customer";
   public ADD_BACKLINK = "/api/backlink/createBackink";
   constructor() { }  
   

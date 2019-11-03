@@ -69,11 +69,23 @@
                                             <label class="col-md-3 label-control" for="projectinput5"><span
                                                     style="color: red">(*)</span> Điểm quy đổi</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" value=""
-                                                    formControlName="point" placeholder="Từ 0 đến 99999">
+                                                <input type="text" class="form-control" value="" formControlName="point"
+                                                    placeholder="Từ 0 đến 99999">
                                                 <div class="invalid-tooltip"
                                                     *ngIf="userFormGroup && userFormGroup.controls.point.errors && !userFormGroup.controls.point.pristine">
                                                     {{userFormGroup.controls.point.errors.message}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 label-control" for="projectinput5"><span
+                                                    style="color: red">(*)</span> Số lần quy đổi</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" value="" formControlName="limit"
+                                                    placeholder="Từ 0 đến 99999">
+                                                <div class="invalid-tooltip"
+                                                    *ngIf="userFormGroup && userFormGroup.controls.limit.errors && !userFormGroup.controls.limit.pristine">
+                                                    {{userFormGroup.controls.limit.errors.message}}
                                                 </div>
                                             </div>
                                         </div>
@@ -85,7 +97,9 @@
                                                         đầu</label>
                                                     <div class="col-md-12">
                                                         <input type="text" class="form-control" value=""
-                                                            formControlName="beginTime" placeholder="Ngày bắt đầu Backlink" readonly bsDatepicker [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }">
+                                                            formControlName="beginTime"
+                                                            placeholder="Ngày bắt đầu Backlink" readonly bsDatepicker
+                                                            [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }">
                                                     </div>
                                                     <div class="invalid-tooltip"
                                                         *ngIf="userFormGroup && userFormGroup.controls.beginTime.errors && !userFormGroup.controls.beginTime.pristine">
@@ -98,7 +112,9 @@
                                                         thúc</label>
                                                     <div class="col-md-12">
                                                         <input type="text" class="form-control" value=""
-                                                            formControlName="endTime" placeholder="Ngày kết thúc Backlink" readonly bsDatepicker [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }">
+                                                            formControlName="endTime"
+                                                            placeholder="Ngày kết thúc Backlink" readonly bsDatepicker
+                                                            [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }">
 
                                                         <div class="invalid-tooltip"
                                                             *ngIf="userFormGroup && userFormGroup.controls.endTime.errors && !userFormGroup.controls.endTime.pristine">
@@ -132,6 +148,42 @@
                                     </div>
 
                                 </form>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Mã BL</th>
+                                            <th>Loại BL</th>
+                                            <th>Điểm quy đổi</th>
+                                            <th>Thời gian</th>
+                                            <th>Hành Động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let backlink of backlinks; index as i">
+                                            <td>{{ i + 1}}</td>
+                                            <td>{{backlink.id.substr(7)}}</td>
+                                            <td *ngIf="backlink.blockPixel">Action</td>
+                                            <td *ngIf="!backlink.blockPixel">Backlink</td>
+                                            <td>{{backlink.point}}</td>
+                                            <td>{{backlink.createAt | date:'HH:mm:ss dd-MM-yyyy'}}</td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-outline-primary mr-1">
+                                                    <i class="ft-eye"></i> Chi tiết
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="text-center">
+                                                <button type="button" class="btn btn-outline-warning mr-1">
+                                                    <i class="ft-repeat"></i> Xem thêm
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

@@ -17,6 +17,8 @@ public class BacklinkRequest {
 	private String urlBacklink;
 
 	private int point;
+	
+	private int limit;
 
 	private boolean filterVA;
 	
@@ -42,6 +44,14 @@ public class BacklinkRequest {
 
 	public void setPoint(int point) {
 		this.point = point;
+	}
+
+	public int getLimit() {
+		return limit;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
 	}
 
 	public boolean isFilterVA() {
