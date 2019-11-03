@@ -41,6 +41,12 @@ public class BacklinkController {
 	}	
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
+	@GetMapping("backlink/getBackink/{id}")
+	public ResponseEntity<?> getBacklink(@PathVariable String id) {
+		return new ResponseEntity<Object>(backlinkService.getById(id), HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
 	@GetMapping("backlink/getBackinks")
 	public ResponseEntity<?> getBacklinks() {
 		return new ResponseEntity<Object>(backlinkService.findAll(), HttpStatus.OK);
