@@ -2,6 +2,7 @@ package com.backlink.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -32,6 +33,7 @@ import com.backlink.exception.BadRequestException;
 import com.backlink.exception.ResourceNotFoundException;
 import com.backlink.payload.reponse.APIResponse;
 import com.backlink.payload.reponse.JwtAuthenticationResponse;
+import com.backlink.payload.reponse.PointMember;
 import com.backlink.payload.request.AddUserRequest;
 import com.backlink.payload.request.LoginRequest;
 import com.backlink.payload.request.RecoverRequest;
@@ -75,6 +77,14 @@ public class UserService implements IBaseService<User, String> {
 	@Override
 	public List<User> findAll() {
 		return userRepository.findAll();
+	}
+	
+	public List<PointMember> findPoint() {
+		List<PointMember> pmb = new ArrayList<PointMember>();
+		userRepository.findAll().forEach(u -> {
+			pmb.add(new PointMember(u.getFullname(), u.getUsername(), u.getPoint() ));
+		});
+		return pmb;
 	}
 
 	@Override
