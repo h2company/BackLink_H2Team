@@ -16,6 +16,7 @@ import { viLocale } from 'ngx-bootstrap/locale';
 })
 export class AddBacklinkComponent implements OnInit {
   backlink: Backlink = new Backlink();
+  backlinks = null;
   userFormGroup: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
@@ -27,11 +28,13 @@ export class AddBacklinkComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    this.loadBacklinks();
   }
   createForm() {
     this.userFormGroup = this.formBuilder.group({
       backlink_url: ['', [requiredValidator(), urlValidator()]],
-      point: ['', [requiredValidator(), minmaxValidator(0,9999)]],
+      point: ['', [requiredValidator(), minmaxValidator(0,999999)]],
+      limit: ['', [requiredValidator(), minmaxValidator(0,999999)]],
       beginTime: ['', []],
       endTime: ['', []],
       filterVA: [false, []],
@@ -50,6 +53,7 @@ export class AddBacklinkComponent implements OnInit {
     const controls = this.userFormGroup.controls;
     this.backlink.urlBacklink = controls.backlink_url.value;
     this.backlink.point = controls.point.value;
+    this.backlink.limit = controls.limit.value;
     this.backlink.filterVA = controls.filterVA.value;
     this.backlink.saveVA = controls.saveVA.value;
     this.backlink.beginTime = new Date(controls.beginTime.value).getTime();
@@ -59,11 +63,19 @@ export class AddBacklinkComponent implements OnInit {
       this.toastr.success('Thông báo!', 'Thao tác thành công !', {
         positionClass: 'toast-top-right'
       });
-      this.router.navigate(['/statistical-access']);
+      this.router.navigate(['']);
     }, error => {
       this.toastr.error(error.error.error, error.error.message, {
         positionClass: 'toast-top-right'
       });
+    });
+  }
+  loadBacklinks() {
+    this._backlinkService.findAllByUser().subscribe(res => {
+      this.backlinks = res;
+      console.log(this.backlinks);
+    }, error => {
+      console.log(error)
     });
   }
 }

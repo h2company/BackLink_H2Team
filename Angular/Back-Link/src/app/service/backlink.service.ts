@@ -24,6 +24,13 @@ export class BacklinkService implements IBaseService<Backlink, string> {
             map((data: Backlink[]) => data.map((item: Backlink) => item)),
         );
     }
+
+    findAllByUser(): Observable<Backlink[]> {
+        return this.http.get(this.API.BACKLINKS_USER).pipe(
+            map((data: Backlink[]) => data.map((item: Backlink) => item)),
+        );
+    }
+
     deleteById(id: string): Observable<Backlink> {
         throw new Error('Method not implemented.');
     }

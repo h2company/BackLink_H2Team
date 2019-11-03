@@ -93,11 +93,17 @@ public class BacklinkService implements IBaseService<Backlink, String> {
 		return false;
 	}
 	
+	public List<Backlink> findAllByUser() {
+		// TODO Auto-generated method stub
+		return backlinkRepository.findAllByUsername(currentUser.get().getUsername());
+	}
+	
 	public ResponseEntity<?> saveBacklink(BacklinkRequest backlinkRequest){
 		Backlink backlink = new Backlink();
 		backlink.setUsername(currentUser.get().getUsername());
 		backlink.setUrlBacklink(backlinkRequest.getUrlBacklink());
 		backlink.setPoint(backlinkRequest.getPoint());
+		backlink.setLimit(backlinkRequest.getLimit());
 		backlink.setFilterVA(backlinkRequest.isFilterVA());
 		backlink.setSaveVA(backlinkRequest.isSaveVA());
 		backlink.setBeginTime(backlinkRequest.getBeginTime());

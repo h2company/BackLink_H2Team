@@ -53,6 +53,12 @@ public class BacklinkController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
+	@GetMapping("backlink/getBackinks/customer")
+	public ResponseEntity<?> getBacklinksByUser() {
+		return new ResponseEntity<Object>(backlinkService.findAllByUser(), HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
 	@PostMapping("backlink/createBackink")
 	public ResponseEntity<?> createBacklink(@Valid @RequestBody BacklinkRequest backlinkRequest) {
 		return backlinkService.saveBacklink(backlinkRequest);

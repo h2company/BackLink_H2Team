@@ -6,7 +6,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal/ngx-bootstrap-modal';
 import { Backlink } from 'src/app/model/backlink.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { requiredValidator, urlValidator } from 'src/app/util/custom-validator';
-
+declare var jQuery: any;
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -17,7 +17,7 @@ export class IndexComponent implements OnInit {
   varifyForm: FormGroup;
   backlink: Backlink = new Backlink();
   backlinks = null;
-  blcode = `<a href="" backlink="" target="_blank">Nội dung backlink</a>`;
+  blcode = `<a href="" data-backlink="" target="_blank">Nội dung backlink</a>`;
   verify: string = `<script>
     (function(b,d,w,i,f,r){
         b._blSettings={siteId:22,action: 'verify'};
@@ -32,8 +32,8 @@ export class IndexComponent implements OnInit {
     private formBuilder: FormBuilder,
     private _backlinkService: BacklinkService,
     private toastr: ToastrService,
-    private router: Router 
-    ) { }
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.createForm();
@@ -44,10 +44,10 @@ export class IndexComponent implements OnInit {
       urlVerify: ['', [requiredValidator(), urlValidator()]]
     });
   }
-  onVerifySubmit(){
+  onVerifySubmit() {
     console.log('submit');
-    if(this.varifyForm.invalid){
-      this.toastr.error('Thông báo!', 'Vui lòng nhập chính xác thông tin!',{
+    if (this.varifyForm.invalid) {
+      this.toastr.error('Thông báo!', 'Vui lòng nhập chính xác thông tin!', {
         positionClass: 'toast-top-right'
       });
       return;
@@ -55,7 +55,7 @@ export class IndexComponent implements OnInit {
     const controls = this.varifyForm.controls;
     var win = window.open(controls.urlVerify.value, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=500,width=700,height=400");
   }
-  loadBacklinks(){
+  loadBacklinks() {
     this._backlinkService.findAll().subscribe(res => {
       this.backlinks = res;
       console.log(this.backlinks);
@@ -65,14 +65,19 @@ export class IndexComponent implements OnInit {
       });
     });
   }
-  onClickBacklinkDetail(id){
+  onClickBacklinkDetail(id) {
     this._backlinkService.findById(id).subscribe(res => {
       this.backlink = res;
-      //Set BACKLINK
-      document.getElementsByClassName("token punctuation").item(2).innerText = "\""+this.backlink.urlBacklink;
-      document.getElementsByClassName("token punctuation").item(4).innerText = "\""+this.backlink.id;
-      //Set Verify Code
-      document.getElementsByClassName("token number").item(0).innerText = this.backlink.id;
+      if (this.backlink) {
+        let _this = this;
+        (function ($) {
+          //Set Backlink
+          $('.token.punctuation').eq(2).html("\"" + _this.backlink.urlBacklink);
+          $('.token.punctuation').eq(4).html("=\"" + _this.backlink.id);
+          //Set Verify Code
+          $('.token.number').eq(0).html(_this.backlink.id);
+        })(jQuery);
+      }
       setTimeout(() => {
         this.childModal.show();
       }, 500);
