@@ -17,7 +17,7 @@ export class IndexComponent implements OnInit {
   varifyForm: FormGroup;
   backlink: Backlink = new Backlink();
   backlinks = null;
-  blcode = `<a href="" target="_blank">Nội dung backlink</a>`;
+  blcode = `<a href="" backlink="" target="_blank">Nội dung backlink</a>`;
   verify: string = `<script>
     (function(b,d,w,i,f,r){
         b._blSettings={siteId:22,action: 'verify'};
@@ -68,8 +68,11 @@ export class IndexComponent implements OnInit {
   onClickBacklinkDetail(id){
     this._backlinkService.findById(id).subscribe(res => {
       this.backlink = res;
+      //Set BACKLINK
       document.getElementsByClassName("token punctuation").item(2).innerText = "\""+this.backlink.urlBacklink;
-      document.getElementsByClassName("token number").item(0).innerText = id;
+      document.getElementsByClassName("token punctuation").item(4).innerText = "\""+this.backlink.id;
+      //Set Verify Code
+      document.getElementsByClassName("token number").item(0).innerText = this.backlink.id;
       setTimeout(() => {
         this.childModal.show();
       }, 500);
