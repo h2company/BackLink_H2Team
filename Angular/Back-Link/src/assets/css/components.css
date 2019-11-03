@@ -668,7 +668,7 @@ footer.footer-dark {
     height: 100%;
     /* fallback if needed */
     top: 0;
-    z-index: 1051; }
+    z-index: 10; }
     .main-menu.menu-fixed .main-menu-footer {
       position: fixed; }
   .main-menu.menu-static {

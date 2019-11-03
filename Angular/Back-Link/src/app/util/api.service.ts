@@ -12,6 +12,7 @@ export class APIService {
   public OAUTH_SIGNUP = "/api/auth/signup";
   public OAUTH_RECOVER = "/api/auth/recover";
   //BACKLINK
+  public BACKLINK = "/api/backlink/getBackink/";
   public BACKLINKS = "/api/backlink/getBackinks";
   public ADD_BACKLINK = "/api/backlink/createBackink";
   constructor() { }  

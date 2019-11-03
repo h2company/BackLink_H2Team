@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,12 @@ public class BacklinkController {
 
 	@Autowired
 	private BacklinkService backlinkService;
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
+	@GetMapping("backlink/getBackink/{id}")
+	public ResponseEntity<?> getBacklink(@PathVariable String id) {
+		return new ResponseEntity<Object>(backlinkService.getById(id), HttpStatus.OK);
+	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
 	@GetMapping("backlink/getBackinks")
