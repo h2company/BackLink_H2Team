@@ -36,13 +36,16 @@ export class UserService implements IBaseService<User, string> {
     return this.http.put(this.API.ALL_USERS, entity);
   }
   save(entity: User): Observable<User> {
-    throw new Error('Method not implemented.');
+    return this.http.post_oauth(this.API.ALL_USERS, entity);
   }
   login(data: any): Observable<any> {    
     return this.http.post(this.API.OAUTH_SIGNIN, data)
   }
   register(entity: User): Observable<any> {
     return this.http.post(this.API.OAUTH_SIGNUP, entity);
+  }
+  recover(data: any): Observable<any> {
+    return this.http.put(this.API.OAUTH_RECOVER, data);
   }
   getinfo(): Observable<User[]>  {
     return this.http.get(this.API.ME);

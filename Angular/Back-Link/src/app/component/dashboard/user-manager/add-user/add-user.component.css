@@ -1,0 +1,14 @@
+.form-control.ng-valid.ng-dirty{
+    color: #3b4781;
+    border: 1px solid #cacfe7;
+    background-image: unset;
+}
+
+.form-control.ng-valid.ng-dirty:focus {
+    color: #4e5154;
+    border-color: #6967ce;
+    outline: 0;
+    background-color: #fff;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
