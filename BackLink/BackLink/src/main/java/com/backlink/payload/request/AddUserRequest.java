@@ -47,6 +47,8 @@ public class AddUserRequest {
 	private boolean gender;
 	
 	private boolean enabled;
+	
+	private int point;
 
 	public String getUsername() {
 		return username;
@@ -127,8 +129,13 @@ public class AddUserRequest {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
-	
-	
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
 	
 }

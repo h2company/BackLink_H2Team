@@ -9,7 +9,7 @@
                 <div class="breadcrumbs-top float-md-right">
                     <div class="breadcrumb-wrapper mr-1">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Trang
+                            <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Trang
                                     chủ</a></li>
                             <li class="breadcrumb-item"><a href="#">Quản Lý
                                     Backlink</a></li>
@@ -56,63 +56,74 @@
                                             <label class="col-md-3 label-control" for="projectinput5"><span
                                                     style="color: red">(*)</span> Đường dẫn yêu cầu</label>
                                             <div class="col-md-9">
-                                                <input type="text" id="projectinput5" class="form-control" value=""
-                                                    name="username"
-                                                    placeholder="Ví dụ: http://h2team.blog/gioi-thieu-ve-h2team.hmtl">
+                                                <input type="text" class="form-control" value="" formControlName="backlink_url"
+                                                    placeholder="Ví dụ: http://h2team.blog/gioi-thieu-ve-h2team.html">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-3 label-control" for="projectinput5"><span
                                                     style="color: red">(*)</span> Kênh tìm kiếm hợp lệ</label>
                                             <div class="col-md-9">
-                                                <textarea class="form-control" id="descTextarea" rows="3"
-                                                    placeholder="Ví dụ: google.com , bing.com, yahoo.com..."></textarea>
+                                                <textarea class="form-control" rows="3"
+                                                    placeholder="Ví dụ: google.com , bing.com, yahoo.com..." formControlName="searchEngine"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-3 label-control" for="projectinput5"><span
                                                     style="color: red">(*)</span> Từ khóa tìm kiếm hợp lệ</label>
                                             <div class="col-md-9">
-                                                <textarea class="form-control" id="descTextarea" rows="3"
-                                                    placeholder="Ví dụ: h2team , h2 team,..."></textarea>
+                                                <textarea class="form-control" rows="3"
+                                                    placeholder="Ví dụ: h2team , h2 team,..." formControlName="keywords"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-3 label-control" for="projectinput5"><span
                                                     style="color: red">(*)</span> Danh sách trình duyệt hợp lệ</label>
                                             <div class="col-md-9">
-                                                <textarea class="form-control" id="descTextarea" rows="3"
-                                                    placeholder="Ví dụ: Chrome , Opera, Firefox,..."></textarea>
+                                                <textarea class="form-control" rows="3"
+                                                    placeholder="Ví dụ: Chrome , Opera, Firefox,..." formControlName="userAgent"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-3 label-control" for="projectinput5"><span
                                                     style="color: red">(*)</span> Điểm quy đổi</label>
                                             <div class="col-md-9">
-                                                <input type="text" id="projectinput5" class="form-control" value=""
-                                                    name="username">
+                                                <input type="text" class="form-control" value="" formControlName="point">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="row col-md-9 offset-md-3">
+                                                <div class="col-md-6">
+                                                    <label class="col-md-12 label-control text-left"
+                                                        for="projectinput5"><span style="color: red">(*)</span> Ngày bắt
+                                                        đầu</label>
+                                                    <div class="col-md-12">
+                                                        <input type="text" class="form-control" value="" formControlName="beginTime">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="col-md-12 label-control text-left"
+                                                        for="projectinput5"><span style="color: red">(*)</span> Ngày kết
+                                                        thúc</label>
+                                                    <div class="col-md-12">
+                                                        <input type="text" class="form-control" value="" formControlName="endTime">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-3 label-control" for="projectinput5"><span
                                                     style="color: red">(*)</span> Mã theo dõi</label>
-                                            <div class="col-md-9">
-                                                <input type="text" id="projectinput5" class="form-control"
-                                                    value="BL01544877" name="username" readonly="readonly">
+                                            <div class="col-md-9"> (Dùng mã nhúng sau <a data-bl='BL0215778'
+                                                    href="">Text backlink</a>)
+                                                <input type="text" class="form-control" value=""
+                                                    readonly="readonly" formControlName="backlink_code">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-3 label-control" for="projectinput5"></label>
                                             <div class="col-md-9">
-                                                <ui-switch [checked]="true"></ui-switch>
-                                                <label for="switcheryColor" class="card-title ml-1">Chặn
-                                                    trình thu thập dữ liệu</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3 label-control" for="projectinput5"></label>
-                                            <div class="col-md-9">
-                                                <ui-switch [checked]="true"></ui-switch>
+                                                <ui-switch [checked]="true" formControlName="filterVA"></ui-switch>
                                                 <label for="switcheryColor" class="card-title ml-1">Lọc
                                                     truy cập ảo</label>
                                             </div>
@@ -120,7 +131,7 @@
                                         <div class="form-group row">
                                             <label class="col-md-3 label-control" for="projectinput5"></label>
                                             <div class="col-md-9">
-                                                <ui-switch [checked]="true"></ui-switch>
+                                                <ui-switch [checked]="true" formControlName="saveVA"></ui-switch>
                                                 <label for="switcheryColor" class="card-title ml-1">Lưu
                                                     thông tin truy cập</label>
                                             </div>
