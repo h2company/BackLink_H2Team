@@ -1,0 +1,142 @@
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-wrapper-before"></div>
+        <div class="content-header row">
+            <div class="content-header-left col-md-4 col-12 mb-2">
+                <h3 class="content-header-title">Backlink - Thêm mới Yêu Cầu Hành Động</h3>
+            </div>
+            <div class="content-header-right col-md-8 col-12">
+                <div class="breadcrumbs-top float-md-right">
+                    <div class="breadcrumb-wrapper mr-1">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Trang
+                                    chủ</a></li>
+                            <li class="breadcrumb-item"><a href="#">Quản Lý
+                                    Backlink</a></li>
+                            <li class="breadcrumb-item active">Thêm mới Yêu Cầu Hành Động</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title" id="horz-layout-basic">Thêm mới
+                                Backlink</h4>
+                            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                    <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-content collpase show">
+                            <div class="card-body">
+                                <div class="card-text">
+                                    <p>
+                                        <span style="color: red">Chú ý:</span> Hãy cẩn trọng khi thay
+                                        đổi bất kì thông tin nào.
+                                    </p>
+                                    <p>
+                                        <span style="color: red">(*):</span> Thông tin bắt buộc.
+                                    </p>
+                                </div>
+                                <form class="form form-horizontal" [formGroup]="userFormGroup" (ngSubmit)="onSubmit()">
+                                    <div class="form-body">
+                                        <h4 class="form-section">
+                                            <i class="ft-clipboard"></i>Thông Tin Hành Động
+                                        </h4>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 label-control" for="projectinput5"><span
+                                                    style="color: red">(*)</span> Đường dẫn yêu cầu</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" value=""
+                                                    formControlName="backlink_url"
+                                                    placeholder="Ví dụ: http://h2team.blog/gioi-thieu-ve-h2team.html">
+                                                <div class="invalid-tooltip"
+                                                    *ngIf="userFormGroup && userFormGroup.controls.backlink_url.errors && !userFormGroup.controls.backlink_url.pristine">
+                                                    {{userFormGroup.controls.backlink_url.errors.message}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 label-control" for="projectinput5"><span
+                                                    style="color: red">(*)</span> Điểm quy đổi</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" value=""
+                                                    formControlName="point" placeholder="Từ 0 đến 99999">
+                                                <div class="invalid-tooltip"
+                                                    *ngIf="userFormGroup && userFormGroup.controls.point.errors && !userFormGroup.controls.point.pristine">
+                                                    {{userFormGroup.controls.point.errors.message}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="row col-md-9 offset-md-3">
+                                                <div class="col-md-6">
+                                                    <label class="col-md-12 label-control text-left"
+                                                        for="projectinput5"><span style="color: red">(*)</span> Ngày bắt
+                                                        đầu</label>
+                                                    <div class="col-md-12">
+                                                        <input type="text" class="form-control" value=""
+                                                            formControlName="beginTime" placeholder="Ngày bắt đầu Backlink" readonly bsDatepicker [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }">
+                                                    </div>
+                                                    <div class="invalid-tooltip"
+                                                        *ngIf="userFormGroup && userFormGroup.controls.beginTime.errors && !userFormGroup.controls.beginTime.pristine">
+                                                        {{userFormGroup.controls.beginTime.errors.message}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="col-md-12 label-control text-left"
+                                                        for="projectinput5"><span style="color: red">(*)</span> Ngày kết
+                                                        thúc</label>
+                                                    <div class="col-md-12">
+                                                        <input type="text" class="form-control" value=""
+                                                            formControlName="endTime" placeholder="Ngày kết thúc Backlink" readonly bsDatepicker [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }">
+
+                                                        <div class="invalid-tooltip"
+                                                            *ngIf="userFormGroup && userFormGroup.controls.endTime.errors && !userFormGroup.controls.endTime.pristine">
+                                                            {{userFormGroup.controls.endTime.errors.message}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 label-control" for="projectinput5"></label>
+                                            <div class="col-md-9">
+                                                <ui-switch [checked]="true" formControlName="filterVA"></ui-switch>
+                                                <label for="switcheryColor" class="card-title ml-1">Lọc
+                                                    truy cập ảo</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 label-control" for="projectinput5"></label>
+                                            <div class="col-md-9">
+                                                <ui-switch [checked]="true" formControlName="saveVA"></ui-switch>
+                                                <label for="switcheryColor" class="card-title ml-1">Lưu
+                                                    thông tin truy cập</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions right">
+                                        <button type="submit" class="btn btn-primary mr-1">
+                                            <i class="la la-check-square-o"></i> Thêm mới
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
