@@ -39,13 +39,15 @@ public class User extends BaseEntity {
 	private Date birthday;
 
 	private boolean gender;
+	
+	private int point;
 
 	public User() {
 		super();
 	}
 
 	public User(String username, String password, Set<Role> roles, String email, String phone, String fullname,
-			String address, Date birthday, boolean gender) {
+			String address, Date birthday, boolean gender, int point) {
 		super();
 		this.username = username;
 		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -56,6 +58,7 @@ public class User extends BaseEntity {
 		this.address = address;
 		this.birthday = birthday;
 		this.gender = gender;
+		this.point = point;
 	}
 	
 	
@@ -69,7 +72,7 @@ public class User extends BaseEntity {
 	}
 
 	public User(String id, String username, String password, Set<Role> roles, String email, String phone,
-			String fullname, String address, Date birthday, boolean gender) {
+			String fullname, String address, Date birthday, boolean gender, int point) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -81,6 +84,7 @@ public class User extends BaseEntity {
 		this.address = address;
 		this.birthday = birthday;
 		this.gender = gender;
+		this.point = point;
 	}
 
 	public String getId() {
@@ -163,4 +167,15 @@ public class User extends BaseEntity {
 		this.gender = gender;
 	}
 
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
+	
+
+	
 }
