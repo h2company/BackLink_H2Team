@@ -20,7 +20,7 @@ export class IndexComponent implements OnInit {
   blcode = `<a href="" data-backlink="" target="_blank">Nội dung backlink</a>`;
   verify: string = `<script>
     (function(b,d,w,i,f,r){
-        b._blSettings={siteId:22,action: 'verify'};
+        b._blSettings={siteId:'22',action: 'verify'};
         f=d.getElementsByTagName('head')[0];
         r=d.createElement('script');
         r.async=1;
@@ -53,7 +53,8 @@ export class IndexComponent implements OnInit {
       return;
     }
     const controls = this.varifyForm.controls;
-    var win = window.open(controls.urlVerify.value, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=500,width=700,height=400");
+    var win = window.open(controls.urlVerify.value, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=400,width=700,height=400");
+    
   }
   loadBacklinks() {
     this._backlinkService.findAll().subscribe(res => {
@@ -73,9 +74,15 @@ export class IndexComponent implements OnInit {
         (function ($) {
           //Set Backlink
           $('.token.punctuation').eq(2).html("\"" + _this.backlink.urlBacklink);
-          $('.token.punctuation').eq(4).html("=\"" + _this.backlink.id);
+          $('.token.punctuation').eq(5).html("\"" + _this.backlink.id);
           //Set Verify Code
-          $('.token.number').eq(0).html(_this.backlink.id);
+          $('.token.string').eq(0).html('\''+_this.backlink.id+'\'');
+
+          console.log($(window).eq(0));
+
+          $(window).eq(0).setData = function(param) {
+              console.log(param);
+          }
         })(jQuery);
       }
       setTimeout(() => {
