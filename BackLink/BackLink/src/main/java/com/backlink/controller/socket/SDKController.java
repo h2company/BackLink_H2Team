@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import com.backlink.beans.CurrentUser;
 import com.backlink.entities.AccessHistory;
 import com.backlink.entities.SDKMessage;
 import com.backlink.service.AccessHistoryService;
@@ -33,6 +34,9 @@ public class SDKController {
 	private List<AccessHistory> AHList = new ArrayList<>();
 	
 	@Autowired
+	private CurrentUser currentUser;
+	
+	@Autowired
     private TemplateEngine templateEngine;
 	
 	@Autowired
@@ -41,11 +45,12 @@ public class SDKController {
 	@MessageMapping("/service.sendMessage")
 	@SendTo("/service/public")
 	public AccessHistory sendMessage(@Payload AccessHistory accessHistory, SimpMessageHeaderAccessor headerAccessor) {
-		AHList.add(accessHistory);
-		headerAccessor.getSessionAttributes().put("tracking", AHList);
-		accessHistory.setTimeConnect(new Date());
-		accessHistory.setUpdateAt(new Date());
-		return accessHistory;
+//		AHList.add(accessHistory);
+//		headerAccessor.getSessionAttributes().put("tracking", AHList);
+//		accessHistory.setTimeConnect(new Date());
+//		accessHistory.setUpdateAt(new Date());
+//		return accessHistory;
+		return AHService.saveOne(accessHistory);
 	}
 	
 	@MessageMapping("/service.addEvent")
@@ -75,6 +80,17 @@ public class SDKController {
 		context.setVariable("ip", request.getRemoteAddr());	
 		context.setVariable("userAgent", request.getHeader("User-Agent"));
 		String body = templateEngine.process("follow", context);
+		return body;
+	}
+	
+	@RequestMapping(value="/frame/c/verify.js", method = RequestMethod.GET, produces = "text/javascript; charset=UTF-8")
+	@ResponseBody
+	public String verifyResource(HttpServletRequest request, @RequestParam String siteId) {
+		Context context = new Context();		
+		context.setVariable("siteId", siteId);		
+		context.setVariable("ip", request.getRemoteAddr());	
+		context.setVariable("userAgent", request.getHeader("User-Agent"));
+		String body = templateEngine.process("verify", context);
 		return body;
 	}
 }

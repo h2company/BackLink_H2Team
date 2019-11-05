@@ -44,6 +44,7 @@
             "scripts": [
               "src/assets/vendors/js/vendors.min.js",
               "src/assets/js/scripts/forms/switch.min.js",
+              "src/assets/js/scripts/data.js",
               "src/assets/js/core/app-menu.min.js",
               "src/assets/js/core/app.min.js",
               "src/assets/vendors/js/ui/prism.min.js",
