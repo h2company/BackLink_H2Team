@@ -42,7 +42,6 @@ public class UpdateUserRequest {
 	@Size(min = 5, max = 30, message = MessageException.ANO_SIZE)
 	private String fullname;
 	
-	@DateTimeFormat
 	private Date birthday;
 	
 	private boolean gender;

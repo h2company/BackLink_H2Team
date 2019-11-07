@@ -35,10 +35,14 @@
                                 <div class="col-md-9">
                                     <input type="text" id="username" formControlName="username"
                                         [(ngModel)]="user.username"
-                                        [class.is-invalid]="controls.username.invalid && controls.username.touched"
-                                        class="form-control" name="username">
+                                        (click)="removeError($event)"
+                                        [class.is-invalid]="(controls.username.invalid && controls.username.touched) || isSubmit"
+                                        [class.is-invalid-api]="errApi.username.status" class="form-control">
                                     <div class="invalid-tooltip" *ngIf="controls.username.errors">
                                         {{controls.username.errors.message}}
+                                    </div>
+                                    <div class="invalid-tooltip api-error" *ngIf="errApi.username.status">
+                                        {{errApi.username.message}}
                                     </div>
                                 </div>
                             </div>
@@ -55,42 +59,71 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-primary btn-min-width box-shadow-5 mr-1 mb-1"
+                                    <button type="button" class="btn btn-primary btn-min-width box-shadow-5 mr-1"
                                         (click)="showHide()">{{text}}</button>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control" for="email"><span
+                                        style="color: red">(*)</span> Email</label>
+                                <div class="col-md-9">
+                                    <input type="email" formControlName="email" [(ngModel)]="user.email"
+                                        class="form-control"
+                                        id="email"
+                                        (click)="removeError($event)"
+                                        [class.is-invalid]="(controls.email.invalid && controls.email.touched)"                                        
+                                        [class.is-invalid-api]="errApi.email.status" >                                        
+                                    <div class="invalid-tooltip" *ngIf="controls.email.errors">
+                                        {{controls.email.errors.message}}
+                                    </div>
+                                    <div class="invalid-tooltip api-error" *ngIf="errApi.email.status">
+                                        {{errApi.email.message}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 label-control" for="phone"><span
+                                        style="color: red">(*)</span> Số Điện Thoại</label>
+                                <div class="col-md-9">
+                                    <input type="text" formControlName="phone" [(ngModel)]="user.phone"
+                                        class="form-control"
+                                        id="phone"
+                                        (click)="removeError($event)"
+                                        [class.is-invalid]="(controls.phone.invalid && controls.phone.touched)"
+                                        [class.is-invalid-api]="errApi.phone.status" >
+                                    <div class="invalid-tooltip" *ngIf="controls.phone.errors">
+                                        {{controls.phone.errors.message}}
+                                    </div>
+                                    <div class="invalid-tooltip api-error" *ngIf="errApi.phone.status">
+                                        {{errApi.phone.message}}
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5"><span
                                         style="color: red">(*)</span> Ngày Sinh</label>
                                 <div class="col-md-9">
-                                    <input type="text" placeholder="Ngày sinh" class="form-control red" readonly bsDatepicker placement="bottom" [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }">
-                                    <div class="invalid-tooltip" *ngIf="controls.email.errors">
-                                        {{controls.email.errors.message}}
-                                    </div>
+                                    <input type="text" placeholder="Ngày sinh" class="form-control red" readonly
+                                        bsDatepicker placement="bottom" (bsValueChange)="onChangeBirthday($event)"
+                                        [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }">
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row skin skin-square">
                                 <label class="col-md-3 label-control" for="projectinput5"><span
-                                        style="color: red">(*)</span> Email</label>
+                                        style="color: red">(*)</span> Giới tính</label>
                                 <div class="col-md-9">
-                                    <input type="email" formControlName="email" [(ngModel)]="user.email"
-                                        class="form-control"
-                                        [class.is-invalid]="controls.email.invalid && controls.email.touched">
-                                    <div class="invalid-tooltip" *ngIf="controls.email.errors">
-                                        {{controls.email.errors.message}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-md-3 label-control" for="projectinput5"><span
-                                        style="color: red">(*)</span> Số Điện Thoại</label>
-                                <div class="col-md-9">
-                                    <input type="text" formControlName="phone" [(ngModel)]="user.phone"
-                                        class="form-control"
-                                        [class.is-invalid]="controls.phone.invalid && controls.phone.touched">
-                                    <div class="invalid-tooltip" *ngIf="controls.phone.errors">
-                                        {{controls.phone.errors.message}}
-                                    </div>
+                                    <p-radio name="gender" (change)="getGender($event)" value="true"
+                                        checked="{{user.gender ? 'checked' : ''}}" shape="curve" color="success"
+                                        animation="jelly">
+                                        <i p-icon class="material-icons">done</i>
+                                        Nam
+                                    </p-radio>
+                                    <p-radio name="gender" (change)="getGender($event)" value="false"
+                                        checked="{{!user.gender ? 'checked' : ''}}" shape="curve" color="success"
+                                        animation="jelly">
+                                        <i p-icon class="material-icons">done</i>
+                                        Nữ
+                                    </p-radio>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -144,3 +177,5 @@
         </div>
     </div>
 </div>
+
+{{user | json}}

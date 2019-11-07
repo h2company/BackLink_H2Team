@@ -29,7 +29,7 @@ export const urlValidator = (): ValidatorFn => {
 
 export const lengthValidator = (min: number, max: number): ValidatorFn => {
     return (control: AbstractControl): { [key: string]: string } | null => {
-        if ((control.value.length < min || control.value.length > max)) {
+        if ((control.value == null || control.value.length < min || control.value.length > max)) {
             return { "message" : 'Giá trị không hợp lệ (Độ dài tối thiểu '+min+', tối đa '+max+')'};
         }
         return null;

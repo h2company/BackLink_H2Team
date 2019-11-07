@@ -21,13 +21,19 @@ defineLocale('vi', viLocale);
 export class AddUserComponent implements OnInit {
 
   user: User = new User();
-  userForm : FormGroup;
+  userForm: FormGroup;
   roles = roles;
-  controls : any;
+  controls: any;
   hide: boolean = true;
-  text: string =  'Hiện';
+  text: string = 'Hiện';
+  errApi = {
+    username : {status: false, message : ''},
+    email: {status: false, message : ''},
+    phone: {status: false, message : ''}
+  }
+  isSubmit: boolean = false;
 
-  @ViewChild(SwalComponent, {static: false}) deleteSwal: SwalComponent;
+  @ViewChild(SwalComponent, { static: false }) deleteSwal: SwalComponent;
 
   constructor(
     private router: Router,
@@ -40,9 +46,10 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    this.defaultValue();
   }
 
-  createForm(){
+  createForm() {
     this.userForm = this.formBuider.group({
       username: ['', [requiredValidator(), lengthValidator(8, 50)]],
       password: ['', [requiredValidator(), lengthValidator(8, 50)]],
@@ -51,46 +58,91 @@ export class AddUserComponent implements OnInit {
       address: ['', [requiredValidator()]],
       fullname: ['', [requiredValidator()]]
     });
+
     this.controls = this.userForm.controls;
+
     this.bsLocaleService.use('vi');
   }
 
-  onRolesChange(id: number){
-    let rolename: RoleName = id == 0 ? RoleName.ROLE_CUSTOMER : id == 1 ? RoleName.ROLE_ADMIN : RoleName.ROLE_MANAGER ;
+  defaultValue() {
+    this.user.roles = [new Roles(0, RoleName.ROLE_CUSTOMER)];
+    this.user.gender = true;
+    // this.user.username = 'quoxank1';
+    // this.user.email = 'qa1796@gmail.com';
+    // this.user.fullname = 'Le Anh Quoc';
+    // this.user.phone = '0377312609';
+    // this.user.address = 'go vap';
+    // this.user.password = 'asdasdasd';
+  }
+
+  onRolesChange(id: number) {
+    let rolename: RoleName = id == 0 ? RoleName.ROLE_CUSTOMER : id == 1 ? RoleName.ROLE_ADMIN : RoleName.ROLE_MANAGER;
     this.user.roles = [
       new Roles(id, rolename)
     ];
   }
 
-  onSubmit(){
-    if(!this.userForm.valid){
-      this.toastr.error('Thông báo!', 'Vui lòng nhập chính xác thông tin!',{
+  onSubmit() {    
+    this.clearErrorAPI();
+    if (!this.userForm.valid) {      
+    this.isSubmit = true;
+      this.toastr.error('Thông báo!', 'Vui lòng nhập chính xác thông tin!', {
         positionClass: 'toast-top-right'
       });
       return;
     }
-   
-    this._userService.save(this.user).subscribe(data => {       
-      this.user = data;     
-      this.resetForm(this.user);   
+
+    this._userService.save(this.user).subscribe(data => {
+      this.user = data;
+      this.resetForm(this.user);
       this.toastr.success('Thông báo!', 'Cập nhật thông tin thành công!', {
         positionClass: 'toast-top-right'
       })
-    }, err => {
-        this.toastr.error('Thông báo!', err.error.message,{
-          positionClass: 'toast-top-right'
-        });
+    }, errs => {
+      this.handleErrorAPI(errs);
+      this.toastr.error('Thông báo!', errs.error.message, {
+        positionClass: 'toast-top-right'
+      });
     });
+
   }
 
-  showHide(){
+  showHide() {
     this.hide = !this.hide;
     this.text = this.hide ? 'Hiện' : 'Ẩn';
   }
 
-  resetForm(user: User){
+  resetForm(user: User) {
+    this.isSubmit = false;
     Object.keys(this.controls).forEach(elm => {
       this.controls[elm].reset(this.user[elm]);
     });
+  }
+
+  getGender($event){
+    this.user.gender = $event.value;
+  }
+
+  onChangeBirthday(date: Date){
+    this.user.birthday = date;
+  }
+
+  removeError($event){
+    this.errApi[$event.target.id].status = false;
+    this.errApi[$event.target.id].message = '';
+  }
+
+  clearErrorAPI(){    
+    Object.keys(this.errApi).forEach(e => {
+      this.errApi[e].status = false;
+      this.errApi[e].message = '';
+    })  
+  }
+
+  handleErrorAPI(errs){    
+    Object.keys(errs.error.errors).forEach(e => {
+      this.errApi[e].status = true;
+      this.errApi[e].message = errs.error.errors[e];
+    })  
   }
 }
