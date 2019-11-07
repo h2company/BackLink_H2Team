@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.backlink.entities.User;
@@ -15,7 +16,7 @@ public interface UserRepository extends MongoRepository<User, String>{
 
 	Optional<User> findByUsernameOrEmail(String username, String email);
 
-	List<User> findByIdIn(List<Long> userIds);
+	List<User> findByIdIn(List<Long> userIds);	
 
 	Optional<User> findByUsername(String username);
 	
@@ -24,5 +25,8 @@ public interface UserRepository extends MongoRepository<User, String>{
 	Boolean existsByUsername(String username);
 
 	Boolean existsByEmail(String email);
+	
+	@Query(value="{}", fields="{email : 0}")
+	List<User> findPoint();
 	
 }

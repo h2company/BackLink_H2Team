@@ -20,17 +20,25 @@
             }
         }
         bindEvent(window, 'message', function (e) {
-        	if(e.data.action == 'connect'){
-        		console.log('Begin listen !');
-                window.blSiteSettings = e.data.blSiteSettings;
-        		connect();
-        	} else if(e.data.action == 'tracking'){
-        		e.data.type = "tracking";
-        		window.blSiteSettings = e.data.blSiteSettings;
-        		if(stompClient && e.data.isTrusted == true) {
-        			delete e.data.isTrusted;
-        			stompClient.send("/app/service.sendMessage", {}, JSON.stringify(e.data));
-        		}
+        	switch(e.data.action){
+	        	case "connect":
+	        		window.blSiteSettings = e.data.blSiteSettings;
+	        		connect();
+	        		break;
+	        	case "tracking":
+	        		window.blSiteSettings = e.data.blSiteSettings;
+	        		if(stompClient && e.data.isTrusted == true) {
+	        			delete e.data.isTrusted;
+	        			stompClient.send("/app/service.sendMessage", {}, JSON.stringify(e.data));
+	        		}
+	        		break;
+	        	case "verify":
+	        		window.blSiteSettings = e.data.blSiteSettings;
+	        		if(stompClient && e.data.isTrusted == true) {
+	        			delete e.data.isTrusted;
+	        			stompClient.send("/app/service.sendMessage", {}, JSON.stringify(e.data));
+	        		}
+	        		break;
         	}
         });
 		function connect() {
@@ -61,6 +69,12 @@
 				console.log("LEAVE", message);
 			} else {
 				console.log("RESPONE", message);
+				if(message.events[0].eventAction[0].event == "verify") {
+					console.log('close window !');
+					console.log(message.id);
+					window.setData(message.id);
+					//alert("Xác thực thành công ! Vui lòng xóa mã nhúng xác thực để tránh ảnh hưởng đến trải nghiệm người dùng.", window.parent.close());
+				}
 			}
 		}
 		function onError(error) {

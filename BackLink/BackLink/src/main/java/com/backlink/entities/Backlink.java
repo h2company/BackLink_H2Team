@@ -16,7 +16,7 @@ public class Backlink extends BaseEntity {
 
 	private int point;
 
-	private String blockPixel;
+	private int limit;
 
 	private boolean filterVA;
 	
@@ -45,20 +45,20 @@ public class Backlink extends BaseEntity {
 		this.endTime = endTime;
 	}
 
-
-	public Backlink(String username, String urlBacklink, int point, String blockPixel, boolean filterVA, boolean saveVA,
+	public Backlink(String username, String urlBacklink, int point, int limit, boolean filterVA, boolean saveVA,
 			Long beginTime, Long endTime) {
 		super();
 		this.username = username;
 		this.urlBacklink = urlBacklink;
 		this.point = point;
-		this.blockPixel = blockPixel;
+		this.limit = limit;
 		this.filterVA = filterVA;
 		this.saveVA = saveVA;
 		this.beginTime = beginTime;
 		this.endTime = endTime;
 	}
-	
+
+
 	public String getUsername() {
 		return username;
 	}
@@ -90,14 +90,16 @@ public class Backlink extends BaseEntity {
 	public void setPoint(int point) {
 		this.point = point;
 	}
-
-	public String getBlockPixel() {
-		return blockPixel;
+	
+	public int getLimit() {
+		return limit;
 	}
 
-	public void setBlockPixel(String blockPixel) {
-		this.blockPixel = blockPixel;
+
+	public void setLimit(int limit) {
+		this.limit = limit;
 	}
+
 
 	public boolean isFilterVA() {
 		return filterVA;

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import com.backlink.beans.CurrentUser;
 import com.backlink.entities.AccessHistory;
 import com.backlink.entities.Event;
 import com.backlink.entities.SDKMessage;
@@ -21,7 +22,6 @@ import com.backlink.service.AccessHistoryService;
 
 @Component
 public class WebSocketEventListener {
-
 	@Autowired
 	private AccessHistoryService AHService;
 	
@@ -41,6 +41,7 @@ public class WebSocketEventListener {
 
         String siteId = (String) headerAccessor.getSessionAttributes().get("siteId");
         if(siteId != null) {
+            
             logger.info("User Disconnected : " + siteId);
             
             //Danh sach action get from headerAccessor
@@ -57,6 +58,7 @@ public class WebSocketEventListener {
 			}
             lastaccessHistory.setEvents(events);
             AHService.saveOne(lastaccessHistory);
+            
         }
     }
 }
