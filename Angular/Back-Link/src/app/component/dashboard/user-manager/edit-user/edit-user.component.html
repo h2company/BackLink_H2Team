@@ -33,7 +33,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5">Tài Khoản</label>
                                 <div class="col-md-9">
-                                    <input type="text" formControlName="username" [(ngModel)]="user.username"
+                                    <input type="text" [value]="user.username"
                                         class="form-control" name="username" readonly="readonly">
                                 </div>
                             </div>
@@ -43,9 +43,6 @@
                                 <div class="col-md-9">
                                     <input type="email" formControlName="email" [(ngModel)]="user.email"
                                         class="form-control" [class.is-invalid]="userForm.controls.email.invalid">
-                                    <div class="invalid-tooltip" *ngIf="userForm.controls.email.errors">
-                                        {{userForm.controls.email.errors.message}}
-                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -70,9 +67,35 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group row skin skin-square">
+                                <label class="col-md-3 label-control" for="projectinput5"><span
+                                        style="color: red">(*)</span> Giới tính</label>
+                                <div class="col-md-9">
+                                    <p-radio name="gender" (change)="getGender($event)" value="true" checked="{{user.gender ? 'checked' : ''}}" shape="curve" color="success" animation="jelly">
+                                        <i p-icon class="material-icons">done</i>
+                                        Nam
+                                    </p-radio>
+                                    <p-radio name="gender" (change)="getGender($event)" value="false" checked="{{!user.gender ? 'checked' : ''}}" shape="curve" color="success" animation="jelly">
+                                        <i p-icon class="material-icons">done</i>
+                                        Nữ
+                                    </p-radio>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5"><span
-                                    style="color: red">(*)</span>Địa Chỉ</label>
+                                        style="color: red">(*)</span> Ngày Sinh</label>
+                                <div class="col-md-9">
+                                    <input type="text" value="{{ user.birthday | date: 'dd-MM-yyyy'}}" placeholder="Ngày sinh" class="form-control red" readonly
+                                        bsDatepicker placement="bottom"
+                                        [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }" (bsValueChange)="onChangeBirthday($event)">
+                                    <div class="invalid-tooltip" *ngIf="userForm.controls.birthday.errors">
+                                        {{userForm.controls.birthday.errors.message}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" form-group row">
+                                <label class="col-md-3 label-control" for="projectinput5"><span
+                                        style="color: red">(*)</span>Địa Chỉ</label>
                                 <div class="col-md-9">
                                     <input type="text" formControlName="address" [(ngModel)]="user.address"
                                         class="form-control" [class.is-invalid]="userForm.controls.address.invalid">
@@ -80,14 +103,15 @@
                                         {{userForm.controls.address.errors.message}}
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                             <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5">Vai trò</label>
                                 <div class="col-md-9">
                                     <select class="form-control" (change)="onRolesChange($event.target.value)"
                                         name="role">
                                         <option *ngFor="let role of roles" value="{{role.id}}"
-                                            [selected]="user.roles && user.roles[0].id === role.id ">{{role.name}}</option>
+                                            [selected]="user.roles && user.roles[0].id === role.id ">{{role.name}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -110,7 +134,7 @@
                             </div>
                         </div>
                         <div class="form-actions right">
-                            <button type="submit" class="btn btn-primary mr-1" >
+                            <button type="submit" class="btn btn-primary mr-1">
                                 <i class="la la-check-square-o"></i> Cập nhật
                             </button>
                             <button [routerLink]="[ '/dashboard/users']" type="button" class="btn btn-danger"

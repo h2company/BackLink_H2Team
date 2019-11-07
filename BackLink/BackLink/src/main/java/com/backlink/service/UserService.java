@@ -3,8 +3,10 @@ package com.backlink.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -27,6 +29,8 @@ import com.backlink.entities.Mailer;
 import com.backlink.entities.Role;
 import com.backlink.entities.Role.RoleName;
 import com.backlink.entities.User;
+import com.backlink.exception.ApiError;
+import com.backlink.exception.ApiException;
 import com.backlink.exception.AuthorizationException;
 import com.backlink.exception.BadRequestException;
 import com.backlink.exception.ResourceNotFoundException;
@@ -71,7 +75,7 @@ public class UserService implements IBaseService<User, String> {
 		}
 		return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 	}
-	
+
 	@Override
 	public List<User> findAll() {
 		return userRepository.findAll();
@@ -129,11 +133,12 @@ public class UserService implements IBaseService<User, String> {
 		user.setUsername(signUpRequest.getUsername());
 		user.setPassword(signUpRequest.getPassword());
 		user.setEmail(signUpRequest.getEmail());
-		//user.setPhone(signUpRequest.getPhone());
+		// user.setPhone(signUpRequest.getPhone());
 		user.setFullname(signUpRequest.getFullname());
 		user.setAddress(signUpRequest.getAddress());
 		user.setGender(signUpRequest.isGender());
-		//user.setBirthday(new SimpleDateFormat("dd/MM/yyyy").parse(signUpRequest.getBirthday()));
+		// user.setBirthday(new
+		// SimpleDateFormat("dd/MM/yyyy").parse(signUpRequest.getBirthday()));
 		Set<Role> role = new HashSet<Role>();
 		role.add(new Role(RoleName.ROLE_CUSTOMER));
 		user.setRoles(role);
@@ -149,19 +154,27 @@ public class UserService implements IBaseService<User, String> {
 
 	// THÊM THÀNH VIÊN
 	public ResponseEntity<?> addUser(AddUserRequest addUserRequest) throws ParseException {
+		
+		// Mảng lỗi
+		Map<String, String> errors = new HashMap<String, String>();
+
 		// KIỂM TRA USERNAME ĐÃ TỒN TẠI HAY CHƯA
 		if (userRepository.findByUsername(addUserRequest.getUsername()).isPresent()) {
-			throw new BadRequestException(String.format(MessageException.EXIST, addUserRequest.getUsername()));
+			errors.put("username", String.format(MessageException.EXIST, addUserRequest.getUsername()));
 		}
 
 		// KIỂM TRA MAIL ĐÃ TỒN TẠI HAY CHƯA
 		if (userRepository.findByEmail(addUserRequest.getEmail()).isPresent()) {
-			throw new BadRequestException(String.format(MessageException.EXIST, addUserRequest.getEmail()));
+			errors.put("email", String.format(MessageException.EXIST, addUserRequest.getEmail()));
 		}
 
 		// KIỂM TRA SỐ ĐIỆN THOẠI ĐÃ TỒN TẠI HAY CHƯA
 		if (userRepository.findByPhone(addUserRequest.getPhone()).isPresent()) {
-			throw new BadRequestException(String.format(MessageException.EXIST, addUserRequest.getPhone()));
+			errors.put("phone", String.format(MessageException.EXIST, addUserRequest.getPhone()));
+		}
+		
+		if(errors.size() > 0) {
+			return new ResponseEntity<Object>(new ApiException(HttpStatus.BAD_REQUEST, MessageException.INCORRECT_SYNTAX, errors), HttpStatus.BAD_REQUEST);
 		}
 
 		// SET GIÁ TRỊ
@@ -173,7 +186,7 @@ public class UserService implements IBaseService<User, String> {
 		user.setFullname(addUserRequest.getFullname());
 		user.setAddress(addUserRequest.getAddress());
 		user.setGender(addUserRequest.isGender());
-		user.setBirthday(new SimpleDateFormat("dd/MM/yyyy").parse(addUserRequest.getBirthday()));
+		user.setBirthday(addUserRequest.getBirthday());
 		Set<Role> role = new HashSet<Role>();
 		for (RoleRequest rq : addUserRequest.getRoles()) {
 			role.add(new Role(rq.getName()));
@@ -194,7 +207,7 @@ public class UserService implements IBaseService<User, String> {
 		// KIỂM TRA ID Có tồn tại hay không
 		if (!userRepository.findById(updateUserRequest.getId()).isPresent()) {
 			throw new BadRequestException(String.format(MessageException.USER_NOT_FOUND_ID, updateUserRequest.getId()));
-		}		
+		}
 
 		// SET GIÁ TRỊ
 		User user = userOpt.get();

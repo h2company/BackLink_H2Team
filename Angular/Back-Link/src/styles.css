@@ -27,3 +27,16 @@ app-sidebar .main-menu.menu-light .navigation>li ul .open>a.active::before {
     top: 50%;
     border-radius: 50%;
 }
+
+.form-control.is-invalid-api {
+    border-color: #fa626b !important;
+    padding-right: 2.75rem !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fa626…%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: center right calc(0.3125em + 0.375rem) !important;
+    background-size: calc(0.625em + 0.75rem) calc(0.625em + 0.75rem) !important;
+}
+
+.form-control.is-invalid-api ~ .invalid-tooltip.api-error{
+    display: block;
+}

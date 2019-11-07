@@ -24,8 +24,8 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/assets/css/fonts.css",
               "src/assets/vendors/css/vendors.min.css",
               "src/assets/css/plugins/forms/switch.min.css",
@@ -37,15 +37,18 @@
               "src/assets/css/core/menu/menu-types/vertical-menu.min.css",
               "src/assets/css/core/colors/palette-gradient.min.css",
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/pretty-checkbox/dist/pretty-checkbox.min.css",
               "src/styles.css"
             ],
             "scripts": [
               "src/assets/vendors/js/vendors.min.js",
               "src/assets/js/scripts/forms/switch.min.js",
+              "src/assets/vendors/js/forms/icheck/icheck.min.js",
               "src/assets/js/core/app-menu.min.js",
               "src/assets/js/core/app.min.js",
               "src/assets/js/scripts/customizer.min.js",
-              "src/assets/vendors/js/jquery.sharrre.js"
+              "src/assets/vendors/js/jquery.sharrre.js",
+              "src/assets/js/scripts/forms/checkbox-radio.min.js"
             ]
           },
           "configurations": {
