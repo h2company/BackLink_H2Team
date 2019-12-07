@@ -50,8 +50,7 @@
               "src/assets/js/core/app.min.js",
               "src/assets/vendors/js/ui/prism.min.js",
               "src/assets/js/scripts/customizer.min.js",
-              "src/assets/vendors/js/jquery.sharrre.js",
-              "src/assets/js/scripts/forms/checkbox-radio.min.js"
+              "src/assets/vendors/js/jquery.sharrre.js"
             ]
           },
           "configurations": {

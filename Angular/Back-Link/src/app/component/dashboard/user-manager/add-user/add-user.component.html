@@ -34,8 +34,7 @@
                                     Tài Khoản</label>
                                 <div class="col-md-9">
                                     <input type="text" id="username" formControlName="username"
-                                        [(ngModel)]="user.username"
-                                        (click)="removeError($event)"
+                                        [(ngModel)]="user.username" (click)="removeError($event)"
                                         [class.is-invalid]="(controls.username.invalid && controls.username.touched) || isSubmit"
                                         [class.is-invalid-api]="errApi.username.status" class="form-control">
                                     <div class="invalid-tooltip" *ngIf="controls.username.errors">
@@ -52,10 +51,10 @@
                                 <div class="col-md-7">
                                     <input [type]="hide ? 'password' : 'text'" id="password" formControlName="password"
                                         [(ngModel)]="user.password"
-                                        [class.is-invalid]="controls.password.invalid && controls.password.touched"
+                                        [class.is-invalid]="controls.password.invalid && controls.password.touched || isSubmit"
                                         class="form-control">
                                     <div class="invalid-tooltip" *ngIf="controls.password.errors">
-                                        {{controls.username.errors.message}}
+                                        {{controls.password.errors.message}}
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -64,15 +63,13 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 label-control" for="email"><span
-                                        style="color: red">(*)</span> Email</label>
+                                <label class="col-md-3 label-control" for="email"><span style="color: red">(*)</span>
+                                    Email</label>
                                 <div class="col-md-9">
                                     <input type="email" formControlName="email" [(ngModel)]="user.email"
-                                        class="form-control"
-                                        id="email"
-                                        (click)="removeError($event)"
-                                        [class.is-invalid]="(controls.email.invalid && controls.email.touched)"                                        
-                                        [class.is-invalid-api]="errApi.email.status" >                                        
+                                        class="form-control" id="email" (click)="removeError($event)"
+                                        [class.is-invalid]="controls.email.invalid && controls.email.touched || isSubmit"
+                                        [class.is-invalid-api]="errApi.email.status">
                                     <div class="invalid-tooltip" *ngIf="controls.email.errors">
                                         {{controls.email.errors.message}}
                                     </div>
@@ -82,15 +79,13 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 label-control" for="phone"><span
-                                        style="color: red">(*)</span> Số Điện Thoại</label>
+                                <label class="col-md-3 label-control" for="phone"><span style="color: red">(*)</span> Số
+                                    Điện Thoại</label>
                                 <div class="col-md-9">
                                     <input type="text" formControlName="phone" [(ngModel)]="user.phone"
-                                        class="form-control"
-                                        id="phone"
-                                        (click)="removeError($event)"
-                                        [class.is-invalid]="(controls.phone.invalid && controls.phone.touched)"
-                                        [class.is-invalid-api]="errApi.phone.status" >
+                                        class="form-control" id="phone" (click)="removeError($event)"
+                                        [class.is-invalid]="controls.phone.invalid && controls.phone.touched || isSubmit"
+                                        [class.is-invalid-api]="errApi.phone.status">
                                     <div class="invalid-tooltip" *ngIf="controls.phone.errors">
                                         {{controls.phone.errors.message}}
                                     </div>
@@ -103,9 +98,17 @@
                                 <label class="col-md-3 label-control" for="projectinput5"><span
                                         style="color: red">(*)</span> Ngày Sinh</label>
                                 <div class="col-md-9">
-                                    <input type="text" placeholder="Ngày sinh" class="form-control red" readonly
-                                        bsDatepicker placement="bottom" (bsValueChange)="onChangeBirthday($event)"
-                                        [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }">
+                                    <input type="text" 
+                                        id="birthday"
+                                        placeholder="Ngày sinh"
+                                        class="form-control red" bsDatepicker placement="bottom"
+                                        readonly
+                                        (bsValueChange)="onChangeBirthday($event)"
+                                        [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }"
+                                        [class.is-invalid]="isSubmit && !user.birthday">
+                                    <div class="invalid-tooltip" *ngIf="isSubmit && !user.birthday">
+                                        Trường dữ liệu bắt buộc
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row skin skin-square">
@@ -130,9 +133,12 @@
                                 <label class="col-md-3 label-control" for="projectinput5"><span
                                         style="color: red">(*)</span> Tên Thành Viên</label>
                                 <div class="col-md-9">
-                                    <input type="text" formControlName="fullname" [(ngModel)]="user.fullname"
+                                    <input 
+                                        type="text" 
+                                        formControlName="fullname" 
+                                        [(ngModel)]="user.fullname"
                                         class="form-control"
-                                        [class.is-invalid]="controls.fullname.invalid && controls.fullname.touched">
+                                        [class.is-invalid]="controls.fullname.invalid && controls.fullname.touched || isSubmit">
                                     <div class="invalid-tooltip" *ngIf="controls.fullname.errors">
                                         {{controls.fullname.errors.message}}
                                     </div>
@@ -142,9 +148,12 @@
                                 <label class="col-md-3 label-control" for="projectinput5"><span
                                         style="color: red">(*)</span> Địa Chỉ</label>
                                 <div class="col-md-9">
-                                    <input type="text" formControlName="address" [(ngModel)]="user.address"
+                                    <input 
+                                        type="text"
+                                        formControlName="address" 
+                                        [(ngModel)]="user.address"
                                         class="form-control"
-                                        [class.is-invalid]="controls.address.invalid && controls.address.touched">
+                                        [class.is-invalid]="controls.address.invalid && controls.address.touched || isSubmit">
                                     <div class="invalid-tooltip" *ngIf="controls.address.errors">
                                         {{controls.address.errors.message}}
                                     </div>
@@ -166,7 +175,7 @@
                             <button type="submit" class="btn btn-primary mr-1">
                                 <i class="la la-check-square-o"></i> Thêm Mới
                             </button>
-                            <button [routerLink]="[ '/dashboard/users']" type="button" class="btn btn-danger"
+                            <button [routerLink]="['/dashboard/users']" type="button" class="btn btn-danger"
                                 style="min-height: 44px">
                                 <i class="ft-x"></i> Trở về
                             </button>
@@ -177,5 +186,3 @@
         </div>
     </div>
 </div>
-
-{{user | json}}
