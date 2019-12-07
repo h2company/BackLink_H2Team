@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/model/user.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { roles, RoleName, Roles } from 'src/app/model/roles.model';
-import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { requiredValidator, emailValidator, phoneValidator, lengthValidator, minmaxValidator } from 'src/app/util/custom-validator';
@@ -33,11 +31,7 @@ export class AddUserComponent implements OnInit {
   }
   isSubmit: boolean = false;
 
-  @ViewChild(SwalComponent, { static: false }) deleteSwal: SwalComponent;
-
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private _userService: UserService,
     private formBuider: FormBuilder,
     private toastr: ToastrService,
@@ -51,7 +45,7 @@ export class AddUserComponent implements OnInit {
 
   createForm() {
     this.userForm = this.formBuider.group({
-      username: ['', [requiredValidator(), lengthValidator(8, 50)]],
+      username: ['', [requiredValidator(), lengthValidator(5, 50)]],
       password: ['', [requiredValidator(), lengthValidator(8, 50)]],
       email: ['', [requiredValidator(), emailValidator()]],
       phone: ['', [phoneValidator()]],
@@ -67,12 +61,7 @@ export class AddUserComponent implements OnInit {
   defaultValue() {
     this.user.roles = [new Roles(0, RoleName.ROLE_CUSTOMER)];
     this.user.gender = true;
-    // this.user.username = 'quoxank1';
-    // this.user.email = 'qa1796@gmail.com';
-    // this.user.fullname = 'Le Anh Quoc';
-    // this.user.phone = '0377312609';
-    // this.user.address = 'go vap';
-    // this.user.password = 'asdasdasd';
+    this.user.birthday = null;
   }
 
   onRolesChange(id: number) {
@@ -84,7 +73,7 @@ export class AddUserComponent implements OnInit {
 
   onSubmit() {    
     this.clearErrorAPI();
-    if (!this.userForm.valid) {      
+    if (!this.userForm.valid || !this.user.birthday) {      
     this.isSubmit = true;
       this.toastr.error('Thông báo!', 'Vui lòng nhập chính xác thông tin!', {
         positionClass: 'toast-top-right'
@@ -104,6 +93,7 @@ export class AddUserComponent implements OnInit {
         positionClass: 'toast-top-right'
       });
     });
+    this.isSubmit = false;
 
   }
 

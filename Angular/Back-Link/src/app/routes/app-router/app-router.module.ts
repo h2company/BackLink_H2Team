@@ -22,11 +22,12 @@ import { PointLogComponent } from 'src/app/component/dashboard/point-log/point-l
 import { EditUserComponent } from 'src/app/component/dashboard/user-manager/edit-user/edit-user.component';
 import { ListUserComponent } from 'src/app/component/dashboard/user-manager/list-user/list-user.component';
 import { AddUserComponent } from 'src/app/component/dashboard/user-manager/add-user/add-user.component';
+import { AppRouter } from '../app-router.model';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: `/${AppRouter.INDEX}`, pathMatch: 'full' },
   {
-    path: 'dashboard',
+    path: AppRouter.INDEX,
     component: DashboardComponent,
     canActivate: [NeedAuthGuard],
     children: [
@@ -40,31 +41,31 @@ const routes: Routes = [
           { path: ':id', component: EditUserComponent },
         ]
       },
-      { path: 'add-backlink', component: AddBacklinkComponent },
-      { path: 'add-action', component: AddActionComponent },
-      { path: 'statistical-access', component: StatisticalAccessComponent },
-      { path: 'point-member', component: PointMemberComponent },
-      { path: 'point-member/:id', component: PointMemberComponent },
-      { path: 'point-log', component: PointLogComponent }
+      { path: AppRouter.ADD_BACKLINK, component: AddBacklinkComponent },
+      { path: AppRouter.ADD_ACTION, component: AddActionComponent },
+      { path: AppRouter.STATISTICAL_ACCESS, component: StatisticalAccessComponent },
+      { path: AppRouter.POINT_MEMBER, component: PointMemberComponent },
+      { path: `${AppRouter.POINT_MEMBER}/:id`, component: PointMemberComponent },
+      { path: AppRouter.POINT_LOG, component: PointLogComponent }
     ]
   },
   {
-    path: 'signin',
+    path: AppRouter.SIGNIN,
     component: LoginComponent,
     canActivate: [NotAuthGuard],
   },
   { 
-    path: 'recover', 
+    path: AppRouter.RECOVER, 
     component: RecoverComponent,
     canActivate: [NotAuthGuard],
   },
   { 
-    path: 'signup', 
+    path: AppRouter.SIGNUP, 
     component: SignupComponent,
     canActivate: [NotAuthGuard]
   },
-  { path: '404', component: NotFoundComponent },
-  { path: '**', redirectTo: '/404', pathMatch: 'full' }
+  { path: AppRouter.NOT_FOUND, component: NotFoundComponent },
+  { path: '**', redirectTo: `/${AppRouter.NOT_FOUND}`, pathMatch: 'full' }
 ];
 
 @NgModule({

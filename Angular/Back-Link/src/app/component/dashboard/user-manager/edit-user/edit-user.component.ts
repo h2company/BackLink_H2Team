@@ -50,13 +50,14 @@ export class EditUserComponent implements OnInit {
         })
 
         // dữ liệu trả về không hợp lệ (không có dữ liệu với ':id') thì chuyển hướng về 404 (không tìm thấy)
-        .catch(err => this.router.navigate(['/404']));   
+        .catch(err => this.router.navigate(['/not-found']));   
         this.createForm();
     })
   }
 
   createForm(){
     this.userForm = this.formBuider.group({
+      username: ['', [requiredValidator()]],
       email: ['', [requiredValidator(), emailValidator()]],
       phone: ['', [phoneValidator()]],
       address: ['', [requiredValidator()]],

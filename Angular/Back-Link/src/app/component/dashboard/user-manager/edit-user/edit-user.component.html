@@ -33,8 +33,8 @@
                             <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5">Tài Khoản</label>
                                 <div class="col-md-9">
-                                    <input type="text" [value]="user.username"
-                                        class="form-control" name="username" readonly="readonly">
+                                    <input type="text" formControlName="username" [(ngModel)]="user.username"
+                                        class="form-control" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -68,19 +68,23 @@
                                 </div>
                             </div>
                             <div class="form-group row skin skin-square">
-                                <label class="col-md-3 label-control" for="projectinput5"><span
-                                        style="color: red">(*)</span> Giới tính</label>
-                                <div class="col-md-9">
-                                    <p-radio name="gender" (change)="getGender($event)" value="true" checked="{{user.gender ? 'checked' : ''}}" shape="curve" color="success" animation="jelly">
-                                        <i p-icon class="material-icons">done</i>
-                                        Nam
-                                    </p-radio>
-                                    <p-radio name="gender" (change)="getGender($event)" value="false" checked="{{!user.gender ? 'checked' : ''}}" shape="curve" color="success" animation="jelly">
-                                        <i p-icon class="material-icons">done</i>
-                                        Nữ
-                                    </p-radio>
+                                    <label class="col-md-3 label-control" for="projectinput5"><span
+                                            style="color: red">(*)</span> Giới tính</label>
+                                    <div class="col-md-9">
+                                        <p-radio name="gender" (change)="getGender($event)" value="true"
+                                            checked="{{user.gender ? 'checked' : ''}}" shape="curve" color="success"
+                                            animation="jelly">
+                                            <i p-icon class="material-icons">done</i>
+                                            Nam
+                                        </p-radio>
+                                        <p-radio name="gender" (change)="getGender($event)" value="false"
+                                            checked="{{!user.gender ? 'checked' : ''}}" shape="curve" color="success"
+                                            animation="jelly">
+                                            <i p-icon class="material-icons">done</i>
+                                            Nữ
+                                        </p-radio>
+                                    </div>
                                 </div>
-                            </div>
                             <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5"><span
                                         style="color: red">(*)</span> Ngày Sinh</label>
@@ -88,10 +92,7 @@
                                     <input type="text" value="{{ user.birthday | date: 'dd-MM-yyyy'}}" placeholder="Ngày sinh" class="form-control red" readonly
                                         bsDatepicker placement="bottom"
                                         [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }" (bsValueChange)="onChangeBirthday($event)">
-                                    <div class="invalid-tooltip" *ngIf="userForm.controls.birthday.errors">
-                                        {{userForm.controls.birthday.errors.message}}
                                     </div>
-                                </div>
                             </div>
                             <div class=" form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5"><span

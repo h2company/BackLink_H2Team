@@ -186,6 +186,7 @@ public class UserService implements IBaseService<User, String> {
 		if(errors.size() > 0) {
 			return new ResponseEntity<Object>(new ApiException(HttpStatus.BAD_REQUEST, MessageException.INCORRECT_SYNTAX, errors), HttpStatus.BAD_REQUEST);
 		}
+		
 
 		// SET GIÁ TRỊ
 		User user = new User();
@@ -213,11 +214,42 @@ public class UserService implements IBaseService<User, String> {
 	}
 
 	public ResponseEntity<?> updateUser(UpdateUserRequest updateUserRequest) throws ParseException {
+		
+		// Mảng lỗi
+		Map<String, String> errors = new HashMap<String, String>();
+		
 		Optional<User> userOpt = userRepository.findById(updateUserRequest.getId());
+		
 		// KIỂM TRA ID Có tồn tại hay không
-		if (!userRepository.findById(updateUserRequest.getId()).isPresent()) {
-			throw new BadRequestException(String.format(MessageException.USER_NOT_FOUND_ID, updateUserRequest.getId()));
-		}
+		if(!userOpt.isPresent()) {
+			errors.put("username", String.format(MessageException.EXIST, updateUserRequest.getUsername()));
+		}else {			
+			// Admin được quyền thay đổi email
+			if(currentUser.userHasAuthority(RoleName.ROLE_ADMIN)) {
+				if(!userOpt.get().getEmail().equals(updateUserRequest.getEmail()) && userRepository.findByEmail(updateUserRequest.getEmail()).isPresent()) {
+					errors.put("email", String.format(MessageException.EXIST, updateUserRequest.getEmail()));
+				}
+				
+				if(!userOpt.get().getPhone().equals(updateUserRequest.getPhone()) && userRepository.findByPhone(updateUserRequest.getPhone()).isPresent()) {
+					errors.put("phone", String.format(MessageException.EXIST, updateUserRequest.getPhone()));
+				}
+			}
+			
+			// Custommer không được thay đổi email && phone
+			if(currentUser.userHasAuthority(RoleName.ROLE_CUSTOMER)) {
+				if(!currentUser.get().getEmail().equals(updateUserRequest.getEmail())){
+					errors.put("email", MessageException.CAN_NOT_CHANGE_EMAIL);
+				}
+				
+				if(!userOpt.get().getPhone().equals(updateUserRequest.getPhone())){
+					errors.put("phone", MessageException.CAN_NOT_CHANGE_PHONE);
+				}
+			}
+		}	
+		
+		if(errors.size() > 0) {
+			return new ResponseEntity<Object>(new ApiException(HttpStatus.BAD_REQUEST, MessageException.INCORRECT_SYNTAX, errors), HttpStatus.BAD_REQUEST);
+		}		
 
 		// SET GIÁ TRỊ
 		User user = userOpt.get();
