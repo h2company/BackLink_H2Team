@@ -22,6 +22,7 @@ import { PointLogComponent } from 'src/app/component/dashboard/point-log/point-l
 import { EditUserComponent } from 'src/app/component/dashboard/user-manager/edit-user/edit-user.component';
 import { ListUserComponent } from 'src/app/component/dashboard/user-manager/list-user/list-user.component';
 import { AddUserComponent } from 'src/app/component/dashboard/user-manager/add-user/add-user.component';
+import { LogoutComponent } from 'src/app/component/dashboard/logout/logout.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -45,7 +46,8 @@ const routes: Routes = [
       { path: 'statistical-access', component: StatisticalAccessComponent },
       { path: 'point-member', component: PointMemberComponent },
       { path: 'point-member/:id', component: PointMemberComponent },
-      { path: 'point-log', component: PointLogComponent }
+      { path: 'point-log', component: PointLogComponent },
+      { path: 'logout', component: LogoutComponent }
     ]
   },
   {

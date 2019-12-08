@@ -29,6 +29,7 @@
 	        		window.blSiteSettings = e.data.blSiteSettings;
 	        		if(stompClient && e.data.isTrusted == true) {
 	        			delete e.data.isTrusted;
+	        			e.action = 'tracking';
 	        			stompClient.send("/app/service.sendMessage", {}, JSON.stringify(e.data));
 	        		}
 	        		break;
@@ -36,6 +37,7 @@
 	        		window.blSiteSettings = e.data.blSiteSettings;
 	        		if(stompClient && e.data.isTrusted == true) {
 	        			delete e.data.isTrusted;
+	        			e.action = 'verify';
 	        			stompClient.send("/app/service.sendMessage", {}, JSON.stringify(e.data));
 	        		}
 	        		break;
@@ -72,7 +74,15 @@
 				if(message.events[0].eventAction[0].event == "verify") {
 					console.log('close window !');
 					console.log(message.id);
-					window.setData(message.id);
+					//parent.setData(message.id);
+					/*window.parent.postMessage({
+					    'func': 'parentFunc',
+					    'message': 'Message text from iframe.'
+					}, "*");*/
+					window.parent.postMessage({
+					    'func': 'closeWD',
+					    'message': message
+					}, "*");
 					//alert("Xác thực thành công ! Vui lòng xóa mã nhúng xác thực để tránh ảnh hưởng đến trải nghiệm người dùng.", window.parent.close());
 				}
 			}

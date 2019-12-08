@@ -36,7 +36,9 @@ window.blSiteSettings = {
 			'action': 'connect',
 			'blSiteSettings': blSiteSettings
 		}, '*');
-		alert("Nhấn vào màn hình để tiến hành xác thực  !");
+		setTimeout(function(){
+		    document.body.click()
+		},500)
 	}
 	f.appendChild(s);
 	d.addEventListener("click", function(event){
@@ -70,4 +72,27 @@ function base64EncodeUnicode(str) {
 }
 window.setData = function(param) {
     console.log(param);
+}
+if (window.addEventListener) {
+    window.addEventListener("message", onMessage, false);        
+} 
+else if (window.attachEvent) {
+    window.attachEvent("onmessage", onMessage, false);
+}
+
+function onMessage(event) {
+	console.log(event.origin);
+    // Check sender origin to be trusted
+    if (event.origin !== "http://localhost:8082") return;
+
+    var data = event.data;
+	console.log(data);
+    if (typeof(window[data.func]) == "function") {
+        window[data.func].call(null, data.message);
+    }
+}
+
+function closeWD(message){
+	window.opener.postMessage(message, '*');
+	window.close();
 }
