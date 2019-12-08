@@ -171,18 +171,20 @@
 											<th>Mã BL</th>
 											<th>Loại BL</th>
 											<th>Điểm quy đổi</th>
-											<th>Thời gian</th>
+											<th>Số lượt quy đổi</th>
+											<th>Thời gian kết thúc</th>
 											<th>Hành Động</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr *ngFor="let backlink of backlinks; index as i">
 											<td>{{ i + 1}}</td>
-											<td>{{backlink.id.substr(7)}}</td>
+											<td>{{backlink.id}}</td>
 											<td *ngIf="backlink.blockPixel">Action</td>
 											<td *ngIf="!backlink.blockPixel">Backlink</td>
 											<td>{{backlink.point}}</td>
-											<td>{{backlink.createAt | date:'HH:mm:ss dd-MM-yyyy'}}</td>
+											<td>{{backlink.limit}}</td>
+											<td>{{backlink.endTime | date:'HH:mm:ss dd-MM-yyyy'}}</td>
 											<td class="text-center">
 												<button type="button" class="btn btn-outline-primary mr-1"
 													(click)="onClickBacklinkDetail(backlink.id);">
@@ -221,7 +223,7 @@
 												<p>Mã Backlink : <code *ngIf="backlink">{{ backlink.id }}</code></p>
 												<p>
 													Điểm thưởng mỗi trang Backlink : <code
-														*ngIf="backlink">{{ backlink.point / backlink.limit }}</code> | 
+														*ngIf="backlink">{{ math.round(backlink.point / backlink.limit * 0.9) }}</code> | 
 													Thời gian kết thúc Backlink <code
 														*ngIf="backlink">{{backlink.endTime | date:'HH:mm:ss dd-MM-yyyy'}}</code>
 												</p>

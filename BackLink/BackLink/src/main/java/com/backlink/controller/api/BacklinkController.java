@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.backlink.entities.Backlink;
+import com.backlink.exception.ApiException;
 import com.backlink.payload.reponse.APIResponse;
 import com.backlink.payload.request.BacklinkRequest;
 import com.backlink.payload.request.VerifyRequest;
@@ -67,11 +69,14 @@ public class BacklinkController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
+	@PostMapping("backlink/checkverifyACPBacklink")
+	public ResponseEntity<?> checkverifyACPBacklink(@Valid @RequestBody VerifyRequest verifyRequest) {
+		return backlinkService.checkverifyACPBacklink(verifyRequest);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
 	@PostMapping("backlink/verifyACPBacklink")
-	public APIResponse verifyACPBacklink(@Valid @RequestBody VerifyRequest verifyRequest) {
-		APIResponse res = new APIResponse();
-		res.setSuccess(true);
-		res.setMessage("Xác thực kết nối Backlink thành công !");
-		return res;
+	public ResponseEntity<?> verifyACPBacklink(@Valid @RequestBody VerifyRequest verifyRequest) {
+		return backlinkService.verifyACPBacklink(verifyRequest);
 	}
 }

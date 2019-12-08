@@ -42,6 +42,10 @@ export class BacklinkService implements IBaseService<Backlink, string> {
         return this.http.post_oauth(this.API.ADD_BACKLINK, entity);
     }
     
+    checkVerify(data: any): Observable<Respone> {
+        return this.http.post_oauth(this.API.ADD_BACKLINK_CHECK_VF, data);
+    }
+
     verify(data: any): Observable<Respone> {
         return this.http.post_oauth(this.API.ADD_BACKLINK_VF, data);
     }

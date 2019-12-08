@@ -18,6 +18,7 @@ export class APIService {
   public ADD_BACKLINK = "/api/backlink/createBackink";
   
   public ADD_BACKLINK_VF = "/api/backlink/verifyACPBacklink";
+  public ADD_BACKLINK_CHECK_VF = "/api/backlink/checkverifyACPBacklink";
 
   constructor() { }  
   

@@ -28,6 +28,7 @@ export class IndexComponent implements OnInit {
         f.appendChild(r);
     })(window,document,'http://localhost:8082/frame/c/','.js?siteId=');
   </script>`;
+  math = Math;
   constructor(
     private formBuilder: FormBuilder,
     private _backlinkService: BacklinkService,
@@ -46,6 +47,8 @@ export class IndexComponent implements OnInit {
                 this.toastr.success('Thông báo!', res.message, {
                   positionClass: 'toast-top-right'
                 });
+                this.childModal.toggle();
+                this.loadBacklinks();
             }, error => {
               this.toastr.error(error.error.error, error.error.message, {
                 positionClass: 'toast-top-right'
@@ -69,7 +72,17 @@ export class IndexComponent implements OnInit {
       return;
     }
     const controls = this.varifyForm.controls;
-    var win = window.open(controls.urlVerify.value, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=400,width=700,height=400");
+    this._backlinkService.checkVerify({
+      'id': this.backlink.id,
+      'urlAgent': controls.urlVerify.value
+    }).subscribe(res => {
+      var win = window.open(controls.urlVerify.value, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=400,width=700,height=400");
+    }, error => {
+      this.toastr.error(error.error.error, error.error.message, {
+        positionClass: 'toast-top-right'
+      });
+    });
+    
   }
   loadBacklinks() {
     this._backlinkService.findAll().subscribe(res => {
