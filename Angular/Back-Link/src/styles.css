@@ -40,3 +40,7 @@ app-sidebar .main-menu.menu-light .navigation>li ul .open>a.active::before {
 .form-control.is-invalid-api ~ .invalid-tooltip.api-error{
     display: block;
 }
+
+tag-input{
+    border-bottom: 1px solid #0275d8;
+}

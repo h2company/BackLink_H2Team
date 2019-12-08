@@ -22,6 +22,7 @@ import { EditUserComponent } from './component/dashboard/user-manager/edit-user/
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxPrettyCheckboxModule } from 'ngx-pretty-checkbox';
+import { TagInputModule } from 'ngx-chips';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { NgxPrettyCheckboxModule } from 'ngx-pretty-checkbox';
     }),
     BsDatepickerModule.forRoot(),
     ModalModule.forRoot(),
-    NgxPrettyCheckboxModule
+    NgxPrettyCheckboxModule,
+    TagInputModule
   ],
   providers: [
     HttpService,

@@ -6,8 +6,6 @@ public class PointMember {
 	private String fullname;
 	private String username;
 	private int point;
-
-	
 	
 	
 	public PointMember(String fullname, String username, int point) {

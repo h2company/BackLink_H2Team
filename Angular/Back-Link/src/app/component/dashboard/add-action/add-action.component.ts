@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddActionComponent implements OnInit {
 
+  items = [];
+
   constructor() { }
 
   ngOnInit() {
+    this.items = ['Pizza', 'Pasta', 'Parmesan']
+  }
+
+  onClick(){
+    console.log(123)
   }
 
 }
