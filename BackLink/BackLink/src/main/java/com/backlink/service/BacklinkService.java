@@ -168,6 +168,7 @@ public class BacklinkService implements IBaseService<Backlink, String> {
 		int point = (int)(backlink.getPoint()/backlink.getLimit());
 		
 		// Cap nhat so diem quy doi con lai
+		backlink.setLimit(backlink.getLimit()-1);
 		backlink.setPoint(backlink.getPoint()-point);
 		backlinkRepository.save(backlink);
 		
