@@ -47,7 +47,7 @@ export class UserService implements IBaseService<User, string> {
   recover(data: any): Observable<any> {
     return this.http.put(this.API.OAUTH_RECOVER, data);
   }
-  getinfo(): Observable<User[]>  {
+  getinfo(): Observable<User>  {
     return this.http.get(this.API.ME);
   }
 }
