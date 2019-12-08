@@ -6,7 +6,6 @@ public class PointMember {
 	private String username;
 	private int point;
 	
-	
 	public PointMember(String fullname, String username, int point) {
 		super();
 		this.fullname = fullname;

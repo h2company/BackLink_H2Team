@@ -2,26 +2,20 @@ package com.backlink.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.backlink.Message.MessageException;
 import com.backlink.beans.CurrentUser;
 import com.backlink.entities.AccessHistory;
-import com.backlink.entities.Action;
 import com.backlink.entities.Backlink;
 import com.backlink.entities.LogSystem;
 import com.backlink.entities.LogSystem.LogAction;
 import com.backlink.entities.LogSystem.Type;
-import com.backlink.entities.Role.RoleName;
 import com.backlink.entities.User;
 import com.backlink.exception.ApiException;
 import com.backlink.exception.AppException;
-import com.backlink.exception.ForbiddenException;
 import com.backlink.exception.ResourceNotFoundException;
 import com.backlink.payload.request.BacklinkRequest;
 import com.backlink.payload.request.VerifyRequest;
@@ -32,7 +26,6 @@ import com.backlink.repository.UserRepository;
 @Service
 public class BacklinkService implements IBaseService<Backlink, String> {
 
-	@Autowired
 	private LogSystemService logSystemService;
 	
 	@Autowired
@@ -58,13 +51,11 @@ public class BacklinkService implements IBaseService<Backlink, String> {
 
 	@Override
 	public List<Backlink> findAll() {
-		// TODO Auto-generated method stub
 		return backlinkRepository.findAll();
 	}
 
 	@Override
 	public Backlink saveOne(Backlink entity) {
-		// TODO Auto-generated method stub
 		return backlinkRepository.save(entity);
 	}
 
@@ -82,7 +73,6 @@ public class BacklinkService implements IBaseService<Backlink, String> {
 
 	@Override
 	public List<Backlink> updateMany(List<Backlink> list) {
-		// TODO Auto-generated method stub
 		List<Backlink> bllist = null;
 		try {
 			bllist = backlinkRepository.saveAll(list);
@@ -105,7 +95,6 @@ public class BacklinkService implements IBaseService<Backlink, String> {
 
 	@Override
 	public boolean deleteMany(String[] ids) {
-		// TODO Auto-generated method stub
 		try {
 			for(String id: ids) {
 				backlinkRepository.deleteById(id);

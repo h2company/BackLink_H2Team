@@ -70,7 +70,7 @@ public class LogSystem extends BaseEntity {
 	}
 
 	public enum LogAction {
-		CREATE, UPDATE, REMOVE, SEARCH, RECOVER, LOGIN, REGISTER
+		CREATE, UPDATE, REMOVE, SEARCH, RECOVER, LOGIN, REGISTER, ADD_POINT
 	}
 
 	public enum Type {
