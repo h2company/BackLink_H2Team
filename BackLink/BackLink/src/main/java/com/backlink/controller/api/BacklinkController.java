@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.backlink.payload.reponse.APIResponse;
 import com.backlink.payload.request.BacklinkRequest;
+import com.backlink.payload.request.VerifyRequest;
 import com.backlink.service.BacklinkService;
 import com.backlink.service.UserService;
 
@@ -62,5 +64,14 @@ public class BacklinkController {
 	@PostMapping("backlink/createBackink")
 	public ResponseEntity<?> createBacklink(@Valid @RequestBody BacklinkRequest backlinkRequest) {
 		return backlinkService.saveBacklink(backlinkRequest);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
+	@PostMapping("backlink/verifyACPBacklink")
+	public APIResponse verifyACPBacklink(@Valid @RequestBody VerifyRequest verifyRequest) {
+		APIResponse res = new APIResponse();
+		res.setSuccess(true);
+		res.setMessage("Xác thực kết nối Backlink thành công !");
+		return res;
 	}
 }

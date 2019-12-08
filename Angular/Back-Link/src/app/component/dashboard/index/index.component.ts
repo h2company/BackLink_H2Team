@@ -38,6 +38,22 @@ export class IndexComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.loadBacklinks();
+    window.onmessage = (e) => {
+        console.log(e.data);
+        if(e.data.events) {
+          if(e.data.events[0].eventAction[0].event == 'verify') {
+            this._backlinkService.verify(e.data).subscribe(res => {
+                this.toastr.success('Thông báo!', res.message, {
+                  positionClass: 'toast-top-right'
+                });
+            }, error => {
+              this.toastr.error(error.error.error, error.error.message, {
+                positionClass: 'toast-top-right'
+              });
+            });
+          }
+        }
+    };
   }
   createForm() {
     this.varifyForm = this.formBuilder.group({
@@ -54,7 +70,6 @@ export class IndexComponent implements OnInit {
     }
     const controls = this.varifyForm.controls;
     var win = window.open(controls.urlVerify.value, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=400,width=700,height=400");
-    
   }
   loadBacklinks() {
     this._backlinkService.findAll().subscribe(res => {
@@ -79,7 +94,7 @@ export class IndexComponent implements OnInit {
           $('.token.string').eq(0).html('\''+_this.backlink.id+'\'');
 
           console.log($(window).eq(0));
-
+          
           $(window).eq(0).setData = function(param) {
               console.log(param);
           }
@@ -89,7 +104,7 @@ export class IndexComponent implements OnInit {
         this.childModal.show();
       }, 500);
     }, error => {
-      this.toastr.error("Lỗi", "Nội dung lỗi", {
+      this.toastr.error("Lỗi", "", {
         positionClass: 'toast-top-right'
       });
     });

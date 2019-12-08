@@ -1,15 +1,11 @@
-package com.backlink.entities;
+package com.backlink.payload.request;
 
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.backlink.entities.Event;
 
-@Document(collection = "access_history")
-public class AccessHistory extends BaseEntity {
-	
-	@Id
+public class VerifyRequest {
 	private String id;
 	
 	private String ip;
@@ -26,20 +22,12 @@ public class AccessHistory extends BaseEntity {
 	
 	private String action;
 
-	public AccessHistory() {
-		super();
+	public String getId() {
+		return id;
 	}
-	
-	public AccessHistory(String ip, String userAgent, String urlAgent, Date timeAccess, Date timeConnect,
-			List<Event> events, String action) {
-		super();
-		this.ip = ip;
-		this.userAgent = userAgent;
-		this.urlAgent = urlAgent;
-		this.timeAccess = timeAccess;
-		this.timeConnect = timeConnect;
-		this.events = events;
-		this.action = action;
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getIp() {
@@ -90,14 +78,6 @@ public class AccessHistory extends BaseEntity {
 		this.events = events;
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getAction() {
 		return action;
 	}
@@ -106,4 +86,6 @@ public class AccessHistory extends BaseEntity {
 		this.action = action;
 	}
 	
+	
 }
+
