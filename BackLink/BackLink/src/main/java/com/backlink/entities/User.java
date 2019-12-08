@@ -37,6 +37,10 @@ public class User extends BaseEntity {
 	private String address;
 	
 	private Date birthday;
+	
+	private int point;
+	
+	private int lockpoint;
 
 	private boolean gender;
 
@@ -58,8 +62,6 @@ public class User extends BaseEntity {
 		this.gender = gender;
 	}
 	
-	
-
 	public User(String username, String password, String email, String fullname) {
 		super();
 		this.username = username;
@@ -163,4 +165,21 @@ public class User extends BaseEntity {
 		this.gender = gender;
 	}
 
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
+	public int getLockpoint() {
+		return lockpoint;
+	}
+
+	public void setLockpoint(int lockpoint) {
+		this.lockpoint = lockpoint;
+	}
+	
+	
 }

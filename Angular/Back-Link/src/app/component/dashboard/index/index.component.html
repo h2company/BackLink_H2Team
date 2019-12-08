@@ -221,7 +221,7 @@
 												<p>Mã Backlink : <code *ngIf="backlink">{{ backlink.id }}</code></p>
 												<p>
 													Điểm thưởng mỗi trang Backlink : <code
-														*ngIf="backlink">{{ backlink.point / backlink.limit }}</code> | 
+														*ngIf="backlink">{{ math.round(backlink.point / backlink.limit * 0.9) }}</code> | 
 													Thời gian kết thúc Backlink <code
 														*ngIf="backlink">{{backlink.endTime | date:'HH:mm:ss dd-MM-yyyy'}}</code>
 												</p>

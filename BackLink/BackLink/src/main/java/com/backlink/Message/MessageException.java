@@ -15,4 +15,6 @@ public class MessageException {
 	public static final String FORBIDDEN = "FORBIDDEN";
 	public static final String UNAUTHORIZATION_NOT_VALID = "Truy vấn không hợp lệ";
 	public static final String EXIST = "%s đã tồn tại.";
+	public static final String CAN_NOT_CHANGE_EMAIL = "Bạn không thể thay đổi email. Vui lòng liên hệ ADMIN!";
+	public static final String CAN_NOT_CHANGE_PHONE = "Bạn không thể thay đổi phone. Vui lòng liên hệ ADMIN!";
 }

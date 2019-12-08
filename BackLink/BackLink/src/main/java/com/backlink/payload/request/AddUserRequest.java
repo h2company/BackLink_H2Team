@@ -1,5 +1,7 @@
 package com.backlink.payload.request;
 
+import java.util.Date;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -37,12 +39,10 @@ public class AddUserRequest {
 	private String address;
 	
 	@NotBlank(message = MessageException.ANO_NOT_BLANK)
-	@Size(min = 5, max = 30, message = MessageException.ANO_SIZE)
+	@Size(min = 1, max = 30, message = MessageException.ANO_SIZE)
 	private String fullname;
 	
-	@NotBlank(message = MessageException.ANO_NOT_BLANK)
-	@Pattern(regexp = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$")
-	private String birthday;
+	private Date birthday;
 	
 	private boolean gender;
 	
@@ -106,11 +106,11 @@ public class AddUserRequest {
 		this.fullname = fullname;
 	}
 
-	public String getBirthday() {
+	public Date getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(String birthday) {
+	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
 
