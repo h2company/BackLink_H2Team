@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Output, EventEmitter, Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -8,6 +8,12 @@ import { RoleName, roles, Roles } from 'src/app/model/roles.model';
 import { requiredValidator, emailValidator, phoneValidator } from 'src/app/util/custom-validator';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { PrettyCheckBoxChange } from 'ngx-pretty-checkbox';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { viLocale } from 'ngx-bootstrap/locale';
+
+defineLocale('vi', viLocale);
 
 @Component({
   selector: 'app-edit-user',
@@ -27,7 +33,8 @@ export class EditUserComponent implements OnInit {
     private route: ActivatedRoute,
     private _userService: UserService,
     private formBuider: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private bsLocaleService: BsLocaleService
   ) { }
 
   ngOnInit() {
@@ -43,7 +50,7 @@ export class EditUserComponent implements OnInit {
         })
 
         // dữ liệu trả về không hợp lệ (không có dữ liệu với ':id') thì chuyển hướng về 404 (không tìm thấy)
-        .catch(err => this.router.navigate(['/404']));   
+        .catch(err => this.router.navigate(['/not-found']));   
         this.createForm();
     })
   }
@@ -56,6 +63,8 @@ export class EditUserComponent implements OnInit {
       address: ['', [requiredValidator()]],
       fullname: ['', [requiredValidator()]]
     });
+
+    this.bsLocaleService.use('vi');
   }
 
   onRolesChange(id: number){
@@ -88,5 +97,13 @@ export class EditUserComponent implements OnInit {
     Object.keys(this.userForm.controls).forEach(elm => {
       this.userForm.controls[elm].reset(this.user[elm]);
     });
+  }
+
+  getGender($event){
+    this.user.gender = $event.value;
+  }
+
+  onChangeBirthday(date: Date){
+    this.user.birthday = date;
   }
 }

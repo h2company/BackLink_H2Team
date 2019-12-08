@@ -20,8 +20,8 @@ public class LogController {
 	private LogSystemService logSystemService;
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("logs")
-	public ResponseEntity<?> getAllLogs(@RequestParam(name = "type", defaultValue = "") Type type){
-		return new ResponseEntity<Object>(logSystemService.findAll(type), HttpStatus.OK);
+	@GetMapping("point-member/logs")
+	public ResponseEntity<?> getAllLogs(){
+		return new ResponseEntity<Object>(logSystemService.findByEventAndTypeAndImplementer(), HttpStatus.OK);
 	}
 }

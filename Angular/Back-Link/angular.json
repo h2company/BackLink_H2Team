@@ -24,8 +24,8 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/assets/css/fonts.css",
               "src/assets/vendors/css/vendors.min.css",
               "src/assets/css/plugins/forms/switch.min.css",
@@ -39,6 +39,7 @@
               "src/assets/vendors/css/forms/toggle/switchery.min.css",
               "src/assets/vendors/css/ui/prism.min.css",
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/pretty-checkbox/dist/pretty-checkbox.min.css",
               "src/styles.css"
             ],
             "scripts": [

@@ -1,6 +1,5 @@
 package com.backlink.controller.api;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +17,30 @@ import com.backlink.payload.reponse.APIResponse;
 import com.backlink.payload.request.BacklinkRequest;
 import com.backlink.payload.request.VerifyRequest;
 import com.backlink.service.BacklinkService;
+import com.backlink.service.UserService;
 
 @RestController
 @RequestMapping("/api/")
 public class BacklinkController {
 
 	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	private BacklinkService backlinkService;
+	
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
+	@GetMapping("point-member/{id}")
+	public ResponseEntity<?> findOne(@PathVariable String id){
+		return new ResponseEntity<Object>(userService.getById(id), HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
+	@GetMapping("point-member")
+	public ResponseEntity<?> findAll(){
+		return new ResponseEntity<Object>(userService.findPoint(), HttpStatus.OK);			
+	}	
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
 	@GetMapping("backlink/getBackink/{id}")

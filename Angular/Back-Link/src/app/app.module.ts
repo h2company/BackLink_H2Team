@@ -22,6 +22,7 @@ import { EditUserComponent } from './component/dashboard/user-manager/edit-user/
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { LogoutComponent } from './component/dashboard/logout/logout.component';
+import { NgxPrettyCheckboxModule } from 'ngx-pretty-checkbox';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { LogoutComponent } from './component/dashboard/logout/logout.component';
       progressBar: true
     }),
     BsDatepickerModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    NgxPrettyCheckboxModule
   ],
   providers: [
     HttpService,
