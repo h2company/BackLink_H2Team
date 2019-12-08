@@ -21,6 +21,7 @@ import { ListUserComponent } from './component/dashboard/user-manager/list-user/
 import { EditUserComponent } from './component/dashboard/user-manager/edit-user/edit-user.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { LogoutComponent } from './component/dashboard/logout/logout.component';
 import { NgxPrettyCheckboxModule } from 'ngx-pretty-checkbox';
 import { TagInputModule } from 'ngx-chips';
 
@@ -29,7 +30,8 @@ import { TagInputModule } from 'ngx-chips';
     AppComponent,
     RoutesComponent,
     ListUserComponent,
-    EditUserComponent
+    EditUserComponent,
+    LogoutComponent
   ],
   imports: [
     CommonModule,

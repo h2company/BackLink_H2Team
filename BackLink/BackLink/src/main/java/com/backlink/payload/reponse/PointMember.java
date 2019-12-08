@@ -1,4 +1,3 @@
-
 package com.backlink.payload.reponse;
 
 public class PointMember {
@@ -6,7 +5,6 @@ public class PointMember {
 	private String fullname;
 	private String username;
 	private int point;
-	
 	
 	public PointMember(String fullname, String username, int point) {
 		super();

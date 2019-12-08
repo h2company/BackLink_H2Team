@@ -11,6 +11,4 @@ import com.backlink.entities.User;
 
 public interface BacklinkRepostitory extends MongoRepository<Backlink, String> {
 	List<Backlink> findAllByUsername(String username);
-	
-	
 }

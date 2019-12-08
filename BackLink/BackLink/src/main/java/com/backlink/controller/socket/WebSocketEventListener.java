@@ -46,18 +46,20 @@ public class WebSocketEventListener {
             
             //Danh sach action get from headerAccessor
             List<AccessHistory> AHList = (List<AccessHistory>) headerAccessor.getSessionAttributes().get("tracking");
-            AccessHistory lastaccessHistory = AHList.get(AHList.size()-1);
-            
-            //Set time start connect
-            lastaccessHistory.setTimeConnect(AHList.get(0).getTimeAccess());
-            
-            //Danh sach event cua phien
-            List<Event> events = new ArrayList<>();
-            for (AccessHistory acHistory: (List<AccessHistory>) headerAccessor.getSessionAttributes().get("tracking")) {
-            	events.add(acHistory.getEvents().get(0));
-			}
-            lastaccessHistory.setEvents(events);
-            AHService.saveOne(lastaccessHistory);
+            if(AHList != null) {
+            	AccessHistory lastaccessHistory = AHList.get(AHList.size()-1);
+                
+                //Set time start connect
+                lastaccessHistory.setTimeConnect(AHList.get(0).getTimeAccess());
+                
+                //Danh sach event cua phien
+                List<Event> events = new ArrayList<>();
+                for (AccessHistory acHistory: (List<AccessHistory>) headerAccessor.getSessionAttributes().get("tracking")) {
+                	events.add(acHistory.getEvents().get(0));
+    			}
+                lastaccessHistory.setEvents(events);
+                AHService.saveOne(lastaccessHistory);
+            }
             
         }
     }

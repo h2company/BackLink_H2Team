@@ -22,6 +22,7 @@ import { PointLogComponent } from 'src/app/component/dashboard/point-log/point-l
 import { EditUserComponent } from 'src/app/component/dashboard/user-manager/edit-user/edit-user.component';
 import { ListUserComponent } from 'src/app/component/dashboard/user-manager/list-user/list-user.component';
 import { AddUserComponent } from 'src/app/component/dashboard/user-manager/add-user/add-user.component';
+import { LogoutComponent } from 'src/app/component/dashboard/logout/logout.component';
 import { AppRouter } from '../app-router.model';
 
 const routes: Routes = [
@@ -41,6 +42,7 @@ const routes: Routes = [
           { path: ':id', component: EditUserComponent },
         ]
       },
+      { path: 'logout', component: LogoutComponent }
       { path: AppRouter.ADD_BACKLINK, component: AddBacklinkComponent },
       { path: AppRouter.ADD_ACTION, component: AddActionComponent },
       { path: AppRouter.STATISTICAL_ACCESS, component: StatisticalAccessComponent },

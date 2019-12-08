@@ -7,6 +7,7 @@ import { APIService } from '../util/api.service';
 import { Backlink } from '../model/backlink.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Respone } from '../model/respone.model';
 
 @Injectable({
     providedIn: 'root'
@@ -40,5 +41,12 @@ export class BacklinkService implements IBaseService<Backlink, string> {
     save(entity: Backlink): Observable<Backlink> {
         return this.http.post_oauth(this.API.ADD_BACKLINK, entity);
     }
+    
+    checkVerify(data: any): Observable<Respone> {
+        return this.http.post_oauth(this.API.ADD_BACKLINK_CHECK_VF, data);
+    }
 
+    verify(data: any): Observable<Respone> {
+        return this.http.post_oauth(this.API.ADD_BACKLINK_VF, data);
+    }
 }  

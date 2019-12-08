@@ -16,6 +16,10 @@ export class APIService {
   public BACKLINKS = "/api/backlink/getBackinks";
   public BACKLINKS_USER = "/api/backlink/getBackinks/customer";
   public ADD_BACKLINK = "/api/backlink/createBackink";
+  
+  public ADD_BACKLINK_VF = "/api/backlink/verifyACPBacklink";
+  public ADD_BACKLINK_CHECK_VF = "/api/backlink/checkverifyACPBacklink";
+
   constructor() { }  
   
 }
