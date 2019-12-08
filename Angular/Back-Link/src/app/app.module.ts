@@ -23,6 +23,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { LogoutComponent } from './component/dashboard/logout/logout.component';
 import { NgxPrettyCheckboxModule } from 'ngx-pretty-checkbox';
+import { AccountComponent } from './component/dashboard/account/account.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NgxPrettyCheckboxModule } from 'ngx-pretty-checkbox';
     RoutesComponent,
     ListUserComponent,
     EditUserComponent,
-    LogoutComponent
+    LogoutComponent,
+    AccountComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,138 @@
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-wrapper-before"></div>
+        <div class="content-header row"></div>
+        <div class="content-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title" id="horz-layout-basic">Thông tin tài khoản</h4>
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content collpase show">
+                                <div class="card-body">
+                                    <div class="card-text">
+                                        <p>
+                                            <span style="color: red">Chú ý:</span> Hãy cẩn trọng khi
+                                            thay đổi bất kì thông tin nào.
+                                        </p>
+                                        <p>
+                                            <span style="color: red">(*):</span> Thông tin bắt buộc.
+                                        </p>
+                                    </div>
+                                    <form [formGroup]="userForm" class="form form-horizontal" (ngSubmit)="onSubmit()"
+                                        novalidate>
+                                        <div class="form-body">
+                                            <h4 class="form-section">
+                                                <i class="ft-clipboard"></i>Thông Tin Cá Nhân
+                                            </h4>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 label-control" for="projectinput5">Tài
+                                                    Khoản</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" formControlName="username"
+                                                        [(ngModel)]="user.username" class="form-control" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 label-control" for="projectinput5"><span
+                                                        style="color: red">(*)</span> Email</label>
+                                                <div class="col-md-9">
+                                                    <input type="email" formControlName="email" [(ngModel)]="user.email"
+                                                        class="form-control"
+                                                        [class.is-invalid]="userForm.controls.email.invalid">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 label-control" for="projectinput5"><span
+                                                        style="color: red">(*)</span> Số Điện Thoại</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" formControlName="phone" [(ngModel)]="user.phone"
+                                                        class="form-control"
+                                                        [class.is-invalid]="userForm.controls.phone.invalid">
+                                                    <div class="invalid-tooltip" *ngIf="userForm.controls.phone.errors">
+                                                        {{userForm.controls.phone.errors.message}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 label-control" for="projectinput5"><span
+                                                        style="color: red">(*)</span> Tên Thành Viên</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" formControlName="fullname"
+                                                        [(ngModel)]="user.fullname" class="form-control"
+                                                        [class.is-invalid]="userForm.controls.fullname.invalid">
+                                                    <div class="invalid-tooltip"
+                                                        *ngIf="userForm.controls.fullname.errors">
+                                                        {{userForm.controls.fullname.errors.message}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row skin skin-square">
+                                                <label class="col-md-3 label-control" for="projectinput5"><span
+                                                        style="color: red">(*)</span> Giới tính</label>
+                                                <div class="col-md-9">
+                                                    <p-radio name="gender" (change)="getGender($event)" value="true"
+                                                        checked="{{user.gender ? 'checked' : ''}}" shape="curve"
+                                                        color="success" animation="jelly">
+                                                        <i p-icon class="material-icons">done</i>
+                                                        Nam
+                                                    </p-radio>
+                                                    <p-radio name="gender" (change)="getGender($event)" value="false"
+                                                        checked="{{!user.gender ? 'checked' : ''}}" shape="curve"
+                                                        color="success" animation="jelly">
+                                                        <i p-icon class="material-icons">done</i>
+                                                        Nữ
+                                                    </p-radio>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 label-control" for="projectinput5"><span
+                                                        style="color: red">(*)</span> Ngày Sinh</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" value="{{ user.birthday | date: 'dd-MM-yyyy'}}"
+                                                        placeholder="Ngày sinh" class="form-control red" readonly
+                                                        bsDatepicker placement="bottom"
+                                                        [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }"
+                                                        (bsValueChange)="onChangeBirthday($event)">
+                                                </div>
+                                            </div>
+                                            <div class=" form-group row">
+                                                <label class="col-md-3 label-control" for="projectinput5"><span
+                                                        style="color: red">(*)</span>Địa Chỉ</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" formControlName="address"
+                                                        [(ngModel)]="user.address" class="form-control"
+                                                        [class.is-invalid]="userForm.controls.address.invalid">
+                                                    <div class="invalid-tooltip"
+                                                        *ngIf="userForm.controls.address.errors">
+                                                        {{userForm.controls.address.errors.message}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions right">
+                                            <button type="submit" class="btn btn-primary mr-1">
+                                                <i class="la la-check-square-o"></i> Cập nhật
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
