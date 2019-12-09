@@ -42,7 +42,7 @@ const routes: Routes = [
           { path: ':id', component: EditUserComponent },
         ]
       },
-      { path: 'logout', component: LogoutComponent }
+      { path: 'logout', component: LogoutComponent },
       { path: AppRouter.ADD_BACKLINK, component: AddBacklinkComponent },
       { path: AppRouter.ADD_ACTION, component: AddActionComponent },
       { path: AppRouter.STATISTICAL_ACCESS, component: StatisticalAccessComponent },

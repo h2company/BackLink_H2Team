@@ -255,6 +255,7 @@ public class UserService implements IBaseService<User, String> {
 		User user = userOpt.get();
 		user.setFullname(updateUserRequest.getFullname());
 		user.setAddress(updateUserRequest.getAddress());
+		user.setEmail(updateUserRequest.getEmail());
 		user.setGender(updateUserRequest.isGender());
 		user.setPhone(updateUserRequest.getPhone());
 		user.setBirthday(updateUserRequest.getBirthday());

@@ -3,6 +3,10 @@ package com.backlink.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -50,8 +54,13 @@ public class BacklinkService implements IBaseService<Backlink, String> {
 	}
 
 	@Override
-	public List<Backlink> findAll() {
+	public List<Backlink> findAll() {		
 		return backlinkRepository.findAll();
+	}
+	
+	public List<Backlink> findAll(int page){
+		Pageable sortedByPriceDesc =  PageRequest.of(page, 2, Sort.by("point").descending());
+		return backlinkRepository.findAll(sortedByPriceDesc).getContent();
 	}
 
 	@Override
