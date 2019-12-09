@@ -24,6 +24,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { LogoutComponent } from './component/dashboard/logout/logout.component';
 import { NgxPrettyCheckboxModule } from 'ngx-pretty-checkbox';
 import { TagInputModule } from 'ngx-chips';
+import { AccountComponent } from './component/dashboard/account/account.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { TagInputModule } from 'ngx-chips';
     RoutesComponent,
     ListUserComponent,
     EditUserComponent,
-    LogoutComponent
+    LogoutComponent,
+    AccountComponent
   ],
   imports: [
     CommonModule,

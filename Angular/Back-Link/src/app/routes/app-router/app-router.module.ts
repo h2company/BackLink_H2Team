@@ -24,6 +24,7 @@ import { ListUserComponent } from 'src/app/component/dashboard/user-manager/list
 import { AddUserComponent } from 'src/app/component/dashboard/user-manager/add-user/add-user.component';
 import { LogoutComponent } from 'src/app/component/dashboard/logout/logout.component';
 import { AppRouter } from '../app-router.model';
+import { AccountComponent } from 'src/app/component/dashboard/account/account.component';
 
 const routes: Routes = [
   { path: '', redirectTo: `/${AppRouter.INDEX}`, pathMatch: 'full' },
@@ -40,6 +41,12 @@ const routes: Routes = [
           { path: '', component: ListUserComponent },
           { path: 'add', component: AddUserComponent },
           { path: ':id', component: EditUserComponent },
+        ]
+      },
+      {
+        path: 'account',
+        component: AccountComponent,
+        children: [
         ]
       },
       { path: 'logout', component: LogoutComponent },
