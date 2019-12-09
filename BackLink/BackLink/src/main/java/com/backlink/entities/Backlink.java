@@ -17,6 +17,8 @@ public class Backlink extends BaseEntity {
 	private int point;
 
 	private int limit;
+	
+	private int limit_active;
 
 	private boolean filterVA;
 	
@@ -98,6 +100,16 @@ public class Backlink extends BaseEntity {
 
 	public void setLimit(int limit) {
 		this.limit = limit;
+	}
+
+
+	public int getLimit_active() {
+		return limit_active;
+	}
+
+
+	public void setLimit_active(int limit_active) {
+		this.limit_active = limit_active;
 	}
 
 

@@ -5,6 +5,7 @@ export class Backlink {
         public urlBacklink?: string,
         public point?: number,
         public limit?: number,
+        public limit_active?: number,
         public filterVA?: boolean,
         public saveVA?: boolean,
         public beginTime?: number,

@@ -10,19 +10,39 @@
 						<div class="card-header">
 							<h4 class="card-title">Thống Kê Lưu Lượng Backlink</h4>
 							<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-							<div class="heading-elements">
-								<ul class="list-inline mb-0">
-									<li><button type="button"
-											class="btn btn-glow btn-round btn-bg-gradient-x-red-pink">Xem
-											thêm</button></li>
-								</ul>
-							</div>
 						</div>
 						<div class="card-content collapse show">
-							<div class="card-body p-0 pb-0">
+							<div class="card-body p-0 pb-0" *ngIf="user_backlink">
 								<div class="chartist">
 									<div id="project-stats" class="height-350 areaGradientShadow1"></div>
 								</div>
+							</div>
+							<div class="card-body text-center pt-1" *ngIf="!user_backlink">
+								<div class="spinner-grow text-primary" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<div class="spinner-grow text-secondary" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<div class="spinner-grow text-success" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<div class="spinner-grow text-danger" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<div class="spinner-grow text-warning" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<div class="spinner-grow text-info" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<div class="spinner-grow text-light" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<div class="spinner-grow text-dark" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<p>Vui lòng lựa chọn backlink từ danh sách bên cạnh</p>
 							</div>
 						</div>
 					</div>
@@ -30,18 +50,47 @@
 				<div class="col-lg-4 col-md-12">
 					<div class="row">
 						<div class="col-12">
+							<div class="card pull-up border-top-info border-top-3 rounded-0">
+								<div class="card-header mb-0 pb-0">
+									<h4 class="card-title">
+										Danh sách Backlink của bạn <span
+											class="badge badge-pill badge-info float-right m-0" *ngIf="user_backlinks.length != 0">{{user_backlinks.length - 1}}+</span>
+									</h4>
+									<p class="m-0">Lựa chọn backlink trong danh sách backlink của bạn để hiển thị thông
+										tin tiến trình, chi tiết lưu lượng truy cập backlink.</p>
+								</div>
+								<div class="card-content collapse show">
+									<div class="card-body p-1">
+										<fieldset class="form-group">
+											<select class="form-control" [(ngModel)]="user_backlink"
+												(change)="onBacklinkChange()" *ngIf="user_backlinks.length != 0">
+												<option value="">---Lựa chọn backlink---</option>
+												<option *ngFor="let backlink of user_backlinks; index as i"
+													value="{{ backlink.id }}">Mã: {{ backlink.id }}</option>
+											</select>
+											<div class="text-center" *ngIf="user_backlinks.length == 0">
+												<p>Vui lòng thêm backlink</p>
+												<a [routerLink]="['/dashboard/add-backlink']" class="btn btn-glow btn-round btn-bg-gradient-x-red-pink">Tạo backlink</a>
+											</div>
+										</fieldset>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12">
 							<div class="card pull-up">
 								<div class="card-header">
 									<h4 class="card-title float-left">Tác vụ</h4>
 									<a class="heading-elements-toggle"><i
 											class="la la-ellipsis-v font-medium-3"></i></a> <span
-										class="badge badge-pill badge-info float-right m-0">Đang trong tiến
+										class="badge badge-pill badge-info float-right m-0" *ngIf="user_backlink">Đang
+										trong tiến
 										trình</span>
 								</div>
 								<div class="card-content collapse show">
-									<div class="card-body pt-0 pb-1">
+									<div class="card-body pt-0 pb-1" *ngIf="user_backlink">
 										<h6 class="text-muted font-small-3">Task đã hoàn thành:
-											4/10</h6>
+											</h6>
 										<div class="progress progress-sm mt-1 mb-0 box-shadow-2">
 											<div class="progress-bar bg-gradient-x-info" role="progressbar"
 												style="width: 25%" aria-valuenow="25" aria-valuemin="0"
@@ -79,26 +128,32 @@
 											</div>
 										</div>
 									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-12">
-							<div class="card pull-up border-top-info border-top-3 rounded-0">
-								<div class="card-header">
-									<h4 class="card-title">
-										Khách hàng mới <span
-											class="badge badge-pill badge-info float-right m-0">500+</span>
-									</h4>
-								</div>
-								<div class="card-content collapse show">
-									<div class="card-body p-1">
-										<h4 class="font-large-1 text-bold-400">
-											185,055 <i class="ft-users float-right"></i>
-										</h4>
-									</div>
-									<div class="card-footer p-1">
-										<span class="text-muted"><i class="la la-arrow-circle-o-up info"></i> Tăng
-											23.67%</span>
+									<div class="card-body text-center pt-1" *ngIf="!user_backlink">
+										<div class="spinner-grow text-primary" role="status">
+											<span class="sr-only">Loading...</span>
+										</div>
+										<div class="spinner-grow text-secondary" role="status">
+											<span class="sr-only">Loading...</span>
+										</div>
+										<div class="spinner-grow text-success" role="status">
+											<span class="sr-only">Loading...</span>
+										</div>
+										<div class="spinner-grow text-danger" role="status">
+											<span class="sr-only">Loading...</span>
+										</div>
+										<div class="spinner-grow text-warning" role="status">
+											<span class="sr-only">Loading...</span>
+										</div>
+										<div class="spinner-grow text-info" role="status">
+											<span class="sr-only">Loading...</span>
+										</div>
+										<div class="spinner-grow text-light" role="status">
+											<span class="sr-only">Loading...</span>
+										</div>
+										<div class="spinner-grow text-dark" role="status">
+											<span class="sr-only">Loading...</span>
+										</div>
+										<p>Vui lòng lựa chọn backlink từ danh sách bên trên</p>
 									</div>
 								</div>
 							</div>
@@ -113,13 +168,13 @@
 					<div class="card">
 						<div class="card-header p-1">
 							<h4 class="card-title float-left">
-								Chiến dịch SEO - <span class="blue-grey lighten-2 font-small-3 mb-0">08/08/2019 -
+								Chiến dịch SEO - <span class="blue-grey lighten-2 font-small-3 mb-0" *ngIf="user_backlink">08/08/2019 -
 									09/09/2019</span>
 							</h4>
-							<span class="badge badge-pill badge-info float-right m-0">Đang trong tiến trình</span>
+							<span class="badge badge-pill badge-info float-right m-0" *ngIf="user_backlink">Đang trong tiến trình</span>
 						</div>
 						<div class="card-content collapse show">
-							<div class="card-footer text-center p-1">
+							<div class="card-footer text-center p-1" *ngIf="user_backlink">
 								<div class="row">
 									<div
 										class="col-md-3 col-12 border-right-blue-grey border-right-lighten-5 text-center">
@@ -144,6 +199,33 @@
 								<hr>
 								<span class="text-muted"><a href="#" class="danger darken-2">Backlink H2TEAM</a> Số
 									liệu thống kê</span>
+							</div>
+							<div class="card-body text-center pt-1" *ngIf="!user_backlink">
+								<div class="spinner-grow text-primary" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<div class="spinner-grow text-secondary" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<div class="spinner-grow text-success" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<div class="spinner-grow text-danger" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<div class="spinner-grow text-warning" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<div class="spinner-grow text-info" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<div class="spinner-grow text-light" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<div class="spinner-grow text-dark" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								<p>Vui lòng lựa chọn backlink từ danh sách bên trên</p>
 							</div>
 						</div>
 					</div>
@@ -190,14 +272,12 @@
 													(click)="onClickBacklinkDetail(backlink.id);">
 													<i class="ft-eye"></i> Chi tiết
 												</button>
-												<button type="button" class="btn btn-outline-success mr-1">
-													<i class="ft-camera"></i> Theo dõi
-												</button>
 											</td>
 										</tr>
 										<tr>
-											<td colspan="6" class="text-center">
-												<button type="button" class="btn btn-outline-warning mr-1" (click)="onLoadNextPage()">
+											<td colspan="7" class="text-center">
+												<button type="button" class="btn btn-outline-warning mr-1"
+													(click)="onLoadNextPage()">
 													<i class="ft-repeat"></i> Xem thêm
 												</button>
 											</td>
@@ -223,13 +303,17 @@
 												<p>Mã Backlink : <code *ngIf="backlink">{{ backlink.id }}</code></p>
 												<p>
 													Điểm thưởng mỗi trang Backlink : <code
-														*ngIf="backlink">{{ math.round(backlink.point / backlink.limit * 0.9) }}</code> | 
+														*ngIf="backlink">{{ math.round(backlink.point / backlink.limit * 0.9) }}</code>
+													|
 													Thời gian kết thúc Backlink <code
 														*ngIf="backlink">{{backlink.endTime | date:'HH:mm:ss dd-MM-yyyy'}}</code>
 												</p>
 											</div>
 											<div class="col-md-12">
-												<p><code>Lưu ý:</code> Backlink sau khi được xác thực đã gắn vào website của bạn, điểm thưởng sẽ được cộng vào "Ví điểm khóa" và số điểm này sẽ được chuyển đến "Ví điểm thực" sau khi thời hạn Backlink này kết thúc.</p>
+												<p><code>Lưu ý:</code> Backlink sau khi được xác thực đã gắn vào website
+													của bạn, điểm thưởng sẽ được cộng vào "Ví điểm khóa" và số điểm này
+													sẽ được chuyển đến "Ví điểm thực" sau khi thời hạn Backlink này kết
+													thúc.</p>
 											</div>
 											<hr>
 											<div class="col-md-12">

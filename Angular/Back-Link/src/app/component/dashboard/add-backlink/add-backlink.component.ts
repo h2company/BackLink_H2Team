@@ -63,7 +63,7 @@ export class AddBacklinkComponent implements OnInit {
       this.toastr.success('Thông báo!', 'Thao tác thành công !', {
         positionClass: 'toast-top-right'
       });
-      this.router.navigate(['']);
+      this.router.navigate(['/dashboard/add-backlink']);
     }, error => {
       this.toastr.error(error.error.error, error.error.message, {
         positionClass: 'toast-top-right'
