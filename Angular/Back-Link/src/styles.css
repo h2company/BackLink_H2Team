@@ -40,3 +40,20 @@ app-sidebar .main-menu.menu-light .navigation>li ul .open>a.active::before {
 .form-control.is-invalid-api ~ .invalid-tooltip.api-error{
     display: block;
 }
+
+tag-input{
+    border-bottom: 1px solid #0275d8;
+}
+
+@keyframes MyAnimation {
+    0% {
+      padding-bottom: 100px;
+    }
+    100% {
+      padding-bottom: 0px;
+    } 
+  }
+  
+  .my-animation {
+    animation: MyAnimation 1s;
+  }

@@ -47,7 +47,7 @@
 										<span style="color: red">(*):</span> Thông tin bắt buộc.
 									</p>
 								</div>
-								<form class="form form-horizontal" action="./account/manager.html" method="POST">
+								<form class="form form-horizontal">
 									<div class="form-div">
 										<h4 class="form-section">
 											<i class="ft-clipboard"></i>Thông Tin Hành Động
@@ -56,17 +56,21 @@
 											<label class="col-md-3 label-control" for="projectinput5"><span
 													style="color: red">(*)</span> Đường dẫn yêu cầu</label>
 											<div class="col-md-9">
-												<input type="text" id="projectinput5" class="form-control" value=""
-													name="username"
-													placeholder="Ví dụ: http://h2team.blog/gioi-thieu-ve-h2team.hmtl">
+												<input class="form-control" id="descTextarea" rows="3"
+													placeholder="Ví dụ: google.com , bing.com, yahoo.com...">
 											</div>
 										</div>
 										<div class="form-group row">
 											<label class="col-md-3 label-control" for="projectinput5"><span
 													style="color: red">(*)</span> Kênh tìm kiếm hợp lệ</label>
 											<div class="col-md-9">
-												<textarea class="form-control" id="descTextarea" rows="3"
-													placeholder="Ví dụ: google.com , bing.com, yahoo.com..."></textarea>
+												<!-- <textarea class="form-control" id="descTextarea" rows="3"
+													placeholder="Ví dụ: google.com , bing.com, yahoo.com..."></textarea> -->
+												<tag-input [(ngModel)]='items' 
+												[ngModelOptions]="{standalone: true}"
+												[placeholder]="'Nhập kênh tìm kiếm'"
+												[secondaryPlaceholder]="'Nhập kênh tìm kiếm'"
+												theme='bootstrap'></tag-input>
 											</div>
 										</div>
 										<div class="form-group row">
@@ -127,7 +131,7 @@
 										</div>
 									</div>
 									<div class="form-actions right">
-										<button type="button" class="btn btn-primary mr-1">
+										<button type="button" class="btn btn-primary mr-1" (click)="onClick()">
 											<i class="la la-check-square-o"></i> Thêm mới
 										</button>
 									</div>

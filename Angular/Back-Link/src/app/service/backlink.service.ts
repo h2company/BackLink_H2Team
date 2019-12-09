@@ -20,8 +20,9 @@ export class BacklinkService implements IBaseService<Backlink, string> {
         return this.http.get(this.API.BACKLINK + id);
     }
 
-    findAll(): Observable<Backlink[]> {
-        return this.http.get(this.API.BACKLINKS).pipe(
+    findAll(p?: number): Observable<Backlink[]> {
+        let page = p ? p : 0;
+        return this.http.get(this.API.BACKLINKS + '?p=' + page).pipe(
             map((data: Backlink[]) => data.map((item: Backlink) => item)),
         );
     }

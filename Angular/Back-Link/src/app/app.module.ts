@@ -23,6 +23,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { LogoutComponent } from './component/dashboard/logout/logout.component';
 import { NgxPrettyCheckboxModule } from 'ngx-pretty-checkbox';
+import { TagInputModule } from 'ngx-chips';
 import { AccountComponent } from './component/dashboard/account/account.component';
 
 @NgModule({
@@ -54,7 +55,8 @@ import { AccountComponent } from './component/dashboard/account/account.componen
     }),
     BsDatepickerModule.forRoot(),
     ModalModule.forRoot(),
-    NgxPrettyCheckboxModule
+    NgxPrettyCheckboxModule,
+    TagInputModule
   ],
   providers: [
     HttpService,

@@ -6,13 +6,48 @@ import { ModalDirective } from 'ngx-bootstrap/modal/ngx-bootstrap-modal';
 import { Backlink } from 'src/app/model/backlink.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { requiredValidator, urlValidator } from 'src/app/util/custom-validator';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  query,
+  stagger
+} from '@angular/animations';
+
 declare var jQuery: any;
+
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  styleUrls: ['./index.component.css'],
+  animations: [
+    trigger('listStagger', [
+      transition('* <=> *', [
+        query(
+          ':enter',
+          [
+            style({ opacity: 0, transform: 'translateY(-15px)' }),
+            stagger(
+              '50ms',
+              animate(
+                '550ms ease-out',
+                style({ opacity: 1, transform: 'translateY(0px)' })
+              )
+            )
+          ],
+          { optional: true }
+        ),
+        query(':leave', animate('50ms', style({ opacity: 0 })), {
+          optional: true
+        })
+      ])
+    ])
+  ]
 })
 export class IndexComponent implements OnInit {
+
   @ViewChild('childModal', { static: false }) childModal: ModalDirective;
   varifyForm: FormGroup;
   backlink: Backlink = new Backlink();
@@ -29,6 +64,8 @@ export class IndexComponent implements OnInit {
     })(window,document,'http://localhost:8082/frame/c/','.js?siteId=');
   </script>`;
   math = Math;
+  currentPage = 0;
+
   constructor(
     private formBuilder: FormBuilder,
     private _backlinkService: BacklinkService,
@@ -40,7 +77,6 @@ export class IndexComponent implements OnInit {
     this.createForm();
     this.loadBacklinks();
     window.onmessage = (e) => {
-        console.log(e.data);
         if(e.data.events) {
           if(e.data.events[0].eventAction[0].event == 'verify') {
             this._backlinkService.verify(e.data).subscribe(res => {
@@ -58,13 +94,14 @@ export class IndexComponent implements OnInit {
         }
     };
   }
+  
   createForm() {
     this.varifyForm = this.formBuilder.group({
       urlVerify: ['', [requiredValidator(), urlValidator()]]
     });
   }
+
   onVerifySubmit() {
-    console.log('submit');
     if (this.varifyForm.invalid) {
       this.toastr.error('Thông báo!', 'Vui lòng nhập chính xác thông tin!', {
         positionClass: 'toast-top-right'
@@ -84,16 +121,30 @@ export class IndexComponent implements OnInit {
     });
     
   }
+
   loadBacklinks() {
-    this._backlinkService.findAll().subscribe(res => {
-      this.backlinks = res;
-      console.log(this.backlinks);
+    this._backlinkService.findAll(this.currentPage).subscribe(res => {
+      if(res.length == 0){
+        this.currentPage--;
+        return;
+      }
+      if(this.backlinks){
+        this.backlinks = [].concat(this.backlinks, res);
+      }else{      
+        this.backlinks = res;
+      }
     }, error => {
       this.toastr.error(error.error.error, error.error.message, {
         positionClass: 'toast-top-right'
       });
     });
   }
+
+  onLoadNextPage(){
+    this.currentPage++;
+    this.loadBacklinks();
+  }
+
   onClickBacklinkDetail(id) {
     this._backlinkService.findById(id).subscribe(res => {
       this.backlink = res;

@@ -176,7 +176,7 @@
 											<th>Hành Động</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody [@listStagger]='backlinks.length'>
 										<tr *ngFor="let backlink of backlinks; index as i">
 											<td>{{ i + 1}}</td>
 											<td>{{backlink.id}}</td>
@@ -197,7 +197,7 @@
 										</tr>
 										<tr>
 											<td colspan="6" class="text-center">
-												<button type="button" class="btn btn-outline-warning mr-1">
+												<button type="button" class="btn btn-outline-warning mr-1" (click)="onLoadNextPage()">
 													<i class="ft-repeat"></i> Xem thêm
 												</button>
 											</td>

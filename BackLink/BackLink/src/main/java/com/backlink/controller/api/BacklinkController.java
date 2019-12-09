@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backlink.entities.Backlink;
@@ -52,8 +53,9 @@ public class BacklinkController {
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
 	@GetMapping("backlink/getBackinks")
-	public ResponseEntity<?> getBacklinks() {
-		return new ResponseEntity<Object>(backlinkService.findAll(), HttpStatus.OK);
+	public ResponseEntity<?> getBacklinks(@RequestParam(defaultValue = "0") int p) {
+		System.out.println(p);
+		return new ResponseEntity<Object>(backlinkService.findAll(p), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")

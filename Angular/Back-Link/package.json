@@ -22,6 +22,7 @@
     "@sweetalert2/ngx-sweetalert2": "^6.0.1",
     "bootstrap": "^4.3.1",
     "ngx-bootstrap": "^5.2.0",
+    "ngx-chips": "^2.1.0",
     "ngx-pretty-checkbox": "^1.1.0",
     "ngx-toastr": "^11.1.2",
     "ngx-ui-switch": "^1.6.1",
