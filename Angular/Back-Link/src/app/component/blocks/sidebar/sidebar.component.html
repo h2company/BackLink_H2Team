@@ -12,16 +12,22 @@
   <div class="navigation-background"></div>
   <div class="main-menu-content">
     <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-      <li class=" nav-item "><a class="" [routerLink]="['/dashboard/']" routerLinkActive="active"><i class="ft-home"></i><span class="menu-title" data-i18n="">Trang
+      <li class=" nav-item "><a class="" [routerLink]="['/dashboard/']" routerLinkActive="active"><i
+            class="ft-home"></i><span class="menu-title" data-i18n="">Trang
             Chủ</span></a></li>
+      <li class=" nav-item "><a class="" [routerLink]="['./account']" routerLinkActive="active"><i
+            class="ft-user"></i><span class="menu-title" data-i18n="">Tài khoản</span></a></li>
       <li class=" nav-item has-sub"><a href="#"><i class="ft-bar-chart-2"></i><span class="menu-title" data-i18n="">Quản
             Lý Backlink</span></a>
         <ul class="menu-content">
-          <li class=""><a class="menu-item" [routerLink]="['./add-backlink']" routerLinkActive="active">Thêm Backlink</a>
+          <li class=""><a class="menu-item" [routerLink]="['./add-backlink']" routerLinkActive="active">Thêm
+              Backlink</a>
           </li>
-          <li class=""><a class="menu-item" [routerLink]="['./add-action']" routerLinkActive="active">Thêm Yêu Cầu Hành Động</a>
+          <li class=""><a class="menu-item" [routerLink]="['./add-action']" routerLinkActive="active">Thêm Yêu Cầu Hành
+              Động</a>
           </li>
-          <li class=""><a class="menu-item" [routerLink]="['./statistical-access']" routerLinkActive="active">Thống Kê Truy Cập</a>
+          <li class=""><a class="menu-item" [routerLink]="['./statistical-access']" routerLinkActive="active">Thống Kê
+              Truy Cập</a>
           </li>
         </ul>
       </li>
@@ -52,10 +58,11 @@
           </li>
         </ul>
       </li>
-      <li class=" nav-item has-sub"><a href="#"><i class="ft-users" routerLinkActive="active"></i><span class="menu-title" data-i18n="">Quản Lý Tài
+      <li class=" nav-item has-sub"><a href="#"><i class="ft-users" routerLinkActive="active"></i><span
+            class="menu-title" data-i18n="">Quản Lý Tài
             Khoản</span></a>
         <ul class="menu-content">
-            <li class=""><a class="menu-item" [routerLink]="['./users/add']" routerLinkActive="active">Thêm Thành Viên</a>
+          <li class=""><a class="menu-item" [routerLink]="['./users/add']" routerLinkActive="active">Thêm Thành Viên</a>
           <li class=""><a class="menu-item" [routerLink]="['./users']" routerLinkActive="active">Danh Sách</a>
           </li>
         </ul>
