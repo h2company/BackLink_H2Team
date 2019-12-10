@@ -133,6 +133,7 @@ export class IndexComponent implements OnInit {
     this._backlinkService.findAllByUser().subscribe(res => {
       this.user_backlinks = res;
       this.user_backlink = this.user_backlinks[0].id;
+      this.onBacklinkChange();
       console.log(this.user_backlink);
     }, error => {
       console.log(error)
