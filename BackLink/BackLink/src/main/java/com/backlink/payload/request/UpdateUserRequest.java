@@ -45,6 +45,10 @@ public class UpdateUserRequest {
 	private Date birthday;
 	
 	private boolean gender;
+	
+	private int point;
+	
+	private int lockpoint;
 
 	public String getId() {
 		return id;
@@ -116,6 +120,23 @@ public class UpdateUserRequest {
 
 	public void setGender(boolean gender) {
 		this.gender = gender;
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
+	public int getLockpoint() {
+		return lockpoint;
+	}
+
+	public void setLockpoint(int lockpoint) {
+		this.lockpoint = lockpoint;
 	}	
+	
 	
 }

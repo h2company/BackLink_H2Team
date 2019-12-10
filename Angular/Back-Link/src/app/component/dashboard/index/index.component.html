@@ -102,10 +102,12 @@
 										<div class="progress progress-sm mt-1 mb-0 box-shadow-2">
 											<div class="progress-bar bg-gradient-x-info" role="progressbar"
 												style="width: 25%" aria-valuenow="" aria-valuemin="0"
-												aria-valuemax="100" *ngIf="user_backlink && user_backlink_info.limit_active > 0"></div>
+												aria-valuemax="100"
+												*ngIf="user_backlink && user_backlink_info.limit_active > 0"></div>
 											<div class="progress-bar bg-gradient-x-success" role="progressbar"
 												style="width: 100%" aria-valuenow="100" aria-valuemin="0"
-												aria-valuemax="100" *ngIf="user_backlink && user_backlink_info.limit_active == 0"></div>
+												aria-valuemax="100"
+												*ngIf="user_backlink && user_backlink_info.limit_active == 0"></div>
 										</div>
 										<div class="media d-flex">
 											<div class="align-self-center">
@@ -239,7 +241,7 @@
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
-							<h4 class="card-title">Danh sách Backlink và Action cần trao đổi</h4>
+							<h4 class="card-title">Danh sách Backlink cần trao đổi</h4>
 							<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 							<div class="heading-elements">
 								<ul class="list-inline mb-0">
@@ -291,7 +293,7 @@
 									</tbody>
 								</table>
 							</div>
-							<!--Large modal-->
+							<!--Large modal Backlink-->
 							<div *ngIf="verify" bsModal #childModal="bs-modal" class="modal fade" tabindex="-1"
 								role="dialog" aria-labelledby="dialog-sizes-name1">
 								<div class="modal-dialog modal-lg">
@@ -356,12 +358,171 @@
 									</div>
 								</div>
 							</div>
+							<!--Large modal Actions-->
+							<div *ngIf="verify" bsModal #childModalAction="bs-modal" class="modal fade" tabindex="-1"
+								role="dialog" aria-labelledby="dialog-sizes-name1">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 id="dialog-sizes-name1" class="modal-title pull-left">Thông tin Backlink
+											</h4>
+											<button type="button" class="close pull-right"
+												(click)="childModalAction.hide()" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body row">
+											<div class="col-md-12">
+												<p>Mã Backlink : <code *ngIf="backlink">{{ backlink.id }}</code></p>
+												<p>
+													Điểm thưởng mỗi trang Backlink : <code
+														*ngIf="backlink">{{ math.round(backlink.point / backlink.limit * 0.9) }}</code>
+													|
+													Thời gian kết thúc Backlink <code
+														*ngIf="backlink">{{backlink.endTime | date:'HH:mm:ss dd-MM-yyyy'}}</code>
+												</p>
+											</div>
+											<div class="col-md-12">
+												<p><code>Lưu ý:</code> Backlink sau khi được xác thực đã gắn vào website
+													của bạn, điểm thưởng sẽ được cộng vào "Ví điểm khóa" và số điểm này
+													sẽ được chuyển đến "Ví điểm thực" sau khi thời hạn Backlink này kết
+													thúc.</p>
+											</div>
+											<hr>
+											<div class="col-md-12">
+												<p>Bước 1 : Truy cập extention và nhập mã sau :</p>
+												<pre class="language-markup">
+													<code>id của action</code>
+												</pre>
+												<p>Bước 2 : Truy cập vào một trong các kênh tìm kiếm sau :</p>
+												<pre class="language-markup">
+													<code>Google, Bing, Yandex</code>
+												</pre>
+												<p>Bước 3 : Tìm kiếm theo cú pháp kèm từ khóa:</p>
+												Chọn 1 trong các từ khóa sau: từ khóa 1, từ khóa 2
+												<pre class="language-markup">
+													<code>https://www.youtube.com/watch?v=OFrPeXZXOpY + từ khóa</code>
+												</pre>
+												<p>Bước 4 : Nhận kết quả trả về và nhận điểm</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">Danh sách Action cần trao đổi</h4>
+							<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+									<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+									<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+									<li><a data-action="close"><i class="ft-x"></i></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="table-responsive">
+								<table class="table table-bordered table-striped">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Mã BL</th>
+											<th>Loại BL</th>
+											<th>Điểm quy đổi</th>
+											<th>Số lượt quy đổi</th>
+											<th>Thời gian kết thúc</th>
+											<th>Hành Động</th>
+										</tr>
+									</thead>
+									<tbody [@listStagger]='backlinks.length'>
+										<tr *ngFor="let backlink of backlinks; index as i">
+											<td>{{ i + 1}}</td>
+											<td>{{backlink.id}}</td>
+											<td *ngIf="backlink.blockPixel">Action</td>
+											<td *ngIf="!backlink.blockPixel">Backlink</td>
+											<td>{{backlink.point}}</td>
+											<td>{{backlink.limit}}</td>
+											<td>{{backlink.endTime | date:'HH:mm:ss dd-MM-yyyy'}}</td>
+											<td class="text-center">
+												<button type="button" class="btn btn-outline-primary mr-1"
+													(click)="onClickActionDetail(backlink.id);">
+													<i class="ft-eye"></i> Chi tiết
+												</button>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="7" class="text-center">
+												<button type="button" class="btn btn-outline-warning mr-1"
+													(click)="onLoadNextPage()">
+													<i class="ft-repeat"></i> Xem thêm
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!--Large modal Actions-->
+							<div *ngIf="verify" bsModal #childModalAction="bs-modal" class="modal fade" tabindex="-1"
+								role="dialog" aria-labelledby="dialog-sizes-name1">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 id="dialog-sizes-name1" class="modal-title pull-left">Thông tin Action
+											</h4>
+											<button type="button" class="close pull-right"
+												(click)="childModalAction.hide()" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body row">
+											<div class="col-md-12">
+												<p>Mã Action : <code *ngIf="backlink">{{ backlink.id }}</code></p>
+												<p>
+													Điểm thưởng mỗi trang Backlink : <code
+														*ngIf="backlink">{{ math.round(backlink.point / backlink.limit * 0.9) }}</code>
+													|
+													Thời gian kết thúc Backlink <code
+														*ngIf="backlink">{{backlink.endTime | date:'HH:mm:ss dd-MM-yyyy'}}</code>
+												</p>
+											</div>
+											<div class="col-md-12">
+												<p><code>Lưu ý:</code> Backlink sau khi được xác thực đã gắn vào website
+													của bạn, điểm thưởng sẽ được cộng vào "Ví điểm khóa" và số điểm này
+													sẽ được chuyển đến "Ví điểm thực" sau khi thời hạn Backlink này kết
+													thúc.</p>
+											</div>
+											<hr>
+											<div class="col-md-12">
+												<p>Bước 1 : Truy cập extention và nhập mã sau :</p>
+												<pre class="language-markup">
+													<code>id của action</code>
+												</pre>
+												<p>Bước 2 : Truy cập vào một trong các kênh tìm kiếm sau :</p>
+												<pre class="language-markup">
+													<code>Google, Bing, Yandex</code>
+												</pre>
+												<p>Bước 3 : Tìm kiếm theo cú pháp kèm từ khóa:</p>
+												Chọn 1 trong các từ khóa sau: từ khóa 1, từ khóa 2
+												<pre class="language-markup">
+													<code>https://www.youtube.com/watch?v=OFrPeXZXOpY + từ khóa</code>
+												</pre>
+												<p>Bước 4 : Nhận kết quả trả về và nhận điểm</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--/ Emails Products & Avg Deals -->
+				<!--/ Products sell and New Orders -->
 			</div>
-			<!--/ Emails Products & Avg Deals -->
-			<!--/ Products sell and New Orders -->
 		</div>
 	</div>
-</div>
