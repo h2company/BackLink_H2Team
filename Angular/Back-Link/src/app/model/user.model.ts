@@ -14,6 +14,8 @@ export class User {
       public gender?: boolean,
       public updateAt?: Date,      
       public createAt?: Date,
-      public password?: string
+      public password?: string,
+      public point?: number,
+      public lockpoint?: number
     ) {}
 }

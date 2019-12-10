@@ -25,6 +25,8 @@ import { AddUserComponent } from 'src/app/component/dashboard/user-manager/add-u
 import { LogoutComponent } from 'src/app/component/dashboard/logout/logout.component';
 import { AppRouter } from '../app-router.model';
 import { AccountComponent } from 'src/app/component/dashboard/account/account.component';
+import { EditPointComponent } from 'src/app/component/dashboard/point-member/edit-point/edit-point.component';
+import { ListPointComponent } from 'src/app/component/dashboard/point-member/list-point/list-point.component';
 
 const routes: Routes = [
   { path: '', redirectTo: `/${AppRouter.INDEX}`, pathMatch: 'full' },
@@ -47,6 +49,14 @@ const routes: Routes = [
         path: 'account',
         component: AccountComponent,
         children: [
+        ]
+      },
+      {
+        path: 'point-member',
+        component: PointMemberComponent,
+        children: [
+          { path: '', component: ListPointComponent},
+          { path: ':id', component: EditPointComponent}
         ]
       },
       { path: 'logout', component: LogoutComponent },

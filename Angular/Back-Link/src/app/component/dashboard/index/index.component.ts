@@ -49,6 +49,7 @@ declare var jQuery: any;
 export class IndexComponent implements OnInit {
 
   @ViewChild('childModal', { static: false }) childModal: ModalDirective;
+  @ViewChild('childModalAction', { static: false }) childModalAction: ModalDirective;
   varifyForm: FormGroup;
   backlink: Backlink = new Backlink();
   backlinks = [];
@@ -178,6 +179,22 @@ export class IndexComponent implements OnInit {
       }
       setTimeout(() => {
         this.childModal.show();
+      }, 500);
+    }, error => {
+      this.toastr.error("Lỗi", "", {
+        positionClass: 'toast-top-right'
+      });
+    });
+  }
+
+  onClickActionDetail(id) {
+    this._backlinkService.findById(id).subscribe(res => {
+      this.backlink = res;
+      if (this.backlink) {
+        let _this = this;
+      }
+      setTimeout(() => {
+        this.childModalAction.show();
       }, 500);
     }, error => {
       this.toastr.error("Lỗi", "", {
