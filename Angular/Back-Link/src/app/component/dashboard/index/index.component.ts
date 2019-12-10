@@ -51,7 +51,12 @@ export class IndexComponent implements OnInit {
   @ViewChild('childModal', { static: false }) childModal: ModalDirective;
   varifyForm: FormGroup;
   backlink: Backlink = new Backlink();
-  backlinks = null;
+  backlinks = [];
+
+  user_backlink = "";
+  user_backlink_info = new Backlink();
+  user_backlinks = [];
+
   blcode = `<a href="" data-backlink="" target="_blank">Nội dung backlink</a>`;
   verify: string = `<script>
     (function(b,d,w,i,f,r){
@@ -76,9 +81,11 @@ export class IndexComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.loadBacklinks();
+    this.loadCurentBacklinks();
     window.onmessage = (e) => {
         if(e.data.events) {
           if(e.data.events[0].eventAction[0].event == 'verify') {
+            e.data.backlink_id = this.backlink.id;
             this._backlinkService.verify(e.data).subscribe(res => {
                 this.toastr.success('Thông báo!', res.message, {
                   positionClass: 'toast-top-right'
@@ -122,6 +129,17 @@ export class IndexComponent implements OnInit {
     
   }
 
+  loadCurentBacklinks() {
+    this._backlinkService.findAllByUser().subscribe(res => {
+      this.user_backlinks = res;
+      this.user_backlink = this.user_backlinks[0].id;
+      this.onBacklinkChange();
+      console.log(this.user_backlink);
+    }, error => {
+      console.log(error)
+    });
+  }
+
   loadBacklinks() {
     this._backlinkService.findAll(this.currentPage).subscribe(res => {
       if(res.length == 0){
@@ -156,12 +174,6 @@ export class IndexComponent implements OnInit {
           $('.token.punctuation').eq(5).html("\"" + _this.backlink.id);
           //Set Verify Code
           $('.token.string').eq(0).html('\''+_this.backlink.id+'\'');
-
-          console.log($(window).eq(0));
-          
-          $(window).eq(0).setData = function(param) {
-              console.log(param);
-          }
         })(jQuery);
       }
       setTimeout(() => {
@@ -169,6 +181,23 @@ export class IndexComponent implements OnInit {
       }, 500);
     }, error => {
       this.toastr.error("Lỗi", "", {
+        positionClass: 'toast-top-right'
+      });
+    });
+  }
+
+  onBacklinkChange() {
+    this._backlinkService.findById(this.user_backlink).subscribe(res => {
+      this.user_backlink_info = res;
+      console.log(this.user_backlink_info);
+      if (this.user_backlink_info) {
+        let _this = this;
+        (function ($) {
+          
+        })(jQuery);
+      }
+    }, error => {
+      this.toastr.error(error.error.error, error.error.message, {
         positionClass: 'toast-top-right'
       });
     });

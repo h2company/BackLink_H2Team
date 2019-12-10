@@ -123,8 +123,10 @@ public class BacklinkService implements IBaseService<Backlink, String> {
 		User user = userRepository.findByUsername(currentUser.get().getUsername()).get();
 		
 		if(user.getPoint() < backlinkRequest.getPoint()) {
-			return new ResponseEntity<Object>(new ApiException(HttpStatus.BAD_REQUEST, "Bạn không đủ điểm quy đổi."), HttpStatus.BAD_REQUEST); 
-		} else {
+			return new ResponseEntity<Object>(new ApiException(HttpStatus.BAD_REQUEST, "Bạn không đủ điểm quy đổi. Vui lòng quy đổi thêm điểm bằng cách nạp thêm tiền."), HttpStatus.BAD_REQUEST); 
+		} else if(backlinkRequest.getPoint()/backlinkRequest.getLimit() < 2) {
+			return new ResponseEntity<Object>(new ApiException(HttpStatus.BAD_REQUEST, "Điểm quy đổi quá thấp so với số lần quy đổi."), HttpStatus.BAD_REQUEST); 
+		}else {
 			//Tru diem vào tai khoan
 			user.setPoint(user.getPoint()-backlinkRequest.getPoint());
 			userRepository.save(user);
@@ -134,6 +136,7 @@ public class BacklinkService implements IBaseService<Backlink, String> {
 			backlink.setUrlBacklink(backlinkRequest.getUrlBacklink());
 			backlink.setPoint(backlinkRequest.getPoint());
 			backlink.setLimit(backlinkRequest.getLimit());
+			backlink.setLimit_active(backlinkRequest.getLimit());
 			backlink.setFilterVA(backlinkRequest.isFilterVA());
 			backlink.setSaveVA(backlinkRequest.isSaveVA());
 			backlink.setBeginTime(backlinkRequest.getBeginTime());
@@ -141,32 +144,39 @@ public class BacklinkService implements IBaseService<Backlink, String> {
 			Backlink bl = this.saveOne(backlink);
 			
 			// Lưu Log
-			logSystemService.saveOne(new LogSystem(bl.getUsername(), Type.CUSTOMER, LogAction.CREATE,
-					backlink.getUsername() + " Vừa tạo mới 1 Action: " + bl.getId()));
+//			logSystemService.saveOne(new LogSystem(bl.getUsername(), Type.CUSTOMER, LogAction.CREATE,
+//					backlink.getUsername() + " Vừa tạo mới 1 Action: " + bl.getId()));
 			return new ResponseEntity<Object>(bl, HttpStatus.OK);
 		}
 	}
 	
 	public ResponseEntity<?> checkverifyACPBacklink(VerifyRequest verifyRequest){
 		
-		List<AccessHistory>  accLi = accessHistoryRepository.findByTheAccessHistoryUrlAgent(verifyRequest.getUrlAgent());
+		List<AccessHistory>  accLi = accessHistoryRepository.findByTheAccessHistoryUrlAgent(verifyRequest.getUrlAgent().trim());
 		
-		for(AccessHistory accItem : accLi) {
-			if(accItem.getEvents().get(0).getSiteId().equals(verifyRequest.getId())) {
-				return new ResponseEntity<Object>(new ApiException(HttpStatus.BAD_REQUEST, "Liên kết này đã được xác thực trước đó !"), HttpStatus.BAD_REQUEST); 
-			}
-		}
+//		for(AccessHistory accItem : accLi) {
+//			if(accItem.getEvents().get(0).getSiteId().equals(verifyRequest.getId())) {
+//				return new ResponseEntity<Object>(new ApiException(HttpStatus.BAD_REQUEST, "Liên kết này đã được xác thực trước đó !"), HttpStatus.BAD_REQUEST); 
+//			}
+//		}
+		if(accLi != null && accLi.size() > 0) 
+			return new ResponseEntity<Object>(new ApiException(HttpStatus.BAD_REQUEST, "Liên kết này đã được xác thực trước đó !"), HttpStatus.BAD_REQUEST); 
 		return new ResponseEntity<Object>(new ApiException(HttpStatus.OK, "Kiểm tra liên kết backlink thành công !"), HttpStatus.OK); 
 	}
 	
 	public ResponseEntity<?> verifyACPBacklink(VerifyRequest verifyRequest){
+		
+		if(!verifyRequest.getEvents().get(0).getSiteId().equals(verifyRequest.getBacklink_id())) {
+			accessHistoryRepository.deleteById(verifyRequest.getId());
+			return new ResponseEntity<Object>(new ApiException(HttpStatus.BAD_REQUEST, "Xác thực thất bại ! Bạn chưa nhúng mã script xác thực vào web !"), HttpStatus.BAD_REQUEST); 
+		}
 		
 		Backlink backlink = backlinkRepository.findById(verifyRequest.getEvents().get(0).getSiteId()).get();
 		
 		int point = (int)(backlink.getPoint()/backlink.getLimit());
 		
 		// Cap nhat so diem quy doi con lai
-		backlink.setLimit(backlink.getLimit()-1);
+		backlink.setLimit_active(backlink.getLimit_active()-1);
 		backlink.setPoint(backlink.getPoint()-point);
 		backlinkRepository.save(backlink);
 		

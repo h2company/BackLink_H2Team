@@ -64,6 +64,7 @@
                                                     *ngIf="userFormGroup && userFormGroup.controls.backlink_url.errors && !userFormGroup.controls.backlink_url.pristine">
                                                     {{userFormGroup.controls.backlink_url.errors.message}}
                                                 </div>
+                                                <small>Lưu ý: Vui lòng kiểm tra kĩ trước khi thêm mới backlink, sẽ không thể chỉnh sửa hoặc xóa sau khi thêm thành công.</small>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -76,11 +77,12 @@
                                                     *ngIf="userFormGroup && userFormGroup.controls.point.errors && !userFormGroup.controls.point.pristine">
                                                     {{userFormGroup.controls.point.errors.message}}
                                                 </div>
+                                                <small>Lưu ý: Điểm quy đổi tương ứng với số lượt trao đổi, nếu điểm quá thấp sẽ không thể thêm backlink.</small>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-3 label-control" for="projectinput5"><span
-                                                    style="color: red">(*)</span> Số lần quy đổi</label>
+                                                    style="color: red">(*)</span> Số lượt trao đổi</label>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control" value="" formControlName="limit"
                                                     placeholder="Từ 0 đến 99999">
@@ -88,6 +90,7 @@
                                                     *ngIf="userFormGroup && userFormGroup.controls.limit.errors && !userFormGroup.controls.limit.pristine">
                                                     {{userFormGroup.controls.limit.errors.message}}
                                                 </div>
+                                                <small>Lưu ý: Số lượt quy đổi tương ứng với điểm quy đổi, nếu số lượt quy đổi quá cao sẽ không thể thêm backlink.</small>
                                             </div>
                                         </div>
                                         <div class="form-group row">

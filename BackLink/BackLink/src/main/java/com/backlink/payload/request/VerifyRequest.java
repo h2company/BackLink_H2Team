@@ -6,6 +6,9 @@ import java.util.List;
 import com.backlink.entities.Event;
 
 public class VerifyRequest {
+	
+	private String backlink_id;
+	
 	private String id;
 	
 	private String ip;
@@ -21,6 +24,15 @@ public class VerifyRequest {
 	private List<Event> events;
 	
 	private String action;
+
+	
+	public String getBacklink_id() {
+		return backlink_id;
+	}
+
+	public void setBacklink_id(String backlink_id) {
+		this.backlink_id = backlink_id;
+	}
 
 	public String getId() {
 		return id;
