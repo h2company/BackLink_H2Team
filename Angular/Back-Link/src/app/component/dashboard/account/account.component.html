@@ -36,6 +36,18 @@
                                             <h4 class="form-section">
                                                 <i class="ft-clipboard"></i>Thông Tin Cá Nhân
                                             </h4>
+                                            <div class="align-self-center halfway-fab text-center p-1">
+                                                <div class="d-inline-block pull-up custom-avatar"
+                                                    (click)="fileInput.click()">
+                                                    <span class="avatar avatar-lg avatar-online rounded-circle"><img
+                                                            src="{{user.avatar}}"
+                                                            alt="avatar"></span>
+                                                    <div class="text-center update-avatar"><i
+                                                            class="ft-camera font-size-large"></i> <br>Cập nhật</div>
+                                                </div>
+                                                <input style="display: none" type="file"
+                                                    (change)="onFileChanged($event)" #fileInput>
+                                            </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 label-control" for="projectinput5">Tài
                                                     Khoản</label>

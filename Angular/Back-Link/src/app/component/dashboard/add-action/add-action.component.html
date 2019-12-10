@@ -215,6 +215,39 @@
 									</div>
 								</form>
 							</div>
+							<div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="bg-gradient-x2-primary white">
+                                        <tr>
+                                            <th>#</th>
+											<th>Mã AC</th>
+											<th>Từ khóa</th>
+                                            <th>Điểm quy đổi</th>
+                                            <th>Thời gian tạo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let action of actions; index as i">
+                                            <td class="red font-weight-bold">{{ i + 1}}</td>
+											<td><span class="badge badge-primary"><i class="ft-star mr-1 "></i>{{action.id}}</span></td>
+											<td class="text-center">
+												<span *ngFor="let k of action.keywords" class="badge badge-danger mr-1">
+													{{k}}
+												</span>
+											</td>
+                                            <td class="text-center"><span class="badge badge-info"><i class="ft-anchor mr-1"></i>{{action.point}}</span></td>
+                                            <td class="text-center"><span class="badge badge-danger"><i class="ft-clock mr-1"></i>{{action.createAt | date:'dd-MM-yyyy'}}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="text-center">
+                                                <button type="button" class="btn btn-outline-warning mr-1">
+                                                    <i class="ft-repeat"></i> Xem thêm
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 						</div>
 					</div>
 				</div>

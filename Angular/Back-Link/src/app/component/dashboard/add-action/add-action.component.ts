@@ -14,6 +14,7 @@ import { ActionService } from 'src/app/service/action.service';
 export class AddActionComponent implements OnInit {
 
   action: Action = new Action();
+  actions: Array<Action>;
   actionFormGroup: FormGroup;
   controls: any;
   tempData: any;
@@ -30,6 +31,7 @@ export class AddActionComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.defaultValue();
+    this.loadActions();
   }
 
   defaultValue() {    
@@ -106,6 +108,7 @@ export class AddActionComponent implements OnInit {
     this._actionService.save(this.action).subscribe(data => {
       this.action = data;
       this.resetForm(this.action);
+      this.loadActions();
       this.toastr.success('Thông báo!', 'Cập nhật thông tin thành công!', {
         positionClass: 'toast-top-right'
       })
@@ -132,16 +135,21 @@ export class AddActionComponent implements OnInit {
     return true;
   }
 
-  removeError(event){
-    this.isSubmit = false;
-  }
-
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
     return true;
+  }
+
+  loadActions() {
+    this._actionService.findAll().subscribe(res => {
+      this.actions = res;
+      console.log(this.actions);
+    }, error => {
+      console.log(error)
+    });
   }
 
 }

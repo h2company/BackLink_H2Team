@@ -22,6 +22,9 @@ export class APIService {
   //ACTION
   public ACTION = "/api/actions";
 
+  //UPLOAD
+  public UPLOAD_AVATAR = "/api/upload/avatar";
+
   constructor() { }  
   
 }

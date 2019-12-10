@@ -28,7 +28,7 @@ public class ActionController {
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
 	@GetMapping("actions")
 	public ResponseEntity<?> findAll(){
-		return new ResponseEntity<Object>(actionService.findAll(), HttpStatus.OK);
+		return new ResponseEntity<Object>(actionService.findByUsername(), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")

@@ -1,7 +1,10 @@
 package com.backlink.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,6 +23,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.backlink.Message.MessageException;
 import com.backlink.beans.CurrentUser;
@@ -30,7 +35,6 @@ import com.backlink.entities.Mailer;
 import com.backlink.entities.Role;
 import com.backlink.entities.Role.RoleName;
 import com.backlink.entities.User;
-import com.backlink.exception.ApiError;
 import com.backlink.exception.ApiException;
 import com.backlink.exception.AuthorizationException;
 import com.backlink.exception.BadRequestException;
@@ -82,11 +86,11 @@ public class UserService implements IBaseService<User, String> {
 	public List<User> findAll() {
 		return userRepository.findAll();
 	}
-	
+
 	public List<PointMember> findPoint() {
 		List<PointMember> pmb = new ArrayList<PointMember>();
 		userRepository.findAll().forEach(u -> {
-			pmb.add(new PointMember(u.getFullname(), u.getUsername(), u.getPoint() ));
+			pmb.add(new PointMember(u.getFullname(), u.getUsername(), u.getPoint()));
 		});
 		return pmb;
 	}
@@ -164,7 +168,7 @@ public class UserService implements IBaseService<User, String> {
 
 	// THÊM THÀNH VIÊN
 	public ResponseEntity<?> addUser(AddUserRequest addUserRequest) throws ParseException {
-		
+
 		// Mảng lỗi
 		Map<String, String> errors = new HashMap<String, String>();
 
@@ -182,11 +186,12 @@ public class UserService implements IBaseService<User, String> {
 		if (userRepository.findByPhone(addUserRequest.getPhone()).isPresent()) {
 			errors.put("phone", String.format(MessageException.EXIST, addUserRequest.getPhone()));
 		}
-		
-		if(errors.size() > 0) {
-			return new ResponseEntity<Object>(new ApiException(HttpStatus.BAD_REQUEST, MessageException.INCORRECT_SYNTAX, errors), HttpStatus.BAD_REQUEST);
+
+		if (errors.size() > 0) {
+			return new ResponseEntity<Object>(
+					new ApiException(HttpStatus.BAD_REQUEST, MessageException.INCORRECT_SYNTAX, errors),
+					HttpStatus.BAD_REQUEST);
 		}
-		
 
 		// SET GIÁ TRỊ
 		User user = new User();
@@ -214,42 +219,46 @@ public class UserService implements IBaseService<User, String> {
 	}
 
 	public ResponseEntity<?> updateUser(UpdateUserRequest updateUserRequest) throws ParseException {
-		
+
 		// Mảng lỗi
 		Map<String, String> errors = new HashMap<String, String>();
-		
+
 		Optional<User> userOpt = userRepository.findById(updateUserRequest.getId());
-		
+
 		// KIỂM TRA ID Có tồn tại hay không
-		if(!userOpt.isPresent()) {
+		if (!userOpt.isPresent()) {
 			errors.put("username", String.format(MessageException.EXIST, updateUserRequest.getUsername()));
-		}else {			
+		} else {
 			// Admin được quyền thay đổi email
-			if(currentUser.userHasAuthority(RoleName.ROLE_ADMIN)) {
-				if(!userOpt.get().getEmail().equals(updateUserRequest.getEmail()) && userRepository.findByEmail(updateUserRequest.getEmail()).isPresent()) {
+			if (currentUser.userHasAuthority(RoleName.ROLE_ADMIN)) {
+				if (!userOpt.get().getEmail().equals(updateUserRequest.getEmail())
+						&& userRepository.findByEmail(updateUserRequest.getEmail()).isPresent()) {
 					errors.put("email", String.format(MessageException.EXIST, updateUserRequest.getEmail()));
 				}
-				
-				if(userOpt.isPresent() && !updateUserRequest.getPhone().equals(userOpt.get().getPhone()) && userRepository.findByPhone(updateUserRequest.getPhone()).isPresent()) {
+
+				if (userOpt.isPresent() && !updateUserRequest.getPhone().equals(userOpt.get().getPhone())
+						&& userRepository.findByPhone(updateUserRequest.getPhone()).isPresent()) {
 					errors.put("phone", String.format(MessageException.EXIST, updateUserRequest.getPhone()));
 				}
 			}
-			
+
 			// Custommer không được thay đổi email && phone
-			if(currentUser.userHasAuthority(RoleName.ROLE_CUSTOMER)) {
-				if(!currentUser.get().getEmail().equals(updateUserRequest.getEmail())){
+			if (currentUser.userHasAuthority(RoleName.ROLE_CUSTOMER)) {
+				if (!currentUser.get().getEmail().equals(updateUserRequest.getEmail())) {
 					errors.put("email", MessageException.CAN_NOT_CHANGE_EMAIL);
 				}
-				
-				if(!userOpt.get().getPhone().equals(updateUserRequest.getPhone())){
+
+				if (!userOpt.get().getPhone().equals(updateUserRequest.getPhone())) {
 					errors.put("phone", MessageException.CAN_NOT_CHANGE_PHONE);
 				}
 			}
-		}	
-		
-		if(errors.size() > 0) {
-			return new ResponseEntity<Object>(new ApiException(HttpStatus.BAD_REQUEST, MessageException.INCORRECT_SYNTAX, errors), HttpStatus.BAD_REQUEST);
-		}		
+		}
+
+		if (errors.size() > 0) {
+			return new ResponseEntity<Object>(
+					new ApiException(HttpStatus.BAD_REQUEST, MessageException.INCORRECT_SYNTAX, errors),
+					HttpStatus.BAD_REQUEST);
+		}
 
 		// SET GIÁ TRỊ
 		User user = userOpt.get();
@@ -320,5 +329,27 @@ public class UserService implements IBaseService<User, String> {
 
 	public User me() {
 		return this.getById(currentUser.get().getId());
+	}
+
+	public ResponseEntity<?> saveAvatar(MultipartFile file) throws IOException {
+		if (file.isEmpty()) {
+			return new ResponseEntity<Object>(new ApiException(HttpStatus.BAD_REQUEST, "Missing File"),
+					HttpStatus.BAD_REQUEST);
+		}
+
+		String fileName = currentUser.get().getId() + "_" + new Date().getTime()
+				+ file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+
+		byte[] bt = file.getBytes();
+
+		Path path = Paths.get("C:\\data\\test\\" + fileName);
+		Files.write(path, bt);
+		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/avatar/")
+				.path(fileName).toUriString();
+		
+		User user = userRepository.findById(currentUser.get().getId()).get();
+		user.setAvatar(fileDownloadUri);
+		
+		return new ResponseEntity<Object>(this.updateOne(user), HttpStatus.OK);
 	}
 }

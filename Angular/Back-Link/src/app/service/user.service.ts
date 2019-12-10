@@ -50,4 +50,7 @@ export class UserService implements IBaseService<User, string> {
   getinfo(): Observable<User>  {
     return this.http.get(this.API.ME);
   }
+  avatar(data: any): Observable<User>  {
+    return this.http.post_oauth(this.API.UPLOAD_AVATAR, data);
+  }
 }

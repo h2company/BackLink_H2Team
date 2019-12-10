@@ -5,6 +5,7 @@ import { requiredValidator, emailValidator, phoneValidator } from 'src/app/util/
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from 'src/app/service/authentication.service';
 
 @Component({
   selector: 'app-account',
@@ -13,13 +14,15 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AccountComponent implements OnInit {
   user: User = new User();
+  selectedFile: File;
   userForm: FormGroup;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private _userService: UserService,
     private formBuider: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _authenticationService: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -67,5 +70,26 @@ export class AccountComponent implements OnInit {
 
   onChangeBirthday(date: Date) {
     this.user.birthday = date;
+  }
+
+  onFileChanged(event){
+    this.selectedFile = event.target.files[0];
+    if(!this.selectedFile){
+      return;
+    }
+    const uploadData = new FormData();
+    uploadData.append('file', this.selectedFile, this.selectedFile.name);
+    this._userService.avatar(uploadData).subscribe(event => {
+        this.user.avatar = event.avatar; // handle event here
+
+        this._userService.getinfo().subscribe(res => {
+          let _data = Object.keys(res);
+          _data.forEach(element => {
+            sessionStorage.setItem(element, res[element]);
+          });
+        });
+
+        this._authenticationService.avatar.next(event.avatar);
+      });
   }
 }
