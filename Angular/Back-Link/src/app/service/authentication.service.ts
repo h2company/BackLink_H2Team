@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +8,7 @@ import { Injectable } from '@angular/core';
 export class AuthenticationService {
 
   public token: string;
+  public avatar = new Subject<string>();
 
   constructor() { }
 
@@ -20,4 +23,6 @@ export class AuthenticationService {
   isLogged() : boolean {
     return !!localStorage.getItem('oauth');
   }
+
+  
 }

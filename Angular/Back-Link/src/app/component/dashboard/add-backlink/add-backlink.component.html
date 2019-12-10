@@ -155,29 +155,22 @@
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped">
-                                    <thead>
+                                    <thead class="bg-gradient-x2-primary white">
                                         <tr>
                                             <th>#</th>
                                             <th>Mã BL</th>
-                                            <th>Loại BL</th>
-                                            <th>Điểm quy đổi</th>
-                                            <th>Thời gian</th>
-                                            <th>Hành Động</th>
+                                            <th>Điểm quy đổi</th>                                            
+                                            <th>Lượt trao đổi</th>
+                                            <th>Thời gian Tạo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let backlink of backlinks; index as i">
-                                            <td>{{ i + 1}}</td>
-                                            <td>{{backlink.id.substr(7)}}</td>
-                                            <td *ngIf="backlink.blockPixel">Action</td>
-                                            <td *ngIf="!backlink.blockPixel">Backlink</td>
-                                            <td>{{backlink.point}}</td>
-                                            <td>{{backlink.createAt | date:'HH:mm:ss dd-MM-yyyy'}}</td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-outline-primary mr-1">
-                                                    <i class="ft-eye"></i> Chi tiết
-                                                </button>
-                                            </td>
+                                            <td class="red font-weight-bold">{{ i + 1}}</td>
+                                            <td><span class="badge badge-primary"><i class="ft-star mr-1 "></i>{{backlink.id}}</span></td>
+                                            <td class="text-center"><span class="badge badge-info"><i class="ft-anchor mr-1"></i>{{backlink.point}}</span></td>
+                                            <td class="text-center"><span class="badge badge-warning"><i class="ft-repeat mr-1"></i>{{backlink.limit}}</span></td>
+                                            <td class="text-center"><span class="badge badge-danger"><i class="ft-clock mr-1"></i>{{backlink.createAt | date:'dd-MM-yyyy'}}</span></td>
                                         </tr>
                                         <tr>
                                             <td colspan="6" class="text-center">

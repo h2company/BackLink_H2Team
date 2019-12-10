@@ -26,6 +26,7 @@ import { NgxPrettyCheckboxModule } from 'ngx-pretty-checkbox';
 import { TagInputModule } from 'ngx-chips';
 import { AccountComponent } from './component/dashboard/account/account.component';
 import { ActionService } from './service/action.service';
+import { BacklinkService } from './service/backlink.service';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { ActionService } from './service/action.service';
     AuthenticationService,
     UserService,
     NeedAuthGuard,
-    ActionService
+    ActionService,
+    BacklinkService
   ],
   bootstrap: [AppComponent]
 })

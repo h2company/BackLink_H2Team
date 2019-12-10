@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,10 @@ public class ActionService implements IBaseService<Action, String> {
 	public List<Action> findAll() {
 		return actionRepository.findAll();
 	}
+	
+	public List<Action> findByUsername() {
+		return actionRepository.findByUsername(currentUser.get().getUsername(), Sort.by(Direction.DESC, "createAt"));
+	}
 
 	@Override
 	public Action saveOne(Action entity) {
@@ -56,7 +62,6 @@ public class ActionService implements IBaseService<Action, String> {
 	public Action updateOne(Action entity) {
 		Action action = null;
 		try {
-
 			action = actionRepository.save(entity);
 		} catch (Exception e) {
 			throw new AppException(e.getMessage());

@@ -36,6 +36,8 @@ public class User extends BaseEntity {
 
 	private String address;
 	
+	private String avatar;
+	
 	private Date birthday;
 	
 	private int point;
@@ -181,4 +183,13 @@ public class User extends BaseEntity {
 	public void setLockpoint(int lockpoint) {
 		this.lockpoint = lockpoint;
 	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+	
 }

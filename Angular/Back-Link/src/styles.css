@@ -60,3 +60,34 @@ tag-input{
 
   .no-drop {cursor: no-drop;}
   .bsDatepicker {cursor: pointer}
+
+  table .badge{
+      font-size: 1rem;
+  }
+
+  table thead th,table tbody td{
+      text-align: center;
+  }
+
+  .custom-avatar{
+    position: relative;
+    border: 1px solid #6967ce;
+    border-radius: 10px;
+    padding: 10px;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .custom-avatar:hover .update-avatar{
+    display: block;
+  }
+
+  .update-avatar{
+    display: none;
+    position: fixed;
+    z-index: 100000;
+    bottom: 30%;
+    left: 35%;
+    color: #fff;
+    background: rgb(0, 0, 0, 0.1);
+  }

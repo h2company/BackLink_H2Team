@@ -253,11 +253,10 @@
 						<div class="card-content collapse show">
 							<div class="table-responsive">
 								<table class="table table-bordered table-striped">
-									<thead>
+									<thead class="bg-gradient-x2-primary white">
 										<tr>
 											<th>#</th>
 											<th>Mã BL</th>
-											<th>Loại BL</th>
 											<th>Điểm quy đổi</th>
 											<th>Số lượt quy đổi</th>
 											<th>Thời gian kết thúc</th>
@@ -266,14 +265,12 @@
 									</thead>
 									<tbody [@listStagger]='backlinks.length'>
 										<tr *ngFor="let backlink of backlinks; index as i">
-											<td>{{ i + 1}}</td>
-											<td>{{backlink.id}}</td>
-											<td *ngIf="backlink.blockPixel">Action</td>
-											<td *ngIf="!backlink.blockPixel">Backlink</td>
-											<td>{{backlink.point}}</td>
-											<td>{{backlink.limit}}</td>
-											<td>{{backlink.endTime | date:'HH:mm:ss dd-MM-yyyy'}}</td>
-											<td class="text-center">
+												<td class="red font-weight-bold">{{ i + 1}}</td>
+												<td><span class="badge badge-primary"><i class="ft-star mr-1 "></i>{{backlink.id}}</span></td>
+												<td><span class="badge badge-info"><i class="ft-anchor mr-1"></i>{{backlink.point}}</span></td>
+												<td><span class="badge badge-warning"><i class="ft-repeat mr-1"></i>{{backlink.limit}}</span></td>
+												<td><span class="badge badge-danger"><i class="ft-clock mr-1"></i>{{backlink.endTime | date:'dd-MM-yyyy'}}</span></td>
+											<td>
 												<button type="button" class="btn btn-outline-primary mr-1"
 													(click)="onClickBacklinkDetail(backlink.id);">
 													<i class="ft-eye"></i> Chi tiết
