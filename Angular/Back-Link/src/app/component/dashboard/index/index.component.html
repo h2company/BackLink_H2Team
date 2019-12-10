@@ -54,7 +54,8 @@
 								<div class="card-header mb-0 pb-0">
 									<h4 class="card-title">
 										Danh sách Backlink của bạn <span
-											class="badge badge-pill badge-info float-right m-0" *ngIf="user_backlinks.length != 0">{{user_backlinks.length - 1}}+</span>
+											class="badge badge-pill badge-info float-right m-0"
+											*ngIf="user_backlinks.length != 0">{{user_backlinks.length - 1}}+</span>
 									</h4>
 									<p class="m-0">Lựa chọn backlink trong danh sách backlink của bạn để hiển thị thông
 										tin tiến trình, chi tiết lưu lượng truy cập backlink.</p>
@@ -70,7 +71,9 @@
 											</select>
 											<div class="text-center" *ngIf="user_backlinks.length == 0">
 												<p>Vui lòng thêm backlink</p>
-												<a [routerLink]="['/dashboard/add-backlink']" class="btn btn-glow btn-round btn-bg-gradient-x-red-pink">Tạo backlink</a>
+												<a [routerLink]="['/dashboard/add-backlink']"
+													class="btn btn-glow btn-round btn-bg-gradient-x-red-pink">Tạo
+													backlink</a>
 											</div>
 										</fieldset>
 									</div>
@@ -82,49 +85,39 @@
 								<div class="card-header">
 									<h4 class="card-title float-left">Tác vụ</h4>
 									<a class="heading-elements-toggle"><i
-											class="la la-ellipsis-v font-medium-3"></i></a> <span
-										class="badge badge-pill badge-info float-right m-0" *ngIf="user_backlink">Đang
+											class="la la-ellipsis-v font-medium-3"></i></a>
+									<span class="badge badge-pill badge-info float-right m-0"
+										*ngIf="user_backlink && user_backlink_info.limit_active > 0">Đang
 										trong tiến
 										trình</span>
+									<span class="badge badge-pill badge-success float-right m-0"
+										*ngIf="user_backlink && user_backlink_info.limit_active == 0">Đã hoàn
+										thành</span>
 								</div>
 								<div class="card-content collapse show">
 									<div class="card-body pt-0 pb-1" *ngIf="user_backlink">
 										<h6 class="text-muted font-small-3">Task đã hoàn thành:
-											</h6>
+											{{(user_backlink_info.limit - user_backlink_info.limit_active)}}
+											/ {{user_backlink_info.limit}} </h6>
 										<div class="progress progress-sm mt-1 mb-0 box-shadow-2">
 											<div class="progress-bar bg-gradient-x-info" role="progressbar"
-												style="width: 25%" aria-valuenow="25" aria-valuemin="0"
-												aria-valuemax="100"></div>
+												style="width: 25%" aria-valuenow="" aria-valuemin="0"
+												aria-valuemax="100" *ngIf="user_backlink && user_backlink_info.limit_active > 0"></div>
+											<div class="progress-bar bg-gradient-x-success" role="progressbar"
+												style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+												aria-valuemax="100" *ngIf="user_backlink && user_backlink_info.limit_active == 0"></div>
 										</div>
 										<div class="media d-flex">
 											<div class="align-self-center">
 												<h6 class="text-bold-600 mt-2">
-													Chiến dịch: <span class="info">Xeon Inc.</span>
+													Chiến dịch: <span class="info">{{user_backlink_info.id}}</span>
 												</h6>
 												<h6 class="text-bold-600 mt-1">
-													Deadline: <span class="blue-grey">25/08/2019</span>
+													Deadline: <span
+														class="blue-grey">{{user_backlink_info.endTime | date:'medium' }}</span>
 												</h6>
 											</div>
 											<div class="media-body text-right mt-2">
-												<ul class="list-unstyled users-list">
-													<li data-toggle="tooltip" data-popup="tooltip-custom"
-														data-original-title="John Doe" class="avatar avatar-sm pull-up">
-														<img class="media-object rounded-circle"
-															src="/assets/images/portrait/small/avatar-s-19.png"
-															alt="Avatar"></li>
-													<li data-toggle="tooltip" data-popup="tooltip-custom"
-														data-original-title="Katherine Nichols"
-														class="avatar avatar-sm pull-up"><img
-															class="media-object rounded-circle"
-															src="/assets/images/portrait/small/avatar-s-18.png"
-															alt="Avatar"></li>
-													<li data-toggle="tooltip" data-popup="tooltip-custom"
-														data-original-title="Joseph Weaver"
-														class="avatar avatar-sm pull-up"><img
-															class="media-object rounded-circle"
-															src="/assets/images/portrait/small/avatar-s-17.png"
-															alt="Avatar"></li>
-												</ul>
 											</div>
 										</div>
 									</div>
@@ -168,10 +161,16 @@
 					<div class="card">
 						<div class="card-header p-1">
 							<h4 class="card-title float-left">
-								Chiến dịch SEO - <span class="blue-grey lighten-2 font-small-3 mb-0" *ngIf="user_backlink">08/08/2019 -
-									09/09/2019</span>
+								Chiến dịch SEO - <span class="blue-grey lighten-2 font-small-3 mb-0"
+									*ngIf="user_backlink">{{user_backlink_info.beginTime | date:'dd-MM-yyyy' }} -
+									{{user_backlink_info.endTime | date:'dd-MM-yyyy' }}</span>
 							</h4>
-							<span class="badge badge-pill badge-info float-right m-0" *ngIf="user_backlink">Đang trong tiến trình</span>
+							<span class="badge badge-pill badge-info float-right m-0"
+								*ngIf="user_backlink && user_backlink_info.limit_active > 0">Đang
+								trong tiến
+								trình</span>
+							<span class="badge badge-pill badge-success float-right m-0"
+								*ngIf="user_backlink && user_backlink_info.limit_active == 0">Đã hoàn thành</span>
 						</div>
 						<div class="card-content collapse show">
 							<div class="card-footer text-center p-1" *ngIf="user_backlink">
@@ -179,21 +178,28 @@
 									<div
 										class="col-md-3 col-12 border-right-blue-grey border-right-lighten-5 text-center">
 										<p class="blue-grey lighten-2 mb-0">Tasks</p>
-										<p class="font-medium-5 text-bold-400">56</p>
+										<p class="font-medium-5 text-bold-400">
+											{{user_backlink_info.limit - (user_backlink_info.limit - user_backlink_info.limit_active)}}
+											/ {{user_backlink_info.limit}}</p>
 									</div>
 									<div
 										class="col-md-3 col-12 border-right-blue-grey border-right-lighten-5 text-center">
 										<p class="blue-grey lighten-2 mb-0">Hoàn thành</p>
-										<p class="font-medium-5 text-bold-400">58%</p>
+										<p class="font-medium-5 text-bold-400">
+											{{math.round((user_backlink_info.limit - user_backlink_info.limit_active) / user_backlink_info.limit * 100)}}%
+										</p>
 									</div>
 									<div
 										class="col-md-3 col-12 border-right-blue-grey border-right-lighten-5 text-center">
 										<p class="blue-grey lighten-2 mb-0">Chưa giải quyết</p>
-										<p class="font-medium-5 text-bold-400">42%</p>
+										<p class="font-medium-5 text-bold-400">
+											{{math.round(user_backlink_info.limit_active / user_backlink_info.limit * 100)}}%
+										</p>
 									</div>
 									<div class="col-md-3 col-12 text-center">
 										<p class="blue-grey lighten-2 mb-0">Thời hạn</p>
-										<p class="font-medium-5 text-bold-400">09/09/2019</p>
+										<p class="font-medium-5 text-bold-400">
+											{{user_backlink_info.endTime | date:'medium' }}</p>
 									</div>
 								</div>
 								<hr>
