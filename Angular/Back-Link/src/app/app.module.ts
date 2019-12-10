@@ -25,6 +25,7 @@ import { LogoutComponent } from './component/dashboard/logout/logout.component';
 import { NgxPrettyCheckboxModule } from 'ngx-pretty-checkbox';
 import { TagInputModule } from 'ngx-chips';
 import { AccountComponent } from './component/dashboard/account/account.component';
+import { ActionService } from './service/action.service';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { AccountComponent } from './component/dashboard/account/account.componen
     HttpService,
     AuthenticationService,
     UserService,
-    NeedAuthGuard
+    NeedAuthGuard,
+    ActionService
   ],
   bootstrap: [AppComponent]
 })

@@ -57,3 +57,6 @@ tag-input{
   .my-animation {
     animation: MyAnimation 1s;
   }
+
+  .no-drop {cursor: no-drop;}
+  .bsDatepicker {cursor: pointer}

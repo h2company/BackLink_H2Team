@@ -99,18 +99,12 @@ public class ActionService implements IBaseService<Action, String> {
 	}
 
 	public ResponseEntity<?> saveAction(ActionRequest actionRequest, HttpServletRequest request) {
-		System.out.println(currentUser.get().getUsername() + " : " + actionRequest.getUsername());
-		if (currentUser.userHasAuthority(RoleName.ROLE_CUSTOMER)
-				&& !currentUser.get().getUsername().equals(actionRequest.getUsername())) {
-			throw new ForbiddenException(MessageException.FORBIDDEN);
-		}
-
 		Action action = new Action();
-		action.setUserAgent(new String[] { request.getHeader("User-Agent") });
+		action.setUserAgent(actionRequest.getUserAgent());
 		action.setKeywords(actionRequest.getKeywords());
 		action.setSearchEngine(actionRequest.getSearchEngine());
 		action.setPoint(Integer.parseInt(actionRequest.getPoint().toString()));
-		action.setUsername(actionRequest.getUsername());
+		action.setUsername(currentUser.get().getUsername());
 		action.setBlockPixel(actionRequest.isBlockPixel());
 		action.setFilterVA(actionRequest.isFilterVA());
 		action.setAccessHistory(new String[0]);
@@ -123,7 +117,7 @@ public class ActionService implements IBaseService<Action, String> {
 		// Lưu Log
 		logSystemService.saveOne(new LogSystem(action.getUsername(), Type.CUSTOMER, LogAction.CREATE,
 				action.getUsername() + " Vừa tạo mới 1 Action: " + ac.getId()));
-		return new ResponseEntity<Object>(action, HttpStatus.OK);
+		return new ResponseEntity<Object>(ac, HttpStatus.OK);
 		
 		
 	}

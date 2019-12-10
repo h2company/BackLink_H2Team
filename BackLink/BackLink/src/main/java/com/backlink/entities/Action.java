@@ -10,6 +10,8 @@ public class Action extends BaseEntity {
 
 	@Id
 	private String id;
+	
+	private String urlAction;
 
 	private String username;
 
@@ -22,6 +24,8 @@ public class Action extends BaseEntity {
 	private int point;
 
 	private boolean blockPixel;
+	
+	private boolean saveVA;
 
 	private boolean filterVA;
 
@@ -136,6 +140,22 @@ public class Action extends BaseEntity {
 
 	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
+	}
+
+	public boolean isSaveVA() {
+		return saveVA;
+	}
+
+	public void setSaveVA(boolean saveVA) {
+		this.saveVA = saveVA;
+	}
+
+	public String geturlAction() {
+		return urlAction;
+	}
+
+	public void seturlAction(String urlAction) {
+		this.urlAction = urlAction;
 	}
 
 }

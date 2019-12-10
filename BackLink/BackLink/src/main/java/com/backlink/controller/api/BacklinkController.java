@@ -54,7 +54,6 @@ public class BacklinkController {
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
 	@GetMapping("backlink/getBackinks")
 	public ResponseEntity<?> getBacklinks(@RequestParam(defaultValue = "0") int p) {
-		System.out.println(p);
 		return new ResponseEntity<Object>(backlinkService.findAll(p), HttpStatus.OK);
 	}
 	
