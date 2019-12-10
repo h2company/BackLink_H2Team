@@ -230,7 +230,7 @@ public class UserService implements IBaseService<User, String> {
 					errors.put("email", String.format(MessageException.EXIST, updateUserRequest.getEmail()));
 				}
 				
-				if(!userOpt.get().getPhone().equals(updateUserRequest.getPhone()) && userRepository.findByPhone(updateUserRequest.getPhone()).isPresent()) {
+				if(userOpt.isPresent() && !updateUserRequest.getPhone().equals(userOpt.get().getPhone()) && userRepository.findByPhone(updateUserRequest.getPhone()).isPresent()) {
 					errors.put("phone", String.format(MessageException.EXIST, updateUserRequest.getPhone()));
 				}
 			}

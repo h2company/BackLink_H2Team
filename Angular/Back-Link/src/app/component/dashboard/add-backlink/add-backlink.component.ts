@@ -2,18 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { requiredValidator, emailValidator, urlValidator, minmaxValidator } from 'src/app/util/custom-validator';
+import { requiredValidator, urlValidator, minmaxValidator } from 'src/app/util/custom-validator';
 import { Backlink } from 'src/app/model/backlink.model';
 import { BacklinkService } from 'src/app/service/backlink.service';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { defineLocale } from 'ngx-bootstrap/chronos';
-import { viLocale } from 'ngx-bootstrap/locale';
 
 @Component({
   selector: 'app-add-backlink',
   templateUrl: './add-backlink.component.html',
   styleUrls: ['./add-backlink.component.css']
 })
+
 export class AddBacklinkComponent implements OnInit {
   backlink: Backlink = new Backlink();
   backlinks = null;

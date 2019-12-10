@@ -33,8 +33,10 @@
                                 <label class="col-md-3 label-control" for="username"><span style="color: red">(*)</span>
                                     Tài Khoản</label>
                                 <div class="col-md-9">
-                                    <input type="text" id="username" formControlName="username"
-                                        [(ngModel)]="user.username" (click)="removeError($event)"
+                                    <input type="text" id="username" 
+                                        formControlName="username"
+                                        [(ngModel)]="user.username" 
+                                        (click)="removeError($event)"
                                         [class.is-invalid]="(controls.username.invalid && controls.username.touched) || isSubmit"
                                         [class.is-invalid-api]="errApi.username.status" class="form-control">
                                     <div class="invalid-tooltip" *ngIf="controls.username.errors">

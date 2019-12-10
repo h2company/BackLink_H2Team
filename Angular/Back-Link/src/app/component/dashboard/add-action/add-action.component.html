@@ -25,7 +25,7 @@
 					<div class="card">
 						<div class="card-header">
 							<h4 class="card-title" id="horz-layout-basic">Thêm mới
-								Backlink</h4>
+								Yêu Cầu Hành Động</h4>
 							<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 							<div class="heading-elements">
 								<ul class="list-inline mb-0">
@@ -47,95 +47,172 @@
 										<span style="color: red">(*):</span> Thông tin bắt buộc.
 									</p>
 								</div>
-								<form class="form form-horizontal">
+								<form class="form form-horizontal" [formGroup]="actionFormGroup" (ngSubmit)="onSubmit()" novalidate> 
 									<div class="form-div">
 										<h4 class="form-section">
 											<i class="ft-clipboard"></i>Thông Tin Hành Động
 										</h4>
 										<div class="form-group row">
-											<label class="col-md-3 label-control" for="projectinput5"><span
+											<label class="col-md-3 label-control" for="urlAction"><span
 													style="color: red">(*)</span> Đường dẫn yêu cầu</label>
 											<div class="col-md-9">
-												<input class="form-control" id="descTextarea" rows="3"
-													placeholder="Ví dụ: google.com , bing.com, yahoo.com...">
-											</div>
+												<input class="form-control" 
+													id="urlAction" 
+													type="text"
+													class="form-control"
+													formControlName="actionUrl"													
+													[(ngModel)]="action.urlAction"	
+													[class.is-invalid]="(controls.actionUrl.invalid && controls.actionUrl.touched) || (controls.actionUrl.invalid && isSubmit)"
+													placeholder="Ví dụ: http://h2team.blog/gioi-thieu-ve-h2team.html">
+												<div class="invalid-tooltip"
+                                                    *ngIf="(controls.actionUrl.errors && controls.actionUrl.touched) || (isSubmit && controls.actionUrl.errors)">
+                                                    {{controls.actionUrl.errors.message}}
+												</div>
+											</div>											
 										</div>
 										<div class="form-group row">
 											<label class="col-md-3 label-control" for="projectinput5"><span
 													style="color: red">(*)</span> Kênh tìm kiếm hợp lệ</label>
 											<div class="col-md-9">
-												<!-- <textarea class="form-control" id="descTextarea" rows="3"
-													placeholder="Ví dụ: google.com , bing.com, yahoo.com..."></textarea> -->
-												<tag-input [(ngModel)]='items' 
+												<tag-input 
+												[(ngModel)]='tempData.searchEngine' 
 												[ngModelOptions]="{standalone: true}"
 												[placeholder]="'Nhập kênh tìm kiếm'"
-												[secondaryPlaceholder]="'Nhập kênh tìm kiếm'"
-												theme='bootstrap'></tag-input>
+												[secondaryPlaceholder]="'Ví dụ: google.com...'"
+												[onlyFromAutocomplete]="true"
+												theme='bootstrap'>
+													<tag-input-dropdown [showDropdownIfEmpty]="true"
+														[autocompleteItems]="['Google.com', 'Bing.com', 'Yahoo.com']">
+													</tag-input-dropdown>
+												</tag-input>
+												<div class="invalid-tooltip"
+                                                    *ngIf="isSubmit && !tempData.searchEngine.length">
+                                                    Trường bắt buộc
+												</div>
 											</div>
 										</div>
 										<div class="form-group row">
 											<label class="col-md-3 label-control" for="projectinput5"><span
 													style="color: red">(*)</span> Từ khóa tìm kiếm hợp lệ</label>
 											<div class="col-md-9">
-												<textarea class="form-control" id="descTextarea" rows="3"
-													placeholder="Ví dụ: h2team , h2 team,..."></textarea>
+												<tag-input [(ngModel)]='tempData.keywords' 
+												[ngModelOptions]="{standalone: true}"
+												[placeholder]="'Từ khóa tìm kiếm'"
+												[secondaryPlaceholder]="'Ví dụ: h2team...'"
+												theme='bootstrap'></tag-input>
+												<div class="invalid-tooltip"
+                                                    *ngIf="isSubmit && !tempData.keywords.length">
+                                                    Trường bắt buộc
+												</div>
 											</div>
 										</div>
 										<div class="form-group row">
 											<label class="col-md-3 label-control" for="projectinput5"><span
 													style="color: red">(*)</span> Danh sách trình duyệt hợp lệ</label>
-											<div class="col-md-9">
-												<textarea class="form-control" id="descTextarea" rows="3"
-													placeholder="Ví dụ: Chrome , Opera, Firefox,..."></textarea>
+											<div class="col-md-9">												
+												<tag-input [(ngModel)]='tempData.userAgent' 
+												[ngModelOptions]="{standalone: true}"
+												[placeholder]="'Danh sách trình duyệt'"
+												[secondaryPlaceholder]="'Ví dụ: Chrome , Opera...'"
+												[onlyFromAutocomplete]="true"
+												theme='bootstrap'>
+												<tag-input-dropdown [showDropdownIfEmpty]="true"
+													[autocompleteItems]="['Chrome', 'FireFox', 'Opera']">
+												</tag-input-dropdown>
+												</tag-input>
+												<div class="invalid-tooltip"
+                                                    *ngIf="isSubmit && !tempData.userAgent.length">
+                                                    Trường bắt buộc
+												</div>
 											</div>
 										</div>
 										<div class="form-group row">
-											<label class="col-md-3 label-control" for="projectinput5"><span
+											<label class="col-md-3 label-control" for="point"><span
 													style="color: red">(*)</span> Điểm quy đổi</label>
 											<div class="col-md-9">
-												<input type="text" id="projectinput5" class="form-control" value=""
-													name="username">
+												<input 
+												type="text" 
+												id="point" 
+												class="form-control"
+												formControlName="point"
+												(keypress)="numberOnly($event)"
+												[class.is-invalid]="(controls.point.invalid && controls.point.touched) || (controls.point.invalid && isSubmit)"
+												[(ngModel)]="action.point">
+												<div class="invalid-tooltip"
+                                                    *ngIf="(controls.point.errors && controls.point.touched) || (controls.point.errors && isSubmit)">
+                                                    {{controls.point.errors.message}}
+                                                </div>
 											</div>
 										</div>
 										<div class="form-group row">
-											<label class="col-md-3 label-control" for="projectinput5"><span
-													style="color: red">(*)</span> Mã theo dõi</label>
+                                            <div class="row col-md-9 offset-md-3 p-0">
+                                                <div class="col-md-6 p-0">
+                                                    <label class="col-md-12 label-control text-left"
+                                                        for="beginTime"><span style="color: red">(*)</span> Ngày bắt
+                                                        đầu</label>
+                                                    <div class="col-md-12">
+														<div class="form-control red no-drop">{{ action.beginTime | date: 'dd-MM-yyyy'}}</div>
+													</div>
+                                                </div>
+                                                <div class="col-md-6 p-0">
+                                                    <label class="col-md-12 label-control text-left"
+                                                        for="projectinput5"><span style="color: red">(*)</span> Ngày kết
+                                                        thúc</label>
+                                                    <div class="col-md-12">														
+														<input 
+														type="text" 
+														class="form-control bsDatepicker"														
+														placeholder="Ngày kết thúc Backlink" 
+														value="{{ action.endTime | date: 'dd-MM-yyyy'}}"
+														readonly bsDatepicker
+														(bsValueChange)="onChangeEndTime($event)"
+														[class.is-invalid]="!isValidEndDate"
+														[bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY' }">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+										<div class="form-group row">
+											<label class="col-md-3 label-control" for="projectinput5"></label>
 											<div class="col-md-9">
-												<input type="text" id="projectinput5" class="form-control"
-													value="BL01544877" name="username" readonly="readonly">
+												<ui-switch 
+													[checked]="action.blockPixel" 
+													(change)="onValueChangeBlockPixel($event)">
+												</ui-switch>
+												<label for="switcheryColor" class="card-title ml-1">
+													Chặn trình thu thập dữ liệu
+												</label>
 											</div>
 										</div>
 										<div class="form-group row">
 											<label class="col-md-3 label-control" for="projectinput5"></label>
 											<div class="col-md-9">
-													<ui-switch [checked]="true"></ui-switch>
-													<label for="switcheryColor" class="card-title ml-1">Chặn
-												trình thu thập dữ liệu</label>
+												<ui-switch 
+													[checked]="action.filterVA"
+													(change)="onValueChangeFilterVA($event)">
+												</ui-switch>
+												<label for="switcheryColor" class="card-title ml-1">
+													Lọc truy cập ảo
+												</label>
 											</div>
 										</div>
 										<div class="form-group row">
 											<label class="col-md-3 label-control" for="projectinput5"></label>
 											<div class="col-md-9">
-													<ui-switch [checked]="true"></ui-switch>
-													<label for="switcheryColor" class="card-title ml-1">Lọc
-												truy cập ảo</label>
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-md-3 label-control" for="projectinput5"></label>
-											<div class="col-md-9">
-												<ui-switch [checked]="true"></ui-switch>
-												<label for="switcheryColor" class="card-title ml-1">Lưu
+												<ui-switch 
+												[checked]="action.saveVA"
+												(change)="onValueChangeSaveVA($event)">
+											</ui-switch>
+											<label for="switcheryColor" class="card-title ml-1">Lưu
 												thông tin truy cập</label>
 											</div>
 										</div>
 									</div>
 									<div class="form-actions right">
-										<button type="button" class="btn btn-primary mr-1" (click)="onClick()">
+										<button type="submit" class="btn btn-primary mr-1">
 											<i class="la la-check-square-o"></i> Thêm mới
 										</button>
 									</div>
-
 								</form>
 							</div>
 						</div>

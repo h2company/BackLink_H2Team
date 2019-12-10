@@ -11,10 +11,6 @@ import com.backlink.Message.MessageException;
 
 public class ActionRequest {
 
-	@NotBlank(message = MessageException.ANO_NOT_BLANK)
-	@Size(min = 3, max = 30, message = MessageException.ANO_SIZE)
-	private String username;
-
 	@NotNull(message = MessageException.ANO_NOT_BLANK)
 	@Size(min = 1,message = MessageException.ANO_SIZE_MIN)
 	private String[] keywords;
@@ -22,6 +18,10 @@ public class ActionRequest {
 	@NotNull(message = MessageException.ANO_NOT_NULL)
 	@Size(min = 1,message = MessageException.ANO_SIZE_MIN)
 	private String[] searchEngine;
+	
+	@NotNull(message = MessageException.ANO_NOT_NULL)
+	@Size(min = 1,message = MessageException.ANO_SIZE_MIN)
+	private String[] userAgent;
 
 	@NotNull(message = MessageException.ANO_NOT_NULL)
 	private Long point;
@@ -33,19 +33,14 @@ public class ActionRequest {
 	private boolean filterVA;
 	
 	@NotNull(message = MessageException.ANO_NOT_NULL)
+	private boolean saveVA;
+	
+	@NotNull(message = MessageException.ANO_NOT_NULL)
 	private Long beginTime = new Date().getTime();
 
 	@NotNull(message = MessageException.ANO_NOT_NULL)
 	private Long endTime;
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
+	
 	public String[] getKeywords() {
 		return keywords;
 	}
@@ -101,5 +96,21 @@ public class ActionRequest {
 	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
 	}
+
+	public String[] getUserAgent() {
+		return userAgent;
+	}
+
+	public void setUserAgent(String[] userAgent) {
+		this.userAgent = userAgent;
+	}
+
+	public boolean isSaveVA() {
+		return saveVA;
+	}
+
+	public void setSaveVA(boolean saveVA) {
+		this.saveVA = saveVA;
+	}	
 	
 }
