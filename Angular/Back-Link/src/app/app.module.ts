@@ -27,6 +27,8 @@ import { TagInputModule } from 'ngx-chips';
 import { AccountComponent } from './component/dashboard/account/account.component';
 import { ActionService } from './service/action.service';
 import { BacklinkService } from './service/backlink.service';
+import { EditPointComponent } from './component/dashboard/point-member/edit-point/edit-point.component';
+import { ListPointComponent } from './component/dashboard/point-member/list-point/list-point.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { BacklinkService } from './service/backlink.service';
     ListUserComponent,
     EditUserComponent,
     LogoutComponent,
-    AccountComponent
+    AccountComponent,
+    EditPointComponent,
+    ListPointComponent
   ],
   imports: [
     CommonModule,

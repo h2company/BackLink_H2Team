@@ -16,5 +16,7 @@ export class User {
       public createAt?: Date,
       public password?: string,
       public avatar?: string
+      public point?: number,
+      public lockpoint?: number
     ) {}
 }

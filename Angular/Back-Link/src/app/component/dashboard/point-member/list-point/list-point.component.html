@@ -1,0 +1,55 @@
+<!-- Bordered striped start -->
+<div class="row" *ngIf="!id">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Thêm, xóa, sửa thành viên</h4>
+                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                <div class="heading-elements">
+                    <ul class="list-inline mb-0">
+                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                        <li><a data-action="close"><i class="ft-x"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-content collapse show">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tên Thành Viên</th>
+                                <th>Username</th>
+                                <th>Điểm</th>
+                                <th>Điểm khóa</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of listUser; index as i">
+                                <th scope="row"> #{{ i + 1}}</th>
+                                <td class="text-center primary font-medium-1 font-weight-bold">
+                                    {{ user.username }}</td>
+                                <td class="text-center info font-medium-1 font-weight-bold">
+                                    {{ user.fullname }}</td>
+                                <td>{{ user.point }}</td>
+                                <td>{{ user.lockpoint }}</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-outline-info mr-1"
+                                        [routerLink]="['/dashboard/point-member/', user.id]">
+                                        <i class="ft-edit"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-info mr-1" (click)="ublockPoint(user.id)">
+                                        <i class="la la-check-square-o"></i> Mở điểm khóa
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,14 +8,9 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class PointMemberComponent implements OnInit {
 
-  id: string;
-
-  constructor(private route: ActivatedRoute) { }
+  constructor() { }
 
   ngOnInit() {
-      this.route.paramMap.subscribe((params : ParamMap) => {
-        this.id = params.get('id');
-      })
   }
 
 }
