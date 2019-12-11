@@ -124,15 +124,15 @@ export class IndexComponent implements OnInit {
         data: [{
           type: "column",
           dataPoints: [
-            { y: 71, label: "Tháng 1" },
-            { y: 55, label: "Tháng 2" },
-            { y: 50, label: "Tháng 3" },
-            { y: 65, label: "Tháng 4" },
-            { y: 95, label: "Tháng 5" },
-            { y: 68, label: "Tháng 6" },
-            { y: 28, label: "Tháng 7" },
-            { y: 34, label: "Tháng 8" },
-            { y: 14, label: "Tháng 9" }
+            { y: 71, label: "Tháng 4" },
+            { y: 55, label: "Tháng 5" },
+            { y: 50, label: "Tháng 6" },
+            { y: 65, label: "Tháng 7" },
+            { y: 95, label: "Tháng 8" },
+            { y: 68, label: "Tháng 9" },
+            { y: 28, label: "Tháng 10" },
+            { y: 34, label: "Tháng 11" },
+            { y: 14, label: "Tháng 12" }
           ]
         }]
       });
