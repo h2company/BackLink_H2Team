@@ -28,6 +28,7 @@ import { AccountComponent } from './component/dashboard/account/account.componen
 import { ActionService } from './service/action.service';
 import { EditPointComponent } from './component/dashboard/point-member/edit-point/edit-point.component';
 import { ListPointComponent } from './component/dashboard/point-member/list-point/list-point.component';
+import { RechargeComponent } from './component/dashboard/recharge/recharge.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ListPointComponent } from './component/dashboard/point-member/list-poin
     LogoutComponent,
     AccountComponent,
     EditPointComponent,
-    ListPointComponent
+    ListPointComponent,
+    RechargeComponent
   ],
   imports: [
     CommonModule,

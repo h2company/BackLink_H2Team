@@ -27,6 +27,7 @@ import { AppRouter } from '../app-router.model';
 import { AccountComponent } from 'src/app/component/dashboard/account/account.component';
 import { EditPointComponent } from 'src/app/component/dashboard/point-member/edit-point/edit-point.component';
 import { ListPointComponent } from 'src/app/component/dashboard/point-member/list-point/list-point.component';
+import { RechargeComponent } from 'src/app/component/dashboard/recharge/recharge.component';
 
 const routes: Routes = [
   { path: '', redirectTo: `/${AppRouter.INDEX}`, pathMatch: 'full' },
@@ -58,6 +59,10 @@ const routes: Routes = [
           { path: '', component: ListPointComponent},
           { path: ':id', component: EditPointComponent}
         ]
+      },
+      {
+        path: 'recharge',
+        component: RechargeComponent
       },
       { path: 'logout', component: LogoutComponent },
       { path: AppRouter.ADD_BACKLINK, component: AddBacklinkComponent },
