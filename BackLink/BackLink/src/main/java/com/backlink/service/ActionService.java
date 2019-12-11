@@ -1,10 +1,13 @@
 package com.backlink.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
@@ -47,6 +50,11 @@ public class ActionService implements IBaseService<Action, String> {
 	@Override
 	public List<Action> findAll() {
 		return actionRepository.findAll();
+	}
+	
+	public List<Action> findAll(int page) {
+		Pageable sortedByPriceDesc =  PageRequest.of(page, 5, Sort.by("point").descending());
+		return actionRepository.findByEndTimeGreaterThanEqual(new Date().getTime(), sortedByPriceDesc).getContent();
 	}
 	
 	public List<Action> findByUsername() {
@@ -106,6 +114,7 @@ public class ActionService implements IBaseService<Action, String> {
 	public ResponseEntity<?> saveAction(ActionRequest actionRequest, HttpServletRequest request) {
 		Action action = new Action();
 		action.setUserAgent(actionRequest.getUserAgent());
+		action.seturlAction(actionRequest.getUrlAction());
 		action.setKeywords(actionRequest.getKeywords());
 		action.setSearchEngine(actionRequest.getSearchEngine());
 		action.setPoint(Integer.parseInt(actionRequest.getPoint().toString()));
@@ -122,9 +131,12 @@ public class ActionService implements IBaseService<Action, String> {
 		// Lưu Log
 		logSystemService.saveOne(new LogSystem(action.getUsername(), Type.CUSTOMER, LogAction.CREATE,
 				action.getUsername() + " Vừa tạo mới 1 Action: " + ac.getId()));
-		return new ResponseEntity<Object>(ac, HttpStatus.OK);
+		return new ResponseEntity<Object>(ac, HttpStatus.OK);		
 		
-		
+	}
+	
+	public ResponseEntity<?> findById(String id) {
+		return new ResponseEntity<Object>(actionRepository.findById(id).get(), HttpStatus.OK);
 	}
 
 }

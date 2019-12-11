@@ -1,5 +1,6 @@
 package com.backlink.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +60,11 @@ public class BacklinkService implements IBaseService<Backlink, String> {
 	}
 	
 	public List<Backlink> findAll(int page){
-		Pageable sortedByPriceDesc =  PageRequest.of(page, 2, Sort.by("point").descending());
-		return backlinkRepository.findAll(sortedByPriceDesc).getContent();
+//	Pageable sortedByPriceDesc =  PageRequest.of(page, 2, Sort.by("point").descending());
+//backlinkRepository.findAll(sortedByPriceDesc);
+		
+		Pageable sortedByPriceDesc =  PageRequest.of(page, 5, Sort.by("point").descending());
+		return backlinkRepository.findByEndTimeGreaterThanEqual(new Date().getTime(), sortedByPriceDesc).getContent();
 	}
 
 	@Override

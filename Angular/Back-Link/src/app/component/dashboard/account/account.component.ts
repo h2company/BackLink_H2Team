@@ -82,6 +82,10 @@ export class AccountComponent implements OnInit {
     this._userService.avatar(uploadData).subscribe(event => {
         this.user.avatar = event.avatar; // handle event here
 
+        this.toastr.success("Thông báo", "Cập nhật ảnh đại diện thành công", {
+          positionClass: 'toast-top-right'
+        });
+
         this._userService.getinfo().subscribe(res => {
           let _data = Object.keys(res);
           _data.forEach(element => {

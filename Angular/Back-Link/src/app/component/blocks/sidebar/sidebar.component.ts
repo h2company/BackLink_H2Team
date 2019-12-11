@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/model/user.model';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,10 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+  user: User;
+
+  constructor(private _userService: UserService) { }
 
   ngOnInit() {
-    
+    this._userService.getinfo().subscribe(res => {
+      this.user = res;
+    })
   }
 
 }

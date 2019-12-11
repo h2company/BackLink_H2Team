@@ -20,7 +20,8 @@ export class APIService {
   public ADD_BACKLINK_VF = "/api/backlink/verifyACPBacklink";
   public ADD_BACKLINK_CHECK_VF = "/api/backlink/checkverifyACPBacklink";
   //ACTION
-  public ACTION = "/api/actions";
+  public ACTION = "/api/actions/";
+  public ACTION_DASHBOARD = "/api/actions/dashboard";
 
   //UPLOAD
   public UPLOAD_AVATAR = "/api/upload/avatar";

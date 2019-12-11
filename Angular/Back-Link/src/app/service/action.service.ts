@@ -27,6 +27,13 @@ export class ActionService implements IBaseService<Action, string> {
         );
     }
 
+    findAllDashboard(p?: number): Observable<Action[]> {
+        let page = p ? p : 0;
+        return this.http.get(this.API.ACTION_DASHBOARD + '?p=' + page).pipe(
+            map((data: Action[]) => data.map((item: Action) => item)),
+        );
+    }
+
     deleteById(id: string): Observable<Action> {
         throw new Error('Method not implemented.');
     }

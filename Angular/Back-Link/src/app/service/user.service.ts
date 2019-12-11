@@ -29,8 +29,8 @@ export class UserService implements IBaseService<User, string> {
       map((data: User[]) => data.map((item: User) => item)),
     );
   }
-  deleteById(id: string): Observable<User> {
-    throw new Error('Method not implemented.');
+  deleteById(id: string): Observable<any> {
+    return this.http.delete_oauth(this.API.ALL_USERS + id);
   }
   update(entity: User): Observable<User> {
     return this.http.put_oauth(this.API.ALL_USERS, entity);

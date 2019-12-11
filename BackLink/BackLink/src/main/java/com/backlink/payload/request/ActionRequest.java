@@ -10,7 +10,9 @@ import javax.validation.constraints.Size;
 import com.backlink.Message.MessageException;
 
 public class ActionRequest {
-
+	
+	private String urlAction;
+	
 	@NotNull(message = MessageException.ANO_NOT_BLANK)
 	@Size(min = 1,message = MessageException.ANO_SIZE_MIN)
 	private String[] keywords;
@@ -111,6 +113,15 @@ public class ActionRequest {
 
 	public void setSaveVA(boolean saveVA) {
 		this.saveVA = saveVA;
+	}
+
+	public String getUrlAction() {
+		return urlAction;
+	}
+
+	public void setUrlAction(String urlAction) {
+		this.urlAction = urlAction;
 	}	
+	
 	
 }
