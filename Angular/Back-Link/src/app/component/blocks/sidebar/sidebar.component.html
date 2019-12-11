@@ -26,39 +26,23 @@
           <li class=""><a class="menu-item" [routerLink]="['./add-action']" routerLinkActive="active">Thêm Yêu Cầu Hành
               Động</a>
           </li>
-          <li class=""><a class="menu-item" [routerLink]="['./statistical-access']" routerLinkActive="active">Thống Kê
+          <!-- <li class=""><a class="menu-item" [routerLink]="['./statistical-access']" routerLinkActive="active">Thống Kê
               Truy Cập</a>
-          </li>
+          </li> -->
         </ul>
       </li>
-      <!-- <li class=" nav-item has-sub"><a href="#"><i class="ft-zap"></i><span class="menu-title" data-i18n="">Thanh
-            Toán</span></a>
-        <ul class="menu-content">
-          <li class=""><a class="menu-item" href="pay/recharge.html">Nạp tiền</a>
-          </li>
-          <li class=""><a class="menu-item" href="pay/transaction-history.html">Lịch sử giao dịch</a>
-          </li>
-        </ul>
-      </li>
-      <li class="nav-item has-sub"><a href="#"><i class="ft-sunset"></i><span class="menu-title" data-i18n="">Doanh
-            Thu</span></a>
-        <ul class="menu-content">
-          <li class=""><a class="menu-item" href="revenue/advertisement.html">DT Quảng Cáo</a>
-          </li>
-          <li class=""><a class="menu-item" href="revenue/exchange.html">DT Giao Dịch</a>
-          </li>
-        </ul>
-      </li> -->
-      <li class=" nav-item has-sub"><a href="#"><i class="ft-aperture"></i><span class="menu-title" data-i18n="">Quản Lý
+      <li class=" nav-item "><a class="" [routerLink]="['./recharge']" routerLinkActive="active"><i
+        class="ft-home"></i><span class="menu-title" data-i18n="">Nạp Tiền</span></a></li>
+      <li *ngIf="user && user.roles[0].id == 1" class=" nav-item has-sub"><a href="#"><i class="ft-aperture"></i><span class="menu-title" data-i18n="">Quản Lý
             Điểm</span></a>
         <ul class="menu-content">
           <li class=""><a class="menu-item" [routerLink]="['./point-member']" routerLinkActive="active">Thành Viên</a>
           </li>
-          <li class=""><a class="menu-item" [routerLink]="['./point-log']" routerLinkActive="active">Log</a>
-          </li>
+          <!-- <li class=""><a class="menu-item" [routerLink]="['./point-log']" routerLinkActive="active">Log</a>
+          </li> -->
         </ul>
       </li>
-      <li class=" nav-item has-sub"><a href="#"><i class="ft-users" routerLinkActive="active"></i><span
+      <li *ngIf="user && user.roles[0].id == 1" class=" nav-item has-sub"><a href="#"><i class="ft-users" routerLinkActive="active"></i><span
             class="menu-title" data-i18n="">Quản Lý Tài
             Khoản</span></a>
         <ul class="menu-content">

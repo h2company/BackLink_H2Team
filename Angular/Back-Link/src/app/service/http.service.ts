@@ -35,6 +35,12 @@ export class HttpService {
     });
   }
 
+  public delete_oauth(path: string): Observable<any> {
+    return this.httpClient.delete<any>(this.toHost(path) ,{
+      headers: this.setHeader()
+    });
+  }
+
   public put(path: string, data: any): Observable<any> {
     return this.httpClient.put<any>(this.toHost(path), data);
   }

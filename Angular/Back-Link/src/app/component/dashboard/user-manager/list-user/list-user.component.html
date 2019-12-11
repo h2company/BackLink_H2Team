@@ -41,8 +41,7 @@
                                     <button type="button" class="btn btn-outline-info mr-1" [routerLink]="['./', user.id]">
                                         <i class="ft-edit"></i>
                                     </button>
-                                    <button type="button" class="btn btn-outline-danger mr-1 delete-item"
-                                        data-id="" [swal]="deleteSwal">
+                                    <button type="button" class="btn btn-outline-danger mr-1 delete-item" (click)="deleteClick(user.id)">
                                         <i class="ft-trash-2"></i>
                                     </button>
                                 </td>
@@ -55,5 +54,5 @@
     </div>
 </div>
 <swal #deleteSwal title="Xóa Tài Khoản" text="Bạn có chắc chắn xóa tài khoản này?" type="warning" [showCancelButton]="true"
-    [focusCancel]="true">
+    [focusCancel]="true" (confirm)="deleteUser()">
 </swal>

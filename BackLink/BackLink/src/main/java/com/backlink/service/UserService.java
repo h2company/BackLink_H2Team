@@ -86,6 +86,10 @@ public class UserService implements IBaseService<User, String> {
 	public List<User> findAll() {
 		return userRepository.findAll();
 	}
+	
+	public List<User> findByEnabledTrue() {
+		return userRepository.findByEnabledTrue();
+	}	
 
 	public List<PointMember> findPoint() {
 		List<PointMember> pmb = new ArrayList<PointMember>();
@@ -127,30 +131,42 @@ public class UserService implements IBaseService<User, String> {
 
 	// ĐĂNG KÝ THÀNH VIÊN
 	public ResponseEntity<?> register(SignUpRequest signUpRequest) throws ParseException {
+
+		// Mảng lỗi
+		Map<String, String> errors = new HashMap<String, String>();
+
 		// KIỂM TRA USERNAME ĐÃ TỒN TẠI HAY CHƯA
 		if (userRepository.findByUsername(signUpRequest.getUsername()).isPresent()) {
-			throw new BadRequestException(String.format(MessageException.EXIST, signUpRequest.getUsername()));
+			errors.put("username", String.format(MessageException.EXIST, signUpRequest.getUsername()));
 		}
 
 		// KIỂM TRA MAIL ĐÃ TỒN TẠI HAY CHƯA
 		if (userRepository.findByEmail(signUpRequest.getEmail()).isPresent()) {
-			throw new BadRequestException(String.format(MessageException.EXIST, signUpRequest.getEmail()));
+			errors.put("email", String.format(MessageException.EXIST, signUpRequest.getEmail()));
 		}
 
 		// KIỂM TRA SỐ ĐIỆN THOẠI ĐÃ TỒN TẠI HAY CHƯA
-//		if (userRepository.findByPhone(signUpRequest.getPhone()).isPresent()) {
-//			throw new BadRequestException(String.format(MessageException.EXIST, signUpRequest.getPhone()));
-//		}
+		if (userRepository.findByPhone(signUpRequest.getPhone()).isPresent()) {
+			errors.put("phone", String.format(MessageException.EXIST, signUpRequest.getPhone()));
+		}
+
+		if (errors.size() > 0) {
+			return new ResponseEntity<Object>(
+					new ApiException(HttpStatus.BAD_REQUEST, MessageException.INCORRECT_SYNTAX, errors),
+					HttpStatus.BAD_REQUEST);
+		}
 
 		// SET GIÁ TRỊ
 		User user = new User();
 		user.setUsername(signUpRequest.getUsername());
 		user.setPassword(signUpRequest.getPassword());
 		user.setEmail(signUpRequest.getEmail());
-		// user.setPhone(signUpRequest.getPhone());
+		user.setPhone(signUpRequest.getPhone());
 		user.setFullname(signUpRequest.getFullname());
 		user.setAddress(signUpRequest.getAddress());
 		user.setGender(signUpRequest.isGender());
+		user.setAvatar(ServletUriComponentsBuilder.fromCurrentContextPath().path("/avatar/").path("default.png")
+				.toUriString());
 		// user.setBirthday(new
 		// SimpleDateFormat("dd/MM/yyyy").parse(signUpRequest.getBirthday()));
 		Set<Role> role = new HashSet<Role>();
@@ -201,6 +217,8 @@ public class UserService implements IBaseService<User, String> {
 		user.setPhone(addUserRequest.getPhone());
 		user.setFullname(addUserRequest.getFullname());
 		user.setAddress(addUserRequest.getAddress());
+		user.setAvatar(ServletUriComponentsBuilder.fromCurrentContextPath().path("/avatar/").path("default.png")
+				.toUriString());
 		user.setGender(addUserRequest.isGender());
 		user.setBirthday(addUserRequest.getBirthday());
 		Set<Role> role = new HashSet<Role>();
@@ -248,7 +266,8 @@ public class UserService implements IBaseService<User, String> {
 					errors.put("email", MessageException.CAN_NOT_CHANGE_EMAIL);
 				}
 
-				if (!userOpt.get().getPhone().equals(updateUserRequest.getPhone())) {
+				if (userOpt.get().getPhone() != null
+						&& !userOpt.get().getPhone().equals(updateUserRequest.getPhone())) {
 					errors.put("phone", MessageException.CAN_NOT_CHANGE_PHONE);
 				}
 			}
@@ -344,12 +363,19 @@ public class UserService implements IBaseService<User, String> {
 
 		Path path = Paths.get("C:\\data\\test\\" + fileName);
 		Files.write(path, bt);
-		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/avatar/")
-				.path(fileName).toUriString();
-		
+		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/avatar/").path(fileName)
+				.toUriString();
+
 		User user = userRepository.findById(currentUser.get().getId()).get();
 		user.setAvatar(fileDownloadUri);
-		
+
 		return new ResponseEntity<Object>(this.updateOne(user), HttpStatus.OK);
+	}
+	
+	public ResponseEntity<?> deleteUser(String id){
+		User user = userRepository.findById(id).get();
+		user.setEnabled(false);		
+		userRepository.save(user);
+		return new ResponseEntity<Object>(new APIResponse(true, "Xóa thành công"), HttpStatus.OK);
 	}
 }

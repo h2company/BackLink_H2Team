@@ -33,8 +33,11 @@ export class LoginComponent implements OnInit {
     });
   }
   onSubmit() {
-    console.log('submit');
-    console.log(this.userFormGroup.controls.username);
+    if(!this.userFormGroup.valid){
+      this.toastr.error("Thông báo", "Vui lòng nhập đầy đủ thông tin", {
+        positionClass: 'toast-top-right'
+      });
+    }
     const data = {
       usernameOrEmail: this.userFormGroup.controls.username.value,
       password: this.userFormGroup.controls.password.value
@@ -49,7 +52,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/dashboard']);
       });
     }, error => {
-      this.toastr.error(error.error.error, error.error.message, {
+      this.toastr.error("Thông báo", "Tài khoản hoặc mật khẩu không đúng", {
         positionClass: 'toast-top-right'
       });
     });

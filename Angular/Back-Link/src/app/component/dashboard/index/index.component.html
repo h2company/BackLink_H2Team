@@ -14,7 +14,9 @@
 						<div class="card-content collapse show">
 							<div class="card-body p-0 pb-0" *ngIf="user_backlink">
 								<div class="chartist">
-									<div id="project-stats" class="height-350 areaGradientShadow1"></div>
+									<div id="project-stats" class="height-350 areaGradientShadow1">
+										<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+									</div>
 								</div>
 							</div>
 							<div class="card-body text-center pt-1" *ngIf="!user_backlink">
@@ -267,11 +269,16 @@
 									</thead>
 									<tbody [@listStagger]='backlinks.length'>
 										<tr *ngFor="let backlink of backlinks; index as i">
-												<td class="red font-weight-bold">{{ i + 1}}</td>
-												<td><span class="badge badge-primary"><i class="ft-star mr-1 "></i>{{backlink.id}}</span></td>
-												<td><span class="badge badge-info"><i class="ft-anchor mr-1"></i>{{backlink.point}}</span></td>
-												<td><span class="badge badge-warning"><i class="ft-repeat mr-1"></i>{{backlink.limit}}</span></td>
-												<td><span class="badge badge-danger"><i class="ft-clock mr-1"></i>{{backlink.endTime | date:'dd-MM-yyyy'}}</span></td>
+											<td class="red font-weight-bold">{{ i + 1}}</td>
+											<td><span class="badge badge-primary"><i
+														class="ft-star mr-1 "></i>{{backlink.id}}</span></td>
+											<td><span class="badge badge-info"><i
+														class="ft-anchor mr-1"></i>{{backlink.point}}</span></td>
+											<td><span class="badge badge-warning"><i
+														class="ft-repeat mr-1"></i>{{backlink.limit}}</span></td>
+											<td><span class="badge badge-danger"><i
+														class="ft-clock mr-1"></i>{{backlink.endTime | date:'HH:mm:ss dd-MM-yyyy'}}</span>
+											</td>
 											<td>
 												<button type="button" class="btn btn-outline-primary mr-1"
 													(click)="onClickBacklinkDetail(backlink.id);">
@@ -355,57 +362,6 @@
 									</div>
 								</div>
 							</div>
-							<!--Large modal Actions-->
-							<div *ngIf="verify" bsModal #childModalAction="bs-modal" class="modal fade" tabindex="-1"
-								role="dialog" aria-labelledby="dialog-sizes-name1">
-								<div class="modal-dialog modal-lg">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h4 id="dialog-sizes-name1" class="modal-title pull-left">Thông tin Backlink
-											</h4>
-											<button type="button" class="close pull-right"
-												(click)="childModalAction.hide()" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="modal-body row">
-											<div class="col-md-12">
-												<p>Mã Backlink : <code *ngIf="backlink">{{ backlink.id }}</code></p>
-												<p>
-													Điểm thưởng mỗi trang Backlink : <code
-														*ngIf="backlink">{{ math.round(backlink.point / backlink.limit * 0.9) }}</code>
-													|
-													Thời gian kết thúc Backlink <code
-														*ngIf="backlink">{{backlink.endTime | date:'HH:mm:ss dd-MM-yyyy'}}</code>
-												</p>
-											</div>
-											<div class="col-md-12">
-												<p><code>Lưu ý:</code> Backlink sau khi được xác thực đã gắn vào website
-													của bạn, điểm thưởng sẽ được cộng vào "Ví điểm khóa" và số điểm này
-													sẽ được chuyển đến "Ví điểm thực" sau khi thời hạn Backlink này kết
-													thúc.</p>
-											</div>
-											<hr>
-											<div class="col-md-12">
-												<p>Bước 1 : Truy cập extention và nhập mã sau :</p>
-												<pre class="language-markup">
-													<code>id của action</code>
-												</pre>
-												<p>Bước 2 : Truy cập vào một trong các kênh tìm kiếm sau :</p>
-												<pre class="language-markup">
-													<code>Google, Bing, Yandex</code>
-												</pre>
-												<p>Bước 3 : Tìm kiếm theo cú pháp kèm từ khóa:</p>
-												Chọn 1 trong các từ khóa sau: từ khóa 1, từ khóa 2
-												<pre class="language-markup">
-													<code>https://www.youtube.com/watch?v=OFrPeXZXOpY + từ khóa</code>
-												</pre>
-												<p>Bước 4 : Nhận kết quả trả về và nhận điểm</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -426,29 +382,28 @@
 						<div class="card-content collapse show">
 							<div class="table-responsive">
 								<table class="table table-bordered table-striped">
-									<thead>
+									<thead class="bg-gradient-x2-primary white">
 										<tr>
 											<th>#</th>
-											<th>Mã BL</th>
-											<th>Loại BL</th>
+											<th>Mã AC</th>
 											<th>Điểm quy đổi</th>
-											<th>Số lượt quy đổi</th>
 											<th>Thời gian kết thúc</th>
 											<th>Hành Động</th>
 										</tr>
 									</thead>
-									<tbody [@listStagger]='backlinks.length'>
-										<tr *ngFor="let backlink of backlinks; index as i">
-											<td>{{ i + 1}}</td>
-											<td>{{backlink.id}}</td>
-											<td *ngIf="backlink.blockPixel">Action</td>
-											<td *ngIf="!backlink.blockPixel">Backlink</td>
-											<td>{{backlink.point}}</td>
-											<td>{{backlink.limit}}</td>
-											<td>{{backlink.endTime | date:'HH:mm:ss dd-MM-yyyy'}}</td>
+									<tbody [@listStagger]='actions.length'>
+										<tr *ngFor="let action of actions; index as i">
+											<td class="red font-weight-bold">{{ i + 1}}</td>
+											<td><span class="badge badge-primary"><i
+														class="ft-star mr-1 "></i>{{action.id}}</span></td>
+											<td><span class="badge badge-info"><i
+														class="ft-anchor mr-1"></i>{{action.point}}</span></td>
+											<td><span class="badge badge-danger"><i
+														class="ft-clock mr-1"></i>{{action.endTime | date:'HH:mm:ss dd-MM-yyyy'}}</span>
+											</td>
 											<td class="text-center">
 												<button type="button" class="btn btn-outline-primary mr-1"
-													(click)="onClickActionDetail(backlink.id);">
+													(click)="onClickActionDetail(action.id);">
 													<i class="ft-eye"></i> Chi tiết
 												</button>
 											</td>
@@ -456,7 +411,7 @@
 										<tr>
 											<td colspan="7" class="text-center">
 												<button type="button" class="btn btn-outline-warning mr-1"
-													(click)="onLoadNextPage()">
+													(click)="onLoadNextPageAction()">
 													<i class="ft-repeat"></i> Xem thêm
 												</button>
 											</td>
@@ -479,37 +434,30 @@
 										</div>
 										<div class="modal-body row">
 											<div class="col-md-12">
-												<p>Mã Action : <code *ngIf="backlink">{{ backlink.id }}</code></p>
+												<p>Mã Action : <code *ngIf="action">{{ action.id }}</code></p>
 												<p>
-													Điểm thưởng mỗi trang Backlink : <code
-														*ngIf="backlink">{{ math.round(backlink.point / backlink.limit * 0.9) }}</code>
-													|
-													Thời gian kết thúc Backlink <code
-														*ngIf="backlink">{{backlink.endTime | date:'HH:mm:ss dd-MM-yyyy'}}</code>
+													Thời gian kết thúc Action <code
+														*ngIf="action">{{action.endTime | date:'HH:mm:ss dd-MM-yyyy'}}</code>
 												</p>
-											</div>
-											<div class="col-md-12">
-												<p><code>Lưu ý:</code> Backlink sau khi được xác thực đã gắn vào website
-													của bạn, điểm thưởng sẽ được cộng vào "Ví điểm khóa" và số điểm này
-													sẽ được chuyển đến "Ví điểm thực" sau khi thời hạn Backlink này kết
-													thúc.</p>
 											</div>
 											<hr>
 											<div class="col-md-12">
-												<p>Bước 1 : Truy cập extention và nhập mã sau :</p>
-												<pre class="language-markup">
-													<code>id của action</code>
+												<p class="red">Bước 1 : Truy cập extention và nhập mã sau :</p>
+												<pre class="language-markup d-flex">
+													<span class="badge badge-danger">{{action.id}}</span>
 												</pre>
-												<p>Bước 2 : Truy cập vào một trong các kênh tìm kiếm sau :</p>
-												<pre class="language-markup">
-													<code>Google, Bing, Yandex</code>
+												<p class="red">Bước 2 : Truy cập vào một trong các kênh tìm kiếm sau :
+												</p>
+												<pre class="language-markup d-flex">
+													<span class="badge badge-primary mr-1" *ngFor="let k of action.keywords">{{k}}</span>
 												</pre>
-												<p>Bước 3 : Tìm kiếm theo cú pháp kèm từ khóa:</p>
-												Chọn 1 trong các từ khóa sau: từ khóa 1, từ khóa 2
-												<pre class="language-markup">
-													<code>https://www.youtube.com/watch?v=OFrPeXZXOpY + từ khóa</code>
+												<p class="red">Bước 3 : Tìm kiếm theo cú pháp kèm từ khóa:</p>
+												Chọn 1 trong các từ khóa sau: <span class="badge badge-info mr-1"
+													*ngFor="let k of action.keywords">{{k}}</span>
+												<pre class="language-markup d-flex">
+													<span class="primary text-decoration">{{action.urlAction}}</span> + từ khóa
 												</pre>
-												<p>Bước 4 : Nhận kết quả trả về và nhận điểm</p>
+												<p class="red">Bước 4 : Nhận kết quả trả về và nhận điểm</p>
 											</div>
 										</div>
 									</div>

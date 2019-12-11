@@ -6,6 +6,8 @@ import { ModalDirective } from 'ngx-bootstrap/modal/ngx-bootstrap-modal';
 import { Backlink } from 'src/app/model/backlink.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { requiredValidator, urlValidator } from 'src/app/util/custom-validator';
+import { Action } from 'src/app/model/action.model';
+import * as CanvasJS from 'src/assets/canvasjs.min';
 import {
   trigger,
   state,
@@ -15,6 +17,7 @@ import {
   query,
   stagger
 } from '@angular/animations';
+import { ActionService } from 'src/app/service/action.service';
 
 declare var jQuery: any;
 
@@ -58,6 +61,9 @@ export class IndexComponent implements OnInit {
   user_backlink_info = new Backlink();
   user_backlinks = [];
 
+  actions = [];
+  action: Action = new Action();
+
   blcode = `<a href="" data-backlink="" target="_blank">Nội dung backlink</a>`;
   verify: string = `<script>
     (function(b,d,w,i,f,r){
@@ -71,10 +77,12 @@ export class IndexComponent implements OnInit {
   </script>`;
   math = Math;
   currentPage = 0;
+  currentPageAction = 0;
 
   constructor(
     private formBuilder: FormBuilder,
     private _backlinkService: BacklinkService,
+    private _actionService: ActionService,
     private toastr: ToastrService,
     private router: Router
   ) { }
@@ -83,6 +91,8 @@ export class IndexComponent implements OnInit {
     this.createForm();
     this.loadBacklinks();
     this.loadCurentBacklinks();
+    this.loadActions();
+    this.loadChart();
     window.onmessage = (e) => {
         if(e.data.events) {
           if(e.data.events[0].eventAction[0].event == 'verify') {
@@ -101,6 +111,33 @@ export class IndexComponent implements OnInit {
           }
         }
     };
+  }
+
+  loadChart(){
+    setTimeout(function(){
+      let chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        exportEnabled: true,
+        title: {
+          text: "Backlink Tracking"
+        },
+        data: [{
+          type: "column",
+          dataPoints: [
+            { y: 71, label: "Tháng 4" },
+            { y: 55, label: "Tháng 5" },
+            { y: 50, label: "Tháng 6" },
+            { y: 65, label: "Tháng 7" },
+            { y: 95, label: "Tháng 8" },
+            { y: 68, label: "Tháng 9" },
+            { y: 28, label: "Tháng 10" },
+            { y: 34, label: "Tháng 11" },
+            { y: 14, label: "Tháng 12" }
+          ]
+        }]
+      });
+      chart.render();
+    }, 2000)    
   }
   
   createForm() {
@@ -159,9 +196,32 @@ export class IndexComponent implements OnInit {
     });
   }
 
+  loadActions() {
+    this._actionService.findAllDashboard(this.currentPageAction).subscribe(res => {
+      if(res.length == 0){
+        this.currentPageAction--;
+        return;
+      }
+      if(this.actions){
+        this.actions = [].concat(this.actions, res);
+      }else{      
+        this.actions = res;
+      }
+    }, error => {
+      this.toastr.error(error.error.error, error.error.message, {
+        positionClass: 'toast-top-right'
+      });
+    });
+  }
+
   onLoadNextPage(){
     this.currentPage++;
     this.loadBacklinks();
+  }
+
+  onLoadNextPageAction(){
+    this.currentPageAction++;
+    this.loadActions();
   }
 
   onClickBacklinkDetail(id) {
@@ -188,9 +248,10 @@ export class IndexComponent implements OnInit {
   }
 
   onClickActionDetail(id) {
-    this._backlinkService.findById(id).subscribe(res => {
-      this.backlink = res;
-      if (this.backlink) {
+    console.log(id)
+    this._actionService.findById(id).subscribe(res => {
+      this.action = res;
+      if (this.action) {
         let _this = this;
       }
       setTimeout(() => {

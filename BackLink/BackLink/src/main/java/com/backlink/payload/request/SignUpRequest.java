@@ -26,10 +26,10 @@ public class SignUpRequest {
 	@Email
 	private String email;
 
-//	@NotBlank(message = MessageException.ANO_NOT_BLANK)
-//	@Size(min = 10, max = 10, message = MessageException.ANO_SIZE)
-//	@Pattern(regexp = "^(0{1})([1-9]{1})([0-9]{8})")
-//	private String phone;
+	@NotBlank(message = MessageException.ANO_NOT_BLANK)
+	@Size(min = 10, max = 10, message = MessageException.ANO_SIZE)
+	@Pattern(regexp = "^(0{1})([1-9]{1})([0-9]{8})")
+	private String phone;
 
 	//@NotBlank(message = MessageException.ANO_NOT_BLANK)
 	private String address;
@@ -83,6 +83,15 @@ public class SignUpRequest {
 	public void setGender(boolean gender) {
 		this.gender = gender;
 	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}	
+	
 
 //	@NotBlank(message = MessageException.ANO_NOT_BLANK)
 //	@Pattern(regexp = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$")

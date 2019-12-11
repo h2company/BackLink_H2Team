@@ -63,6 +63,7 @@ tag-input{
 
   table .badge{
       font-size: 1rem;
+      margin-bottom: 5px;
   }
 
   table thead th,table tbody td{

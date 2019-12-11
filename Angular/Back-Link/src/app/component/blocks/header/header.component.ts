@@ -24,11 +24,16 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this._userService.getinfo().subscribe(res => {
       this.userinfo = res;
+
+      let _data = Object.keys(res);
+      _data.forEach(element => {
+        sessionStorage.setItem(element, res[element]);
+      });
+
+      this.avatar = sessionStorage.getItem("avatar");
     }, error => {
       this.router.navigate(['/not-found'])
-    });
-
-    this.avatar = sessionStorage.getItem("avatar");
+    });    
 
     this._authenticationService.avatar.subscribe(item => {
       this.avatar = item;
