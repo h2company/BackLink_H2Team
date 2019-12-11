@@ -14,16 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.backlink.Message.MessageException;
 import com.backlink.beans.CurrentUser;
 import com.backlink.entities.Action;
 import com.backlink.entities.LogSystem;
 import com.backlink.entities.LogSystem.LogAction;
 import com.backlink.entities.LogSystem.Type;
-import com.backlink.entities.Role.RoleName;
-import com.backlink.exception.AppException;
-import com.backlink.exception.ForbiddenException;
-import com.backlink.exception.ResourceNotFoundException;
 import com.backlink.payload.request.ActionRequest;
 import com.backlink.repository.ActionRepository;
 
@@ -41,10 +36,10 @@ public class ActionService implements IBaseService<Action, String> {
 
 	@Override
 	public Action getById(String id) {
-		Action action = actionRepository.findById(id).orElseThrow(() -> {
-			throw new ResourceNotFoundException("Action", "id", id);
-		});
-		return action;
+//		Action action = actionRepository.findById(id).orElseThrow(() -> {
+//			throw new ResourceNotFoundException("Action", "id", id);
+//		});
+		return null;
 	}
 
 	@Override
@@ -69,46 +64,48 @@ public class ActionService implements IBaseService<Action, String> {
 	@Override
 	public Action updateOne(Action entity) {
 		Action action = null;
-		try {
-			action = actionRepository.save(entity);
-		} catch (Exception e) {
-			throw new AppException(e.getMessage());
-		}
+//		try {
+//			action = actionRepository.save(entity);
+//		} catch (Exception e) {
+//			throw new AppException(e.getMessage());
+//		}
 		return action;
 	}
 
 	@Override
 	public List<Action> updateMany(List<Action> list) {
 		List<Action> action = null;
-		try {
-			action = actionRepository.saveAll(list);
-		} catch (Exception e) {
-			throw new AppException(e.getMessage());
-		}
+//		try {
+//			action = actionRepository.saveAll(list);
+//		} catch (Exception e) {
+//			throw new AppException(e.getMessage());
+//		}
 
 		return action;
 	}
 
 	@Override
 	public boolean deleteOne(String id) {
-		try {
-			actionRepository.deleteById(id);
-			return true;
-		} catch (Exception e) {
-			throw new AppException(e.getMessage());
-		}
+//		try {
+//			actionRepository.deleteById(id);
+//			return true;
+//		} catch (Exception e) {
+//			throw new AppException(e.getMessage());
+//		}
+		return false;
 	}
 
 	@Override
 	public boolean deleteMany(String[] ids) {
-		try {
-			for (String id : ids) {
-				this.deleteOne(id);
-			}
-			return true;
-		} catch (Exception e) {
-			throw new AppException(e.getMessage());
-		}
+//		try {
+//			for (String id : ids) {
+//				this.deleteOne(id);
+//			}
+//			return true;
+//		} catch (Exception e) {
+//			throw new AppException(e.getMessage());
+//		}
+		return false;
 	}
 
 	public ResponseEntity<?> saveAction(ActionRequest actionRequest, HttpServletRequest request) {

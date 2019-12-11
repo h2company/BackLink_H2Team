@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backlink.entities.AccessHistory;
 import com.backlink.payload.request.ActionRequest;
 import com.backlink.service.ActionService;
 
